@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agents · Crabbie Ops</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:#0b1020;color:#eaf0ff;margin:0;padding:24px}
+a{color:#9bc0ff;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.card{background:#121a36;border:1px solid #243059;border-radius:12px;padding:14px}
+.name{font-size:18px;font-weight:700}.role{font-size:13px;color:#b7c6ef}
+.avatar{width:100%;height:130px;object-fit:cover;border-radius:8px;background:#1b254a}
+small{color:#9fb0df}
+</style></head><body>
+<h1>Agent Directory</h1><p><a href="/">← Dashboard Home</a></p>
+<div class="grid" id="grid"></div>
+<script>
+const agents=[
+ {id:'tide',name:'Tide',role:'Control Tower / Chief of Staff',avatar:'/assets/avatars/tide.png'},
+ {id:'radar',name:'Radar',role:'Opportunity Scout',avatar:'/assets/avatars/radar.png'},
+ {id:'vantage',name:'Vantage',role:'Role Analyst',avatar:'/assets/avatars/vantage.png'},
+ {id:'forge',name:'Forge',role:'CV Strategist / Writer',avatar:'/assets/avatars/forge.png'},
+ {id:'polish',name:'Polish',role:'CV Layout & Design',avatar:'/assets/avatars/polish.png'},
+ {id:'ledger',name:'Ledger',role:'Pipeline & CRM',avatar:'/assets/avatars/ledger.png'},
+ {id:'atlas',name:'Atlas',role:'Company & Contact Intelligence',avatar:'/assets/avatars/atlas.png'},
+ {id:'crabbie',name:'Crabbie',role:'Manager / Orchestrator',avatar:'/assets/avatars/crabbie.png'}
+];
+const grid=document.getElementById('grid');
+agents.forEach(a=>{const d=document.createElement('div');d.className='card';d.innerHTML=`<img class='avatar' src='${a.avatar}' onerror="this.style.display='none'"><div class='name'>${a.name}</div><div class='role'>${a.role}</div><p><a href='/agents/${a.id}.html'>Open profile →</a></p><small>Bio + markdown editor</small>`;grid.appendChild(d)});
+</script>
+</body></html>

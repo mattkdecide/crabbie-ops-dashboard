@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agent Profile</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:#0b1020;color:#eaf0ff;margin:0;padding:24px}
+a{color:#9bc0ff;text-decoration:none}
+.wrap{display:grid;grid-template-columns:320px 1fr;gap:16px}
+.card{background:#121a36;border:1px solid #243059;border-radius:12px;padding:14px}
+.avatar{width:100%;height:220px;object-fit:cover;border-radius:10px;background:#1b254a}
+.role{color:#b7c6ef}.bio{line-height:1.4}
+textarea{width:100%;min-height:320px;background:#0f1730;color:#eaf0ff;border:1px solid #2a3a70;border-radius:8px;padding:10px;font-family:ui-monospace,Menlo,monospace}
+.btn{background:#2a64ff;color:#fff;border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+.row{display:flex;gap:8px;align-items:center}
+small{color:#9fb0df}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}}
+</style></head>
+<body>
+<p><a href="/agents/index.html">← Agents</a> · <a href="/">Dashboard Home</a></p>
+<div class="wrap">
+  <div class="card">
+    <img id="avatar" class="avatar" src="" alt="avatar" onerror="this.style.display='none'">
+    <h1 id="name"></h1>
+    <div id="role" class="role"></div>
+    <p id="bio" class="bio"></p>
+  </div>
+  <div class="card">
+    <h2>Markdown Workspace</h2>
+    <div class="row">
+      <button class="btn" id="save">Save</button>
+      <button class="btn" id="reset" style="background:#46557f">Reset</button>
+      <small>Saved in browser local storage for quick edits</small>
+    </div>
+    <p><small>Tip: use this for agent instructions, runbooks, and notes. We'll wire file-backed persistence next.</small></p>
+    <textarea id="md"></textarea>
+  </div>
+</div>
+<script>
+const cfg=window.__AGENT__={"id": "vantage", "name": "Vantage", "role": "Role Analyst", "bio": "Builds role briefs and hiring signal maps.", "avatar": "/assets/avatars/vantage.png", "seed": "# Vantage\n\n## Output\n- Mandate summary\n- Must-haves\n- Risks\n- Keyword map\n"};
+document.getElementById('name').textContent=cfg.name;
+document.getElementById('role').textContent=cfg.role;
+document.getElementById('bio').textContent=cfg.bio;
+document.getElementById('avatar').src=cfg.avatar;
+const key='agent-md-'+cfg.id;
+const ta=document.getElementById('md');
+const initial=cfg.seed||'';
+ta.value=localStorage.getItem(key)||initial;
+document.getElementById('save').onclick=()=>{localStorage.setItem(key,ta.value);alert('Saved');};
+document.getElementById('reset').onclick=()=>{localStorage.removeItem(key);ta.value=initial;};
+</script>
+</body></html>
