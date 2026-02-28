@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Crabbie OS Gantt</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:#0b1020;color:#eaf0ff;margin:0;padding:20px}
+.wrap{max-width:1200px;margin:0 auto}
+h1{margin:0 0 10px}.muted{color:#a7b7e6}
+.grid{display:grid;grid-template-columns:220px 1fr;gap:8px;margin-top:16px}
+.row{display:contents}
+.label{background:#121a36;border:1px solid #243059;border-radius:8px;padding:10px;font-size:13px}
+.track{position:relative;background:#101833;border:1px solid #243059;border-radius:8px;height:46px}
+.bar{position:absolute;top:8px;height:30px;border-radius:7px;padding:6px 8px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c1{background:#2563eb}.c2{background:#0ea5a4}.c3{background:#7c3aed}.c4{background:#ca8a04}.c5{background:#16a34a}
+.legend span{display:inline-block;margin-right:10px;padding:4px 8px;border-radius:999px;font-size:12px}
+a{color:#9bc0ff}
+</style></head><body><div class="wrap">
+<h1>Crabbie OS Delivery Gantt</h1>
+<div class="muted">View overlaps, sequencing, and planned functionality delivery</div>
+<p><a href="/">← Dashboard Home</a></p>
+<div class="legend"><span class="c1">Foundation</span><span class="c2">Data & Automation</span><span class="c3">UI/UX</span><span class="c4">Agent Delegation</span><span class="c5">Delivery Ops</span></div>
+<div id="g" class="grid"></div>
+</div>
+<script>
+const start=new Date('2026-03-01');
+const end=new Date('2026-03-28');
+const total=(end-start)/(1000*60*60*24);
+const items=[
+['Foundation','Dashboard app shell + navigation','2026-03-01','2026-03-04','c1'],
+['Foundation','Agents directory + profile controls','2026-03-02','2026-03-06','c1'],
+['Data & Automation','JSON data layer for boards','2026-03-03','2026-03-08','c2'],
+['Data & Automation','Auto-refresh + state sync','2026-03-07','2026-03-11','c2'],
+['UI/UX','Design tokens + component system','2026-03-01','2026-03-07','c3'],
+['UI/UX','Task detail + activity views','2026-03-09','2026-03-15','c3'],
+['Agent Delegation','Studio pod operating model','2026-03-01','2026-03-05','c4'],
+['Agent Delegation','Command router (assign/prioritise)','2026-03-10','2026-03-16','c4'],
+['Delivery Ops','QA gates + release checklist','2026-03-12','2026-03-18','c5'],
+['Delivery Ops','Morning/5pm summary panels','2026-03-14','2026-03-20','c5'],
+['Delivery Ops','v1 stability pass','2026-03-21','2026-03-28','c5']
+];
+const g=document.getElementById('g');
+for (const it of items){
+  const [stream,name,s,e,c]=it;
+  const ds=(new Date(s)-start)/(1000*60*60*24);
+  const de=(new Date(e)-start)/(1000*60*60*24);
+  const left=Math.max(0, ds/total*100);
+  const width=Math.max(3, (de-ds+1)/total*100);
+  const l=document.createElement('div');l.className='label';l.innerHTML=`<strong>${stream}</strong><br>${name}`;
+  const t=document.createElement('div');t.className='track';
+  const b=document.createElement('div');b.className='bar '+c;b.style.left=left+'%';b.style.width=width+'%';b.textContent=`${s} → ${e}`;
+  t.appendChild(b);g.appendChild(l);g.appendChild(t);
+}
+</script></body></html>
