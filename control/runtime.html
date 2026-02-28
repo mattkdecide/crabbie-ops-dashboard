@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Runtime Control · Crabbie OS</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;background:#0b1020;color:#eaf0ff;margin:0;padding:24px}
+.card{background:#121a36;border:1px solid #243059;border-radius:12px;padding:14px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;background:#253463}
+.ok{background:#1d4f34}.warn{background:#6a5a23}
+a{color:#9bc0ff}
+small{color:#9fb0df}
+</style></head><body>
+<h1>Runtime Control</h1><p><a href='/'>← Dashboard Home</a></p>
+<div class='card'><strong>Persistent agents configured:</strong> 8 <span class='badge ok'>main, cv, ux, copy, web, crm, jobs, ops</span></div>
+<div class='grid'>
+  <div class='card'><h3>Spawn policy</h3><div class='badge warn'>Awaiting runtime permission</div><p><small>Agents exist, but delegated session spawning is currently blocked by session tool policy in this chat runtime.</small></p></div>
+  <div class='card'><h3>Gateway</h3><div class='badge ok'>Running</div><p><small>Config applied, healthy probe.</small></p></div>
+  <div class='card'><h3>Focus</h3><div class='badge'>CRM + Jobs</div><p><small>Social/video/health tracks deprioritised.</small></p></div>
+</div>
+<div class='card'><h3>Next visible milestones</h3><ol><li>JSON-backed kanban + queue</li><li>Auto-refresh state sync</li><li>Summary panel on home</li></ol></div>
+</body></html>
