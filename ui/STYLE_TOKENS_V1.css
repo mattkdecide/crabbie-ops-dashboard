@@ -1,0 +1,90 @@
+/* Crabbie OS UI tokens v1 (build-ready)
+   Usage: include in dashboard pages; keep values in sync with DESIGN_LANGUAGE_V1.md
+*/
+
+:root{
+  /* Colour */
+  --bg: #0b1020;
+  --surface: #121a36;
+  --surface-2: #0f1730;
+  --border: #243059;
+  --border-2: #2a3a70;
+  --text: #eaf0ff;
+  --text-2: #b7c6ef;
+  --text-3: #9eb0de;
+  --link: #9bc0ff;
+  --accent: #2a64ff;
+
+  --success-bg: #123b27;
+  --success-fg: #bff3d6;
+  --warning-bg: #3c3516;
+  --warning-fg: #ffe6a6;
+  --danger-bg: #3f1620;
+  --danger-fg: #ffc0ce;
+  --info-bg: #163042;
+  --info-fg: #b9e4ff;
+
+  /* Typography */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --fs-0: 11px;  /* micro */
+  --fs-1: 12px;  /* meta */
+  --fs-2: 14px;  /* body */
+  --fs-3: 16px;  /* emphasis */
+  --fs-4: 20px;  /* section */
+  --fs-5: 28px;  /* page title */
+  --lh-tight: 1.2;
+  --lh-body: 1.45;
+
+  /* Spacing (4px grid) */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 28px;
+
+  /* Radii */
+  --r1: 10px;
+  --r2: 12px;
+  --r-pill: 999px;
+
+  /* Focus */
+  --focus: 0 0 0 2px rgba(42,100,255,.55);
+  --focus-strong: 0 0 0 3px rgba(42,100,255,.75);
+
+  /* CV / document surfaces (paper inside dark UI) */
+  --paper-bg: #ffffff;
+  --paper-text: #0f172a;
+  --paper-muted: #475569;
+  --paper-border: #e2e8f0;
+  --paper-accent: #1d4ed8;
+
+  /* Elevation + layout */
+  --shadow-1: 0 8px 24px rgba(0,0,0,.28);
+  --shadow-2: 0 12px 40px rgba(0,0,0,.38);
+  --content-max: 1200px; /* long-form pages (e.g., CV preview) */
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-2);line-height:var(--lh-body)}
+
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px}
+
+.muted{color:var(--text-3)}
+.small{font-size:var(--fs-1);color:var(--text-3)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:var(--s4)}
+.panel{background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r1)}
+
+.badge{display:inline-block;font-size:var(--fs-0);padding:2px 8px;border-radius:var(--r-pill);border:1px solid rgba(255,255,255,.08);vertical-align:middle}
+.badge--info{background:var(--info-bg);color:var(--info-fg)}
+.badge--success{background:var(--success-bg);color:var(--success-fg)}
+.badge--warning{background:var(--warning-bg);color:var(--warning-fg)}
+.badge--danger{background:var(--danger-bg);color:var(--danger-fg)}
+
+@media (prefers-reduced-motion: reduce){
+  *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+}

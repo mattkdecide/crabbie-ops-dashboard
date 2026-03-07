@@ -1,0 +1,75 @@
+/* Crabbie OS components v1 (dashboard primitives)
+   Depends on: STYLE_TOKENS_V1.css
+*/
+
+/* Layout */
+.topbar{
+  /* Keep topbar height predictable for sticky column headers */
+  --topbar-h: 72px;
+
+  padding: var(--s4) calc(var(--s4) + var(--s2));
+  background: color-mix(in srgb, var(--surface) 80%, var(--bg));
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar__title{margin:0;font-size:var(--fs-4);line-height:var(--lh-tight)}
+.topbar__sub{margin-top:var(--s1);color:var(--text-2);font-size:var(--fs-1)}
+
+.topbar__actions{margin-top:var(--s2);display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
+
+.board{display:flex;gap:var(--s3);overflow:auto;padding:var(--s4)}
+.column{
+  min-width: 340px;
+  max-width: 340px;
+}
+.column__shell{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2)}
+.column__header{
+  font-size: var(--fs-2);
+  margin: 0;
+  padding: var(--s3) var(--s3);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: var(--topbar-h, 58px); /* aligns under topbar */
+  background: var(--surface);
+  z-index: 5;
+}
+
+/* Cards */
+.item{
+  margin: var(--s3);
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r1);
+  padding: var(--s3);
+}
+.item__title{font-weight:700;font-size:var(--fs-2);margin:0 0 var(--s2) 0;line-height:var(--lh-tight)}
+.item__meta{font-size:var(--fs-1);color:var(--text-2);line-height:1.35}
+.item__small{font-size:var(--fs-1);color:var(--text-3);margin-top:var(--s2)}
+
+/* Badges */
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--s2)}
+.badge{display:inline-flex;align-items:center;gap:6px}
+
+.badge--tier{background:rgba(155,192,255,.12);color:var(--text);border-color:rgba(155,192,255,.18)}
+
+.badge--prio-high{background:var(--danger-bg);color:var(--danger-fg)}
+.badge--prio-med{background:var(--warning-bg);color:var(--warning-fg)}
+.badge--prio-low{background:var(--info-bg);color:var(--info-fg)}
+
+/* Links inside cards */
+.item a{color:var(--link)}
+.item a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px}
+
+/* Buttons (dashboard actions) */
+.btn{appearance:none;border:1px solid var(--border-2);background:var(--surface-2);color:var(--text);padding:8px 12px;border-radius:10px;font:inherit;line-height:1.1;cursor:pointer}
+.btn:hover{border-color:color-mix(in srgb, var(--accent) 40%, var(--border-2));box-shadow:var(--shadow-1)}
+.btn:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+.btn--primary{background:color-mix(in srgb, var(--accent) 22%, var(--surface-2));border-color:color-mix(in srgb, var(--accent) 45%, var(--border-2))}
+.btn--danger{background:color-mix(in srgb, var(--danger-bg) 70%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 35%, var(--border-2));color:var(--danger-fg)}
+
+/* Density and readability guardrails */
+@media (max-width: 960px){
+  .column{min-width: 300px;max-width: 300px}
+}

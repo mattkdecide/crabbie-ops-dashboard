@@ -1,15 +1,127 @@
-<html><head><meta charset='utf-8'><title>Employment Pod Agent Queue</title><style>
-body{font-family:Inter,Arial,sans-serif;background:#0b1020;color:#eaf0ff;margin:0}
-.top{padding:16px 20px;background:#111934;position:sticky;top:0;z-index:10}
-h1{margin:0;font-size:20px}
-.sub{margin-top:6px;color:#a9b8e6;font-size:12px}
-.wrap{display:flex;gap:12px;overflow:auto;padding:14px}
-.col{min-width:340px;max-width:340px;background:#121a36;border:1px solid #243059;border-radius:12px}
-.col h2{font-size:14px;margin:0;padding:10px 12px;border-bottom:1px solid #243059;position:sticky;top:58px;background:#121a36}
-.card{margin:10px;background:#0f1730;border:1px solid #2a3a70;border-radius:10px;padding:10px}
-.t{font-weight:700;font-size:13px;margin-bottom:6px}
-.m{font-size:12px;color:#b7c6ef;line-height:1.35}
-.badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;background:#23356a;color:#cfe0ff;margin-right:6px;margin-top:6px}
-.small{font-size:11px;color:#9eb0de;margin-top:6px}
-.pH{background:#6a2333}.pM{background:#6a5a23}.pL{background:#23526a}
-</style></head><body><div class='top'><h1>Crabbie Employment Pod · Agent Queue</h1><div class='sub'>Agents: Forge, Ledger, Polish, Tide, Vantage</div></div><div class='wrap'><div class='col'><h2>Backlog (9)</h2><div class='card'><div class='t'>T-0001 · Create role brief for u&amp;u Chief Experience Officer</div><div class='m'>Agent: Vantage · Role: R-2026-0006</div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: Awaiting brief</div></div><div class='card'><div class='t'>T-0002 · Draft tailored CV for u&amp;u Chief Experience Officer</div><div class='m'>Agent: Forge · Role: R-2026-0006</div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: Starts after role brief</div></div><div class='card'><div class='t'>T-0003 · Apply formatting QA and final PDF for u&amp;u role</div><div class='m'>Agent: Polish · Role: R-2026-0006</div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: Use latest format rules</div></div><div class='card'><div class='t'>T-0004 · Create role brief for Metro South Health Senior Director role</div><div class='m'>Agent: Vantage · Role: R-2026-0007</div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: Prioritise Brisbane relevance</div></div><div class='card'><div class='t'>T-0005 · Draft tailored CV for Metro South Health role</div><div class='m'>Agent: Forge · Role: R-2026-0007</div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: Starts after role brief</div></div><div class='card'><div class='t'>T-0006 · Apply formatting QA and final PDF for Metro role</div><div class='m'>Agent: Polish · Role: R-2026-0007</div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: 2-page layout rules</div></div><div class='card'><div class='t'>T-0007 · Mark Sharp &amp; Carter role as Applied once confirmed</div><div class='m'>Agent: Ledger · Role: R-2026-0003</div><span class='badge pM'>Priority Medium</span><span class='badge'>Due 2026-02-28</span><div class='small'>Notes: Waiting user confirmation</div></div><div class='card'><div class='t'>T-0008 · Prepare outreach draft if contact is available for Datacom</div><div class='m'>Agent: Tide · Role: R-2026-0004</div><span class='badge pM'>Priority Medium</span><span class='badge'>Due 2026-02-28</span><div class='small'>Notes: Check ad contact details</div></div><div class='card'><div class='t'>T-0009 · Check BOQ application completion status and log</div><div class='m'>Agent: Ledger · Role: R-2026-0005</div><span class='badge pM'>Priority Medium</span><span class='badge'>Due 2026-02-28</span><div class='small'>Notes: Track status change</div></div></div><div class='col'><h2>In Progress (1)</h2><div class='card'><div class='t'>T-0010 · Generate daily manager brief from pipeline + tasks</div><div class='m'>Agent: Tide · Role: </div><span class='badge pH'>Priority High</span><span class='badge'>Due 2026-02-27</span><div class='small'>Notes: Daily cadence</div></div></div><div class='col'><h2>Review (0)</h2></div><div class='col'><h2>Blocked (0)</h2></div><div class='col'><h2>Done (0)</h2></div></div></body></html>
+<html><head><meta charset='utf-8'><title>Employment Pod Agent Queue</title>
+<link rel='stylesheet' href='ui/STYLE_TOKENS_V1.css'>
+<link rel='stylesheet' href='ui/COMPONENTS_V1.css'>
+</head><body>
+<div class='topbar'>
+  <h1 class='topbar__title'>Crabbie Employment Pod · Agent Queue</h1>
+  <div class='topbar__sub'>Agents: Forge, Ledger, Polish, Tide, Vantage</div>
+</div>
+<div class='board'>
+  <div class='column'>
+    <div class='column__shell'>
+      <h2 class='column__header'>Backlog (9)</h2>
+
+      <div class='item'>
+        <div class='item__title'>T-0001 · Create role brief for u&amp;u Chief Experience Officer</div>
+        <div class='item__meta'>Agent: Vantage · Role: R-2026-0006</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: Awaiting brief</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0002 · Draft tailored CV for u&amp;u Chief Experience Officer</div>
+        <div class='item__meta'>Agent: Forge · Role: R-2026-0006</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: Starts after role brief</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0003 · Apply formatting QA and final PDF for u&amp;u role</div>
+        <div class='item__meta'>Agent: Polish · Role: R-2026-0006</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: Use latest format rules</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0004 · Create role brief for Metro South Health Senior Director role</div>
+        <div class='item__meta'>Agent: Vantage · Role: R-2026-0007</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: Prioritise Brisbane relevance</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0005 · Draft tailored CV for Metro South Health role</div>
+        <div class='item__meta'>Agent: Forge · Role: R-2026-0007</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: Starts after role brief</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0006 · Apply formatting QA and final PDF for Metro role</div>
+        <div class='item__meta'>Agent: Polish · Role: R-2026-0007</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: 2-page layout rules</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0007 · Mark Sharp &amp; Carter role as Applied once confirmed</div>
+        <div class='item__meta'>Agent: Ledger · Role: R-2026-0003</div>
+        <div class='badges'>
+          <span class='badge badge--prio-med'>Priority Medium</span>
+          <span class='badge'>Due 2026-02-28</span>
+        </div>
+        <div class='item__small'>Notes: Waiting user confirmation</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0008 · Prepare outreach draft if contact is available for Datacom</div>
+        <div class='item__meta'>Agent: Tide · Role: R-2026-0004</div>
+        <div class='badges'>
+          <span class='badge badge--prio-med'>Priority Medium</span>
+          <span class='badge'>Due 2026-02-28</span>
+        </div>
+        <div class='item__small'>Notes: Check ad contact details</div>
+      </div>
+
+      <div class='item'>
+        <div class='item__title'>T-0009 · Check BOQ application completion status and log</div>
+        <div class='item__meta'>Agent: Ledger · Role: R-2026-0005</div>
+        <div class='badges'>
+          <span class='badge badge--prio-med'>Priority Medium</span>
+          <span class='badge'>Due 2026-02-28</span>
+        </div>
+        <div class='item__small'>Notes: Track status change</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class='column'>
+    <div class='column__shell'>
+      <h2 class='column__header'>In Progress (1)</h2>
+      <div class='item'>
+        <div class='item__title'>T-0010 · Generate daily manager brief from pipeline + tasks</div>
+        <div class='item__meta'>Agent: Tide · Role:</div>
+        <div class='badges'>
+          <span class='badge badge--prio-high'>Priority High</span>
+          <span class='badge'>Due 2026-02-27</span>
+        </div>
+        <div class='item__small'>Notes: Daily cadence</div>
+      </div>
+    </div>
+  </div>
+
+  <div class='column'><div class='column__shell'><h2 class='column__header'>Review (0)</h2></div></div>
+  <div class='column'><div class='column__shell'><h2 class='column__header'>Blocked (0)</h2></div></div>
+  <div class='column'><div class='column__shell'><h2 class='column__header'>Done (0)</h2></div></div>
+
+</div>
+</body></html>

@@ -1,0 +1,83 @@
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>CV Preview · Crabbie</title>
+  <link rel='stylesheet' href='ui/STYLE_TOKENS_V1.css'>
+  <link rel='stylesheet' href='ui/COMPONENTS_V1.css'>
+  <link rel='stylesheet' href='ui/CV_PREVIEW_V1.css'>
+</head>
+<body>
+  <div class='topbar'>
+    <h1 class='topbar__title'>CV Preview</h1>
+    <div class='topbar__sub'>Paper-in-dark presentation for on-screen review before PDF export.</div>
+    <div class='topbar__actions'>
+      <button class='btn btn--primary' type='button' onclick='window.print()'>Print / Save PDF</button>
+      <a class='btn' href='kanban.html' style='display:inline-flex;align-items:center;gap:8px;text-decoration:none'>Back to Kanban</a>
+    </div>
+  </div>
+
+  <div class='cv-shell'>
+    <article class='cv-paper' aria-label='Curriculum vitae preview'>
+      <header>
+        <h2 class='cv-h1'>Matt Kain</h2>
+        <p class='cv-lede'>Executive leader across growth, transformation, and digital strategy. Brisbane, AU · <a href='mailto:matt@example.com'>matt@example.com</a> · <a href='https://linkedin.com/in/...' target='_blank' rel='noopener'>LinkedIn</a></p>
+      </header>
+
+      <div class='cv-grid'>
+        <section>
+          <div class='cv-section'>
+            <h3 class='cv-section__title'>Summary</h3>
+            <p style='margin:0;font-size:13.5px;line-height:1.5'>Replace this stub with the generated role-targeted summary. Keep to 3–4 lines for scanability.</p>
+          </div>
+
+          <div class='cv-section'>
+            <h3 class='cv-section__title'>Experience</h3>
+
+            <div class='cv-role'>
+              <p class='cv-role__title'>Role Title · Company</p>
+              <p class='cv-role__meta'>2022–2025 · Brisbane · Function/Domain</p>
+              <ul class='cv-role__bullets'>
+                <li>Outcome-first bullet with metrics (revenue, margin, CAC, pipeline, cycle time).</li>
+                <li>Second bullet: transformation programme scope, operating model, or platform work.</li>
+                <li>Third bullet: stakeholder leadership, governance, or board-level comms.</li>
+              </ul>
+            </div>
+
+            <div class='cv-role'>
+              <p class='cv-role__title'>Role Title · Company</p>
+              <p class='cv-role__meta'>2019–2022 · Location</p>
+              <ul class='cv-role__bullets'>
+                <li>Keep bullets tight: 1–2 lines each, no hanging orphans where possible.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <aside>
+          <div class='cv-section'>
+            <h3 class='cv-section__title'>Core strengths</h3>
+            <div>
+              <span class='cv-pill'>Growth strategy</span>
+              <span class='cv-pill'>Transformation</span>
+              <span class='cv-pill'>MarTech/AdTech</span>
+              <span class='cv-pill'>Operating models</span>
+              <span class='cv-pill'>Executive comms</span>
+            </div>
+          </div>
+
+          <div class='cv-section'>
+            <h3 class='cv-section__title'>Education</h3>
+            <p style='margin:0;color:var(--paper-muted);font-size:12.5px;line-height:1.45'>Degree, Institution (Year)</p>
+          </div>
+
+          <div class='cv-section'>
+            <h3 class='cv-section__title'>Links</h3>
+            <p style='margin:0;font-size:12.5px;line-height:1.6'>Portfolio: <a href='https://example.com' target='_blank' rel='noopener'>example.com</a></p>
+          </div>
+        </aside>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
