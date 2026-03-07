@@ -1,0 +1,30 @@
+task_id,role_id,title,agent,priority,status,due_date,created_at,updated_at,notes
+T-0001,R-2026-0006,Create role brief for u&u Chief Experience Officer,Vantage,High,Blocked,2026-02-27,2026-02-27,2026-03-01,Awaiting brief | On hold per user instruction
+T-0002,R-2026-0006,Draft tailored CV for u&u Chief Experience Officer,Forge,High,Blocked,2026-02-27,2026-02-27,2026-03-01,Starts after role brief | On hold per user instruction
+T-0003,R-2026-0006,Apply formatting QA and final PDF for u&u role,Polish,High,Blocked,2026-02-27,2026-02-27,2026-03-01,Use latest format rules | On hold per user instruction
+T-0004,R-2026-0007,Create role brief for Metro South Health Senior Director role,Vantage,High,Blocked,2026-02-27,2026-02-27,2026-03-01,Prioritise Brisbane relevance | On hold per user instruction
+T-0005,R-2026-0007,Draft tailored CV for Metro South Health role,Forge,High,Blocked,2026-02-27,2026-02-27,2026-03-01,Starts after role brief | On hold per user instruction
+T-0006,R-2026-0007,Apply formatting QA and final PDF for Metro role,Polish,High,Blocked,2026-02-27,2026-02-27,2026-03-01,2-page layout rules | On hold per user instruction
+T-0007,R-2026-0003,Mark Sharp & Carter role as Applied once confirmed,Ledger,Medium,Done,2026-02-28,2026-02-27,2026-03-01,Waiting user confirmation | Closed by user instruction: applied + monitor
+T-0008,R-2026-0004,Prepare outreach draft if contact is available for Datacom,Tide,Medium,Done,2026-02-28,2026-02-27,2026-03-01,Check ad contact details | Closed by user instruction: applied + monitor
+T-0009,R-2026-0005,Check BOQ application completion status and log,Ledger,Medium,Done,2026-02-28,2026-02-27,2026-03-01,Track status change | Closed by user instruction: applied + monitor
+T-0010,,Generate daily manager brief from pipeline + tasks,Tide,High,In Progress,2026-02-27,2026-02-27,2026-02-27,Daily cadence
+T-0101,,Define OS information architecture + nav model,Northstar,High,Backlog,2026-03-01,2026-02-28,2026-02-28,Studio sprint 1
+T-0102,,Create UI token system and component baseline,Velvet,High,Backlog,2026-03-01,2026-02-28,2026-02-28,Align to BMHQ-inspired layout
+T-0103,,Refactor dashboard shell with sidebar + top search,Rivet,High,Backlog,2026-03-01,2026-02-28,2026-02-28,Foundation for multi-page app
+T-0104,,Write microcopy pack for dashboard actions + states,Quill,Medium,Backlog,2026-03-01,2026-02-28,2026-02-28,"Button labels, hints, empty states"
+T-0105,,Create release QA checklist + smoke tests,Sentinel,High,Backlog,2026-03-01,2026-02-28,2026-02-28,Pre-publish gate
+T-0106,,Implement JSON data layer + auto-refresh wiring,Pulse,High,Backlog,2026-03-02,2026-02-28,2026-02-28,Move away from static-only updates
+T-0111,,Integrate iCloud inbox monitoring into priority alert pipeline,crm,High,Backlog,2026-03-01,2026-02-28,2026-02-28,Needed for account invites and tool onboarding emails
+T-0112,,"Create Crabbie account registry schema (tool, login email, status, owner, notes)",ops,High,Backlog,2026-03-01,2026-02-28,2026-02-28,Track autonomous tool accounts safely
+T-0113,,Design secure credential handling flow for Crabbie-managed accounts,ops,High,Backlog,2026-03-01,2026-02-28,2026-02-28,"No plaintext in docs, use secrets + approvals"
+T-0114,,Wire onboarding workflow: invite email detection -> account creation checklist,jobs,Medium,Backlog,2026-03-02,2026-02-28,2026-02-28,Route to delegation console and logs
+T-0115,R-2026-0010,Validate employer identity + listing source for Jobgether role,Atlas,High,Backlog,2026-03-01,2026-03-01,2026-03-01,Check Airbnb mismatch and direct company context
+T-0116,R-2026-0010,Create role brief and fit screen for Head of Marketing remote role,Vantage,High,Backlog,2026-03-01,2026-03-01,2026-03-01,Assess B2B SaaS/startup demand-gen fit
+T-0117,R-2026-0010,Draft tailored CV for Head of Marketing remote role,Forge,High,Backlog,2026-03-01,2026-03-01,2026-03-01,Proceed after identity check + go/no-go
+T-0201,,Create agent profile docs and sprint plans,Tide,High,Done,2026-03-07,2026-03-07,2026-03-07,Published under ops/agents
+T-0202,,Produce UX journey map artefacts v1,Vantage,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/ux/JOURNEY_MAPS_V1.md
+T-0203,,Publish design roadmap incl typography and palette decisions,Polish,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/design/DESIGN_ROADMAP_V1.md
+T-0204,,Implement canonical CRM status mapping spec,Ledger,High,In Progress,2026-03-08,2026-03-07,2026-03-07,Align CSV/DB/Kanban taxonomy
+T-0205,,Wire CV pipeline artefact manifest output,Forge,High,In Progress,2026-03-08,2026-03-07,2026-03-07,role_id keyed outputs + qa.json
+T-0206,,Expand live ops site navigation and artefact links,Rivet,Medium,In Progress,2026-03-08,2026-03-07,2026-03-07,Add agent/docs/design/ux views
