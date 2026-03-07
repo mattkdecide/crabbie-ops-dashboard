@@ -28,3 +28,4 @@ T-0203,,Publish design roadmap incl typography and palette decisions,Polish,High
 T-0204,,Implement canonical CRM status mapping spec,Ledger,High,In Progress,2026-03-08,2026-03-07,2026-03-07,Align CSV/DB/Kanban taxonomy
 T-0205,,Wire CV pipeline artefact manifest output,Forge,High,In Progress,2026-03-08,2026-03-07,2026-03-07,role_id keyed outputs + qa.json
 T-0206,,Expand live ops site navigation and artefact links,Rivet,Medium,In Progress,2026-03-08,2026-03-07,2026-03-07,Add agent/docs/design/ux views
+T-0207,,Spec persistent masthead navigation for design/build,Vantage,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/ux/MASTHEAD_NAV_SPEC_V1.md
