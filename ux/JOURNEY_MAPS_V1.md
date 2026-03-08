@@ -1,7 +1,7 @@
 # UX Journey Maps v1
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (20:25 UTC)
+Last updated: 2026-03-08 (22:24 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -98,6 +98,10 @@ Journey:
 1. Open `ops/status.html`.
 2. See “What changed” module (10 most recent items) with `View all →` link.
 3. Open `ops/activity.html` for the full list (50 items v1), filterable.
+4. Click an item to jump to its working surface with focus:
+   - Task → `ops/agent-queue.html?focus=<task_id>` (scroll + highlight)
+   - Job → `ops/kanban.html?focus=<role_id>` (scroll + highlight)
+   (Build handoff: `ops/ux/HANDOFF_NOTES_V1.md` §1.9–1.10)
 
 Source selection (v1):
 - If `ops/events/` exists: render first N events from JSONL.

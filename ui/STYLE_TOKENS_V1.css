@@ -63,6 +63,7 @@
   --r-pill: 999px;
 
   /* Focus */
+  --focus-r: 10px; /* default focus ring corner radius */
   --focus: 0 0 0 2px rgba(42,100,255,.55);
   --focus-strong: 0 0 0 3px rgba(42,100,255,.75);
 
@@ -103,7 +104,7 @@ a:hover{
 a:focus-visible{
   outline:none;
   box-shadow:var(--focus-strong);
-  border-radius:8px;
+  border-radius:var(--focus-r);
   text-decoration-thickness:2px;
   text-decoration-color:var(--link);
 }
@@ -112,7 +113,7 @@ a:focus-visible{
 ::selection{background:color-mix(in srgb, var(--accent) 35%, transparent);color:var(--text)}
 
 /* Global keyboard focus guardrail (components may override) */
-button:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:10px}
+button:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:var(--focus-r)}
 
 /* Prevent anchored content hiding behind sticky headers */
 :target{scroll-margin-top: calc(var(--sticky-offset, 88px) + var(--s3))}
@@ -125,7 +126,7 @@ input,select,textarea{
 input:focus-visible,select:focus-visible,textarea:focus-visible{
   outline:none;
   box-shadow:var(--focus-strong);
-  border-radius:10px;
+  border-radius:var(--focus-r);
 }
 
 code{

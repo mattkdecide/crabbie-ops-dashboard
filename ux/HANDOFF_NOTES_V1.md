@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (20:25 UTC)
+Last updated: 2026-03-08 (22:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -171,6 +171,36 @@ Deliverables (v1):
 Markup expectation (minimal):
 - Add `data-task-id="T-XXXX"` on task rows in `agent-queue.html`.
 - Add `data-role-id="R-YYYY"` on job rows/cards in `kanban.html`.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5 usability extension)
+
+### 1.10 Build handoff (concrete): Add focus hooks to live renderers (Kanban + Agent Queue)
+Why: Sections 1.9 + Journey 6 require a stable DOM hook so `?focus=` can scroll/highlight the right item even though cards are rendered client-side.
+
+Deliverables (v1):
+1) `ops/ui/kanban_live_v1.js`
+   - In `renderCard(role)`, add the role id attribute when present:
+     - `<article class="item" ... data-role-id="R-2026-0010">`
+   - Source field: `role.role_id`.
+
+2) `ops/ui/agent_queue_live_v1.js`
+   - In `renderCard(t, ...)`, add the task id attribute when present:
+     - `<article class="item" ... data-task-id="T-0303">`
+   - Source field: `t.task_id`.
+
+3) Add a minimal focus/highlight helper (inline script is fine) on:
+   - `ops/kanban.html` (look for `[data-role-id="..."]`)
+   - `ops/agent-queue.html` (look for `[data-task-id="..."]`)
+
+Exact behaviour:
+- Read `focus` query param.
+- If present, poll for the element for up to 2 seconds (because live JS rendering is async).
+- On match: `scrollIntoView({ block: 'center' })` and apply a `.is-focus` class for ~3 seconds.
+
+CSS hook (v1):
+- Add to `ops/ui/COMPONENTS_V1.css`:
+  - `.item.is-focus { outline: 3px solid var(--focus-r); outline-offset: 2px; }`
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5 usability extension)
