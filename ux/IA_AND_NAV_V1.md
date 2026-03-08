@@ -13,10 +13,18 @@ Current build files in scope:
 - `ops/agent-queue.html`
 - `ops/cv-preview.html`
 
+Planned build files (not yet present):
+- `ops/activity.html`
+
 UX source specs (this folder):
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
 - `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
 - `ops/ux/JOURNEY_MAPS_V1.md`
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md`
+
+Build note (current reality):
+- The HTML pages currently use a simpler `.topbar` header with cross-links.
+- The target end-state is the persistent masthead described in `MASTHEAD_NAV_SPEC_V1.md`.
 
 ---
 
@@ -67,7 +75,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 - Agents tab → `agent-queue.html`
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
 - Design tab → `design/DESIGN_ROADMAP_V1.md`
-- Roadmap tab → `EXECUTION_PLAN_2026-03-03.md` (or `status.html` as overview)
+- Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)
 - Activity tab → `activity.html` (to be created)
 
 ### Active-tab logic (static)
@@ -80,7 +88,7 @@ Rule table:
 - `*/agent-queue.html` → active=Agents
 - `*/ux/*` → active=UX
 - `*/design/*` OR `*/ui/*` → active=Design
-- `*/EXECUTION_PLAN_*` OR `*/project-gantt*` OR `*/UPDATE_CAPTURE*` OR `*/status.html` → active=Roadmap (or Overview)
+- `*/EXECUTION_PLAN_*` OR `*/project-gantt*` OR `*/UPDATE_CAPTURE*` OR `*/status.html` → active=Roadmap
 - `*/activity.html` OR `*/events/*` → active=Activity
 
 ---
@@ -90,7 +98,7 @@ Rule table:
 Job-to-be-done: open one page and jump to the right operational surface.
 
 Should contain:
-- persistent masthead
+- persistent masthead (target) or topbar cross-links (current)
 - a compact “What changed” module (last 24h) using Timeline component (or placeholder)
 - links to: Kanban, Agent Queue, CV Preview, key specs
 
@@ -116,10 +124,15 @@ Must show per task row:
 ### `ops/cv-preview.html` (CV build target)
 Job-to-be-done: evaluate layout and export readiness.
 
+Current behaviour (implemented):
+- User can load a draft markdown file via an input field.
+- Optional query param supported:
+  - `cv-preview.html?file=outputs/cv/<role_id>/draft.md`
+
 Should show:
-- active role context (role_id)
+- active role context (role_id) (future)
 - most recent build artefacts + manifest (when available)
-- QA checklist status
+- QA checklist status (when available)
 
 ---
 
@@ -131,6 +144,7 @@ Should show:
 ---
 
 ## 5) Open decisions
-1. Should `status.html` be considered “Roadmap/Overview”, or should there be an explicit Overview tab?
+1. Should `status.html` be considered “Roadmap”, or should there be an explicit Overview tab?
 2. Where should global search land first: Pipeline cards, tasks, or artefact filenames?
 3. Does Activity page render client-side from `ops/events/*.jsonl`, or do we precompute a small index (e.g., `ops/events/index.json`)?
+4. Should `cv-preview.html` restrict allowed draft paths to `outputs/cv/**` only (security hardening for hosted environments)?

@@ -37,6 +37,10 @@ UX requirements (implementation-ready):
 - Explicit quality gate: QA checklist must be acknowledged before final PDF is considered “ready”.
 - One-click access to all artefacts for a role: draft, PDF, manifest, QA, and source links.
 
+Current build note:
+- `ops/cv-preview.html` can load a generated draft markdown file directly.
+- It supports query param `?file=outputs/cv/<role_id>/draft.md`.
+
 ---
 
 ## 3) Application Tracking Journey (job ↔ application)
@@ -68,6 +72,30 @@ Goal: user always knows (a) where they are, (b) what changed, (c) the next actio
 
 ---
 
+## 6) Activity Feed Journey (events-first with derived fallback)
+**Primary artefacts:**
+- Future canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
+- Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
+- Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full, to create)
+
+User story:
+- As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.
+
+Journey:
+1. Open `ops/status.html`.
+2. See “What changed” module.
+3. If `ops/events/` exists, render first N events.
+4. If `ops/events/` is missing, render **derived activity**:
+   - job status changes inferred from `job-pipeline.csv` `status` + `last_action` + `updated_at` (if present)
+   - task status changes inferred from `agent-tasks.csv` `status` + `updated_at`
+5. Click through to `ops/activity.html` for the full list.
+
+Implementation notes (v1, build-ready):
+- Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
+- Derived rules must be explicitly documented in `ops/ux/HANDOFF_NOTES_V1.md` to avoid drift.
+
+---
+
 ## Next UX Deliverables (tracked)
 - **IA + navigation map (static v1)**: `ops/ux/IA_AND_NAV_V1.md`.
 - **Acceptance criteria pack (build-ready)**: `ops/ux/ACCEPTANCE_CRITERIA_V1.md`.
@@ -80,5 +108,4 @@ Goal: user always knows (a) where they are, (b) what changed, (c) the next actio
 - `ops/status.html` (overview/launchpad, should link to UX artefacts + host compact Activity module)
 - `ops/kanban.html` (pipeline decisions, must surface next action per role)
 - `ops/agent-queue.html` (task workload + blockers)
-- `ops/cv-preview.html` (CV layout/QA/run status)
-
+- `ops/cv-preview.html` (CV layout/QA/run status; supports `?file=` draft loading)

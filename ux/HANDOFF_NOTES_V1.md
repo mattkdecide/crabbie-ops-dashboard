@@ -40,13 +40,67 @@ Minimal v1 is acceptable:
 - Support empty/missing states.
 - Hard-code sample data until `ops/events/` exists.
 
-### 1.3 Add UX artefact links to Status
-Status currently links Journey Maps and Design Roadmap.
+### 1.3 Add UX artefact links to Status (small but high-leverage)
+Target file: `ops/status.html`
+
+Current reality:
+- Status links `ux/JOURNEY_MAPS_V1.md` but does **not** yet link the rest of the UX pack.
+
 Add links for:
 - `ux/MASTHEAD_NAV_SPEC_V1.md`
 - `ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
 - `ux/IA_AND_NAV_V1.md`
 - `ux/ACCEPTANCE_CRITERIA_V1.md`
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-6)
+
+### 1.4 Build handoff (concrete): Derived Activity module + Activity page stub
+Source specs:
+- `ops/ux/JOURNEY_MAPS_V1.md` (Journey 6)
+- `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
+- `ops/ux/IA_AND_NAV_V1.md` (Activity tab target)
+
+Deliverables (static v1):
+1) **Create `ops/activity.html`**
+   - Must include masthead (AC-1) and a page title `Activity`.
+   - Must render a `<ol class="timeline">` list.
+   - Data source order:
+     1. if `ops/events/events-YYYY-MM.jsonl` exists → render first 50 lines
+     2. else → render derived activity from CSVs (below)
+
+2) **Add compact module to `ops/status.html`**
+   - Heading: `What changed` + link `View all →` to `activity.html`.
+   - Render first 10 items using the same Timeline markup.
+   - Empty state copy (exact): `No recent activity.`
+
+Derived activity rules (fallback):
+- From `ops/agent-tasks.csv`: create an item per row where `updated_at` is within last 7 days.
+  - `entity_type=task`, `entity_id=task_id`
+  - summary: `${status}: ${title}` (include `role_id` prefix if present)
+  - href: `agent-queue.html` (v1), later deep-link by id
+- From `ops/job-pipeline.csv`: create an item per row where `updated_at` (or `last_action` date if that is all we have) is within last 7 days.
+  - `entity_type=job`, `entity_id=role_id`
+  - summary: `${status}: ${title}` + `Next: ${next_action}` when present
+  - href: `kanban.html` (v1)
+
+Acceptance check:
+- Satisfies `ops/ux/ACCEPTANCE_CRITERIA_V1.md` AC-5 (event feed OR derived activity fallback).
+
+### 1.5 CV Preview UX tightening (quick wins)
+Target file: `ops/cv-preview.html`
+
+Current reality:
+- Draft loader exists (input + fetch + lightweight markdown rendering).
+- Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
+- Default path currently points to a role folder that may not exist.
+
+Build asks:
+- Set default to blank (or to a known-good demo file that exists in repo).
+- If hosted publicly, consider restricting load paths to `outputs/cv/**` only.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-7, AC-8)
 
 ---
 
@@ -84,3 +138,5 @@ Use the acceptance criteria checklist:
   - Mitigation: keep markup identical, consider a small build step later.
 - **Event feed risk:** JSONL parsing in browser may be slow for large files.
   - Mitigation: only read first N lines in v1; add an index/precompute step later.
+- **Draft loader risk:** unrestricted `fetch()` paths can leak files in some hosting contexts.
+  - Mitigation: restrict to `outputs/cv/**` and enforce same-origin only.

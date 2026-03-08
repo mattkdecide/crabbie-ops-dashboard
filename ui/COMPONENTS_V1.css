@@ -8,6 +8,14 @@
    - Adds safe-area padding support for iOS notch devices
 */
 
+:root{
+  /* Sticky header offset shared across pages.
+     Overridden in media queries below.
+  */
+  --topbar-h: 88px;
+  --sticky-offset: calc(var(--topbar-h) + env(safe-area-inset-top));
+}
+
 /* Utilities */
 .sr-only{
   position:absolute !important;
@@ -41,9 +49,6 @@
 
 /* Layout */
 .topbar{
-  /* Sticky column headers need a conservative offset. */
-  --topbar-h: 88px;
-
   padding: calc(var(--s4) + env(safe-area-inset-top)) calc(var(--s4) + var(--s2));
   padding-bottom: var(--s4);
   background: color-mix(in srgb, var(--surface) 80%, var(--bg));
@@ -58,6 +63,10 @@
 .topbar__actions{margin-top:var(--s2);display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
 
 .board{display:flex;gap:var(--s3);overflow:auto;padding:var(--s4)}
+
+/* Status/landing pages: allow columns to wrap instead of forcing horizontal scroll. */
+.board--wrap{flex-wrap:wrap;overflow:visible;align-items:flex-start}
+.board--wrap .column{flex:1 1 420px;min-width:320px;max-width:none}
 .column{
   min-width: 340px;
   max-width: 340px;
@@ -69,7 +78,7 @@
   padding: var(--s3) var(--s3);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: calc(var(--topbar-h, 88px) + env(safe-area-inset-top));
+  top: var(--sticky-offset);
   background: var(--surface);
   z-index: 5;
 }
@@ -116,6 +125,7 @@
   align-items:center;
   justify-content:center;
   gap:8px;
+  min-height: var(--tap-min);
   border:1px solid var(--border-2);
   background:var(--surface-2);
   color:var(--text);
@@ -134,9 +144,25 @@
 .btn--primary{background:color-mix(in srgb, var(--accent) 22%, var(--surface-2));border-color:color-mix(in srgb, var(--accent) 45%, var(--border-2))}
 .btn--danger{background:color-mix(in srgb, var(--danger-bg) 70%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 35%, var(--border-2));color:var(--danger-fg)}
 
+/* Form fields */
+.field{display:grid;gap:6px}
+.field__label{font-size:var(--fs-1);color:var(--text-2)}
+.input{
+  width:100%;
+  min-height: var(--tap-min);
+  background:var(--surface-2);
+  border:1px solid var(--border-2);
+  color:var(--text);
+  border-radius:10px;
+  padding:9px 10px;
+}
+.input::placeholder{color:color-mix(in srgb, var(--text-3) 80%, transparent)}
+.input:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+
 /* Density and readability guardrails */
 @media (max-width: 960px){
-  .topbar{--topbar-h: 104px;padding:calc(var(--s3) + env(safe-area-inset-top)) var(--s3);padding-bottom:var(--s3)}
+  :root{--topbar-h: 104px}
+  .topbar{padding:calc(var(--s3) + env(safe-area-inset-top)) var(--s3);padding-bottom:var(--s3)}
   .topbar__title{font-size:18px}
   .topbar__actions{gap:8px}
   .btn{padding:8px 10px}
@@ -145,7 +171,7 @@
 }
 
 @media (max-width: 640px){
-  .topbar{--topbar-h: 132px}
+  :root{--topbar-h: 132px}
   .topbar__sub{font-size:11px}
   .topbar__actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .btn{width:100%}

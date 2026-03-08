@@ -8,13 +8,14 @@
   <link rel='stylesheet' href='ui/COMPONENTS_V1.css'>
   <link rel='stylesheet' href='ui/CV_PREVIEW_V1.css'>
   <style>
-    .cv-controls{max-width:var(--content-max);margin:12px auto 0;padding:0 var(--s4);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    .cv-controls input{background:var(--surface-2);border:1px solid var(--border-2);color:var(--text);border-radius:10px;padding:9px 10px;min-width:300px;max-width:100%}
-    .cv-note{font-size:12px;color:var(--text-2)}
+    .cv-controls{max-width:var(--content-max);margin:12px auto 0;padding:0 var(--s4);display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+    .cv-controls .field{min-width: min(520px, 100%);flex: 1 1 420px}
+    .cv-note{font-size:var(--fs-1);color:var(--text-2)}
+    .cv-tip{max-width: 60ch}
     #renderedMd p{margin:0 0 10px 0;line-height:1.5}
     #renderedMd h1,#renderedMd h2,#renderedMd h3{margin:14px 0 8px 0;line-height:1.2}
     #renderedMd ul{margin:8px 0 12px 20px}
-    @media (max-width:640px){.cv-controls{padding:0 var(--s3)} .cv-controls input{min-width:100%}}
+    @media (max-width:640px){.cv-controls{padding:0 var(--s3)} }
   </style>
 </head>
 <body>
@@ -31,10 +32,12 @@
   </div>
 
   <div class='cv-controls'>
-    <label class='cv-note' for='mdPath'>Draft file path</label>
-    <input id='mdPath' value='outputs/cv/R-2026-0017/draft.md' />
+    <div class='field'>
+      <label class='field__label' for='mdPath'>Draft file path</label>
+      <input class='input' id='mdPath' type='text' value='outputs/cv/R-2026-0017/draft.md' aria-describedby='mdTip' />
+    </div>
     <button class='btn' id='loadBtn' type='button'>Load Draft</button>
-    <span class='cv-note'>Tip: use query param <code>?file=outputs/cv/&lt;role_id&gt;/draft.md</code></span>
+    <span class='cv-note cv-tip' id='mdTip'>Tip: use query param <code>?file=outputs/cv/&lt;role_id&gt;/draft.md</code></span>
   </div>
 
   <main id='main' class='cv-shell'>

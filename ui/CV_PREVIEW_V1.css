@@ -3,14 +3,14 @@
    Goal: make on-screen preview match PDF-friendly typography without forcing the whole app to light theme.
 */
 
-.cv-shell{max-width:var(--content-max);margin:0 auto;padding:var(--s6) var(--s4)}
+.cv-shell{max-width:var(--content-max);margin:0 auto;padding:clamp(18px, 3vw, var(--s6)) clamp(12px, 2vw, var(--s4))}
 
 .cv-paper{
   background:var(--paper-bg);
   color:var(--paper-text);
   border:1px solid var(--paper-border);
   border-radius:14px;
-  padding:28px;
+  padding:clamp(16px, 2.2vw, 30px);
   box-shadow: var(--shadow-2);
 }
 
@@ -19,8 +19,8 @@
 /* Use paper-specific focus so the ring doesn’t look too “neon” on white */
 .cv-paper a:focus-visible{outline:none;box-shadow:var(--paper-focus, var(--focus-strong));border-radius:8px}
 
-.cv-h1{font-size:26px;line-height:1.15;margin:0 0 8px 0;letter-spacing:-0.01em}
-.cv-lede{margin:0 0 14px 0;color:var(--paper-muted);font-size:13px;line-height:1.4}
+.cv-h1{font-size:clamp(22px, 1.5vw + 16px, 30px);line-height:1.15;margin:0 0 8px 0;letter-spacing:-0.01em}
+.cv-lede{margin:0 0 14px 0;color:var(--paper-muted);font-size:clamp(13px, 0.25vw + 12px, 14px);line-height:1.4}
 
 .cv-grid{display:grid;grid-template-columns: 1.25fr 0.75fr;gap:18px;align-items:start}
 

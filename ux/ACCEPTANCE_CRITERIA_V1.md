@@ -12,6 +12,9 @@ In scope build files:
 - `ops/agent-queue.html`
 - `ops/cv-preview.html`
 
+Planned build file:
+- `ops/activity.html`
+
 Supporting specs:
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
 - `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
@@ -69,7 +72,7 @@ Notes for static v1:
 - **Next:** line (derived from `job-pipeline.csv` `next_action`)
 - link to source listing
 
-**And** if a CV filename/artefact exists, it must be displayed and clickable.
+**And** if a CV filename/artefact exists, it must be displayed and clickable (or at minimum shown as text until storage is wired).
 
 ---
 
@@ -103,5 +106,33 @@ Notes for static v1:
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
 - `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
 - `ops/ux/IA_AND_NAV_V1.md`
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md`
 
 (They may sit under an “Execution Artefacts” list.)
+
+---
+
+## AC-7: CV Preview can load drafts via input or query param
+**Given** I open `ops/cv-preview.html`
+**Then** I can load draft content into the preview surface by either:
+- entering a path into the “Draft file path” field and clicking “Load Draft”, or
+- opening a URL like `cv-preview.html?file=outputs/cv/<role_id>/draft.md`
+
+**And** while loading, the UI shows a loading state.
+
+**And** if the file cannot be fetched, the UI shows a readable error message that includes the attempted path.
+
+Non-goals (v1):
+- Perfect markdown support.
+
+---
+
+## AC-8: CV Preview default path does not mislead
+**Given** I open `ops/cv-preview.html` with no query param
+**When** the default path is shown
+**Then** it should either:
+- point to an example file that exists in the repo/site, or
+- be blank with helper text.
+
+Rationale:
+- Avoids a “broken by default” first impression.
