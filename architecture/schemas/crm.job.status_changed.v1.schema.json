@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ops.mattkain.com/schemas/crm.job.status_changed/v1",
+  "title": "crm.job.status_changed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["old_status", "new_status"],
+  "properties": {
+    "old_status": {"$ref": "#/definitions/jobStatus"},
+    "new_status": {"$ref": "#/definitions/jobStatus"},
+    "reason": {"type": "string"},
+    "changed_by": {"type": "string", "description": "agent:<name> | human:<name> | system"}
+  },
+  "definitions": {
+    "jobStatus": {
+      "type": "string",
+      "enum": ["identified", "shortlisted", "dropped"]
+    }
+  }
+}

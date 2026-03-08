@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ops.mattkain.com/schemas/pipeline.cv_run.completed/v1",
+  "title": "pipeline.cv_run.completed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["role_id", "run_id", "result"],
+  "properties": {
+    "role_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "result": {"type": "string", "enum": ["success", "partial", "failed"]},
+    "manifest_path": {"type": "string"},
+    "qa_path": {"type": "string"},
+    "artefacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "label"],
+        "properties": {
+          "path": {"type": "string"},
+          "label": {"type": "string"},
+          "content_type": {"type": "string"}
+        }
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}

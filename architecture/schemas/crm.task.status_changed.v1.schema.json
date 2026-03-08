@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ops.mattkain.com/schemas/crm.task.status_changed/v1",
+  "title": "crm.task.status_changed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["old_status", "new_status"],
+  "properties": {
+    "old_status": {"$ref": "#/definitions/taskStatus"},
+    "new_status": {"$ref": "#/definitions/taskStatus"},
+    "reason": {"type": "string"},
+    "changed_by": {"type": "string"}
+  },
+  "definitions": {
+    "taskStatus": {
+      "type": "string",
+      "enum": ["backlog", "in_progress", "blocked", "done"]
+    }
+  }
+}

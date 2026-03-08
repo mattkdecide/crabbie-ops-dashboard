@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ops.mattkain.com/schemas/crm.application.status_changed/v1",
+  "title": "crm.application.status_changed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["old_status", "new_status"],
+  "properties": {
+    "old_status": {"$ref": "#/definitions/applicationStatus"},
+    "new_status": {"$ref": "#/definitions/applicationStatus"},
+    "reason": {"type": "string"},
+    "changed_by": {"type": "string"}
+  },
+  "definitions": {
+    "applicationStatus": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "drafting",
+        "submitted",
+        "interviewing",
+        "offer",
+        "rejected",
+        "withdrawn"
+      ]
+    }
+  }
+}

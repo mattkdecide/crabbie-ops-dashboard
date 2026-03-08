@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "canonical": {
+    "pipeline": {
+      "pinned": {"label": "Pinned", "terminal": false},
+      "new": {"label": "New", "terminal": false},
+      "assessing": {"label": "Assessing", "terminal": false},
+      "cv_ready": {"label": "CV Ready", "terminal": false},
+      "applied": {"label": "Applied", "terminal": false},
+      "interview": {"label": "Interview", "terminal": false},
+      "offer": {"label": "Offer", "terminal": true},
+      "rejected": {"label": "Rejected", "terminal": true},
+      "hold": {"label": "Hold", "terminal": false},
+      "ignored": {"label": "Ignored", "terminal": true}
+    },
+    "pipeline_order": ["pinned","new","assessing","cv_ready","applied","interview","offer","rejected","hold","ignored"],
+    "job": {
+      "identified": {
+        "label": "Identified",
+        "terminal": false,
+        "allowed_next": ["shortlisted", "dropped"]
+      },
+      "shortlisted": {
+        "label": "Shortlisted",
+        "terminal": false,
+        "allowed_next": ["dropped"]
+      },
+      "dropped": {
+        "label": "Dropped",
+        "terminal": true,
+        "allowed_next": []
+      }
+    },
+    "application": {
+      "not_started": {
+        "label": "Not started",
+        "terminal": false,
+        "allowed_next": ["drafting", "withdrawn"]
+      },
+      "drafting": {
+        "label": "Drafting",
+        "terminal": false,
+        "allowed_next": ["submitted", "withdrawn"]
+      },
+      "submitted": {
+        "label": "Submitted",
+        "terminal": false,
+        "allowed_next": ["interviewing", "rejected", "withdrawn"]
+      },
+      "interviewing": {
+        "label": "Interviewing",
+        "terminal": false,
+        "allowed_next": ["offer", "rejected", "withdrawn"]
+      },
+      "offer": {
+        "label": "Offer",
+        "terminal": true,
+        "allowed_next": []
+      },
+      "rejected": {
+        "label": "Rejected",
+        "terminal": true,
+        "allowed_next": []
+      },
+      "withdrawn": {
+        "label": "Withdrawn",
+        "terminal": true,
+        "allowed_next": []
+      }
+    },
+    "task": {
+      "backlog": {
+        "label": "Backlog",
+        "terminal": false,
+        "allowed_next": ["in_progress", "review", "blocked", "done"]
+      },
+      "in_progress": {
+        "label": "In progress",
+        "terminal": false,
+        "allowed_next": ["review", "blocked", "done"]
+      },
+      "review": {
+        "label": "Review",
+        "terminal": false,
+        "allowed_next": ["in_progress", "blocked", "done"]
+      },
+      "blocked": {
+        "label": "Blocked",
+        "terminal": false,
+        "allowed_next": ["in_progress", "review", "done"]
+      },
+      "done": {
+        "label": "Done",
+        "terminal": true,
+        "allowed_next": []
+      }
+    }
+  },
+  "mappings": {
+    "db_v0": {
+      "jobs.status": {
+        "new": "identified",
+        "shortlisted": "shortlisted",
+        "applied": "shortlisted",
+        "interview": "shortlisted",
+        "closed": "dropped"
+      },
+      "applications.status": {
+        "draft": "drafting",
+        "submitted": "submitted",
+        "responded": "interviewing",
+        "offer": "offer",
+        "rejected": "rejected"
+      },
+      "tasks.status": {
+        "open": "backlog"
+      }
+    },
+    "agent_tasks_csv": {
+      "Backlog": "backlog",
+      "In Progress": "in_progress",
+      "Review": "review",
+      "Approved": "review",
+      "Blocked": "blocked",
+      "Done": "done"
+    },
+    "job_pipeline_csv": {
+      "Pinned": "pinned",
+      "New": "new",
+      "Assessing": "assessing",
+      "CV Ready": "cv_ready",
+      "Applied": "applied",
+      "Interview": "interview",
+      "Offer": "offer",
+      "Rejected": "rejected",
+      "Hold": "hold",
+      "Ignored": "ignored"
+    }
+  }
+}

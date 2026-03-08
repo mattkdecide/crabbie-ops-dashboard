@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CV Run · Crabbie</title>
+  <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
+  <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
+  <style>
+    .shell{max-width:var(--content-max);margin:0 auto;padding:var(--s4)}
+    .grid{display:grid;gap:var(--s3);grid-template-columns:repeat(12,1fr)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:var(--s3)}
+    .span-12{grid-column:span 12}
+    .span-7{grid-column:span 7}
+    .span-5{grid-column:span 5}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    pre{background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r1);padding:var(--s3);overflow:auto;white-space:pre-wrap;word-break:break-word;margin:0}
+    .help{margin:0;color:var(--text-2);font-size:var(--fs-1);line-height:1.45}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    @media (max-width: 960px){.span-7,.span-5{grid-column:span 12}.shell{padding:var(--s3)}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar" role="banner">
+    <div class="topbar__row">
+      <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    </div>
+    <h1 class="topbar__title">CV Run</h1>
+    <p class="topbar__sub">Generate a one-shot local command to run the deterministic CV pipeline and then preview the draft in-browser.</p>
+    <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
+      <a class="btn" href="status.html">Status</a>
+      <a class="btn" href="kanban.html">Pipeline</a>
+      <a class="btn" href="agent-queue.html">Agent Queue</a>
+      <a class="btn" href="agents.html">Agents</a>
+      <a class="btn" href="api-usage.html">API Usage</a>
+      <a class="btn" href="cv-preview.html">CV Preview</a>
+      <a class="btn" href="cv-run.html" aria-current="page">CV Run</a>
+    </nav>
+  </header>
+
+  <main id="main" class="shell" tabindex="-1">
+    <div class="grid">
+      <section class="card span-7" aria-label="Inputs">
+        <h2 style="margin:0 0 var(--s2) 0">Inputs</h2>
+        <p class="help">This page does not run code in the browser. It generates a command you can paste into a terminal on the machine that hosts the workspace.</p>
+
+        <div style="height:12px"></div>
+
+        <div class="field">
+          <label class="field__label" for="roleKey">Role key</label>
+          <input class="input mono" id="roleKey" type="text" value="R-2026-XXXX" placeholder="R-2026-0017" />
+          <div class="help">Used as the output folder name: <span class="mono">outputs/cv/&lt;role_key&gt;/</span></div>
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="field">
+          <label class="field__label" for="title">Role title</label>
+          <input class="input" id="title" type="text" value="General Manager, Growth and Transformation" />
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="field">
+          <label class="field__label" for="inputFile">Input file (job text)</label>
+          <input class="input mono" id="inputFile" type="text" value="inputs/jobs/R-2026-XXXX/intake.txt" />
+          <div class="help">Tip: keep role intake under <span class="mono">inputs/jobs/&lt;role_key&gt;/intake.txt</span>.</div>
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="field">
+          <label class="field__label" for="profile">Profile (test mode)</label>
+          <select class="input" id="profile">
+            <option value="pass" selected>pass (QA passes, attempts PDF)</option>
+            <option value="fail">fail (forces QA fail for testing)</option>
+          </select>
+          <div class="help">The deterministic pipeline is a scaffold. Use <span class="mono">fail</span> to verify QA + CRM wiring.</div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="row">
+          <button class="btn btn--primary" type="button" id="copyBtn">Copy command</button>
+          <a class="btn" id="previewLink" href="cv-preview.html">Open preview</a>
+          <a class="btn" id="kanbanLink" href="kanban.html">Open pipeline</a>
+        </div>
+      </section>
+
+      <section class="card span-5" aria-label="Command">
+        <h2 style="margin:0 0 var(--s2) 0">Command</h2>
+        <p class="help">Paste into a terminal from workspace root (<span class="mono">/home/kain/.openclaw/workspace</span>):</p>
+        <div style="height:12px"></div>
+        <pre class="mono" id="cmd">python3 ops/cv-pipeline/run_cv_deterministic.py --role-key R-2026-XXXX --title "General Manager, Growth and Transformation" --input-file inputs/jobs/R-2026-XXXX/intake.txt --profile pass</pre>
+        <div style="height:12px"></div>
+        <p class="help">Outputs:
+          <br><span class="mono" id="outDraft">outputs/cv/R-2026-XXXX/draft.md</span>
+          <br><span class="mono" id="outPdf">outputs/cv/R-2026-XXXX/final.pdf</span>
+        </p>
+        <div style="height:12px"></div>
+        <p class="help">After running, refresh <strong>Pipeline</strong> and <strong>Agent Queue</strong> pages, they read <span class="mono">job-pipeline.csv</span> and <span class="mono">agent-tasks.csv</span>.</p>
+      </section>
+
+      <section class="card span-12" aria-label="Notes">
+        <h2 style="margin:0 0 var(--s2) 0">Notes</h2>
+        <ul style="margin:0 0 0 18px;color:var(--text-2);line-height:1.45">
+          <li>If <span class="mono">final.pdf</span> is missing, install Python dependency: <span class="mono">pip install fpdf</span>.</li>
+          <li>The generated draft is intentionally plain and ATS-safe. The richer pipeline comes later.</li>
+          <li>If you want CRM stage to show as <em>CV Ready</em>, update <span class="mono">run_cv_deterministic.py</span> stage mapping (currently writes <span class="mono">Drafting</span>).</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function esc(s){
+      return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
+    }
+
+    function buildCommand(){
+      const roleKey = (document.getElementById('roleKey').value || '').trim() || 'R-2026-XXXX';
+      const title = (document.getElementById('title').value || '').trim() || 'Untitled role';
+      const inputFile = (document.getElementById('inputFile').value || '').trim() || `inputs/jobs/${roleKey}/intake.txt`;
+      const profile = (document.getElementById('profile').value || 'pass').trim();
+
+      const safeTitle = title.replaceAll('"','\\"');
+      const cmd = `python3 ops/cv-pipeline/run_cv_deterministic.py --role-key ${roleKey} --title "${safeTitle}" --input-file ${inputFile} --profile ${profile}`;
+
+      document.getElementById('cmd').textContent = cmd;
+      document.getElementById('outDraft').textContent = `outputs/cv/${roleKey}/draft.md`;
+      document.getElementById('outPdf').textContent = `outputs/cv/${roleKey}/final.pdf`;
+
+      const q = encodeURIComponent(`outputs/cv/${roleKey}/draft.md`);
+      document.getElementById('previewLink').setAttribute('href', `cv-preview.html?file=${q}`);
+
+      return cmd;
+    }
+
+    async function copyCommand(){
+      const cmd = buildCommand();
+      try{
+        await navigator.clipboard.writeText(cmd);
+        const btn = document.getElementById('copyBtn');
+        const prev = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(()=>btn.textContent = prev, 900);
+      }catch(e){
+        alert('Clipboard copy failed. Select and copy manually.');
+      }
+    }
+
+    ['roleKey','title','inputFile','profile'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', buildCommand);
+      document.getElementById(id).addEventListener('change', buildCommand);
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', copyCommand);
+
+    // Initial render + URL hydration.
+    const params = new URLSearchParams(location.search);
+    const rk = params.get('role_key');
+    if(rk) {
+      document.getElementById('roleKey').value = rk;
+      document.getElementById('inputFile').value = `inputs/jobs/${rk}/intake.txt`;
+    }
+    const t = params.get('title');
+    if(t) document.getElementById('title').value = t;
+
+    buildCommand();
+  </script>
+  <script src="ui/nav_v1.js"></script>
+</body>
+</html>

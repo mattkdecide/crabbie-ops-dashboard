@@ -1,0 +1,300 @@
+openapi: 3.0.3
+info:
+  title: Ops Control Tower API
+  version: 1.0.0
+  description: |
+    Minimal read-mostly API façade for Ops Control Tower artefacts.
+
+    V1 goal: unify dashboards + agents on a single contract while the
+    underlying persistence remains file-based (CSV/YAML/JSONL).
+servers:
+  - url: http://localhost:8787
+    description: Local dev
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /v1/health:
+    get:
+      summary: Health check
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  time_utc:
+                    type: string
+                    format: date-time
+
+  /v1/agents:
+    get:
+      summary: List agents
+      responses:
+        '200':
+          description: Agents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+
+  /v1/tasks:
+    get:
+      summary: List tasks
+      parameters:
+        - in: query
+          name: status
+          description: Filter by status
+          schema:
+            $ref: '#/components/schemas/TaskStatus'
+        - in: query
+          name: owner
+          description: Filter by owner/agent
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: Full-text query (implementation-defined)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tasks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+
+  /v1/tasks/{task_id}:
+    get:
+      summary: Get a task
+      parameters:
+        - in: path
+          name: task_id
+          required: true
+          schema:
+            type: string
+            pattern: '^T-\\d{4}$'
+      responses:
+        '200':
+          description: Task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Not found
+
+  /v1/tasks/{task_id}/status:
+    post:
+      summary: Change task status (writes event)
+      description: |
+        V1 mutation endpoint.
+
+        Implementation must:
+        - validate task_id uniqueness
+        - update the current backing store
+        - append an event to JSONL (event type: ops.task.status_changed.v1)
+      parameters:
+        - in: path
+          name: task_id
+          required: true
+          schema:
+            type: string
+            pattern: '^T-\\d{4}$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [to_status]
+              properties:
+                to_status:
+                  $ref: '#/components/schemas/TaskStatus'
+                reason:
+                  type: string
+                  description: Optional human-readable reason
+                actor:
+                  type: string
+                  description: Who/what made the change (agent, user)
+      responses:
+        '200':
+          description: Updated task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '409':
+          description: Conflict (e.g., duplicate IDs, invalid transition)
+
+  /v1/events:
+    get:
+      summary: Query events (append-only)
+      parameters:
+        - in: query
+          name: since
+          description: ISO8601 timestamp (inclusive)
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: until
+          description: ISO8601 timestamp (exclusive)
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: types
+          description: Comma-separated event types
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventEnvelope'
+
+  /v1/status-summary:
+    get:
+      summary: Summary for status.html (pre-aggregated)
+      description: |
+        Returns the exact data needed by the Status page.
+        This endpoint exists to keep UI code simple and stable.
+      responses:
+        '200':
+          description: Summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusSummary'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+
+  schemas:
+    Agent:
+      type: object
+      required: [handle, name, role]
+      properties:
+        handle:
+          type: string
+          example: Forge
+        name:
+          type: string
+          example: Forge
+        role:
+          type: string
+          example: CV Pipeline Engineer
+        status:
+          type: string
+          example: active
+
+    TaskStatus:
+      type: string
+      enum: [Backlog, In Progress, Blocked, Done]
+
+    Task:
+      type: object
+      required: [task_id, title, status]
+      properties:
+        task_id:
+          type: string
+          pattern: '^T-\\d{4}$'
+        title:
+          type: string
+        owner:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        priority:
+          type: string
+          nullable: true
+        due_date:
+          type: string
+          format: date
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    EventEnvelope:
+      type: object
+      required: [event_id, type, occurred_at, payload]
+      properties:
+        event_id:
+          type: string
+          example: 0192f1f0-5f3c-7a51-9f2e-2d4f0f9e4d58
+        type:
+          type: string
+          example: ops.task.status_changed.v1
+        occurred_at:
+          type: string
+          format: date-time
+        actor:
+          type: string
+          nullable: true
+        trace_id:
+          type: string
+          nullable: true
+        payload:
+          type: object
+          additionalProperties: true
+
+    StatusSummary:
+      type: object
+      required: [time_utc, top_priorities, blockers, task_counts]
+      properties:
+        time_utc:
+          type: string
+          format: date-time
+        top_priorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        blockers:
+          type: array
+          items:
+            type: object
+            required: [task_id, blocker]
+            properties:
+              task_id:
+                type: string
+              blocker:
+                type: string
+        task_counts:
+          type: object
+          additionalProperties:
+            type: integer
