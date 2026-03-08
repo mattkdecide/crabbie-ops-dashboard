@@ -11,14 +11,17 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="topbar" role="banner">
-    <div>
-      <h1 class="topbar__title">Crabbie Ops · Live Status</h1>
-      <p class="topbar__sub">Visible execution surfaces: tasks, agent profiles, UX artefacts, design roadmap.</p>
+    <div class="topbar__row">
+      <a class="home-logo" href="index.html">🏠 Crabbie Ops Home</a>
+      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
     </div>
-
-    <nav class="topbar__actions" aria-label="Primary">
-      <a class="btn btn--primary" href="kanban.html">Pipeline Kanban</a>
+    <h1 class="topbar__title">Live Status</h1>
+    <p class="topbar__sub">Visible execution surfaces: tasks, agents, UX, design, and downloads.</p>
+    <nav class="topbar__actions" data-nav-links aria-label="Primary">
+      <a class="btn" href="status.html">Status</a>
+      <a class="btn btn--primary" href="kanban.html">Pipeline</a>
       <a class="btn" href="agent-queue.html">Agent Queue</a>
+      <a class="btn" href="agents.html">Agents</a>
       <a class="btn" href="cv-preview.html">CV Preview</a>
     </nav>
   </header>
@@ -27,64 +30,38 @@
     <section class="column" aria-label="Execution artefacts">
       <div class="column__shell">
         <h2 class="column__header">Execution Artefacts</h2>
-
-        <div class="item">
-          <h3 class="item__title"><a href="UPDATE_CAPTURE.md">Update Capture Log</a></h3>
-          <div class="item__small">Increment-by-increment activity trail</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="project-gantt.md">Project Gantt</a></h3>
-          <div class="item__small">Current timeline and milestones</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="agents/README.md">Agent Profiles Index</a></h3>
-          <div class="item__small">Personalities, responsibilities, and work plans</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="ux/JOURNEY_MAPS_V1.md">UX Journey Maps v1</a></h3>
-          <div class="item__small">Intake → CV → application workflow maps</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="design/DESIGN_ROADMAP_V1.md">Design Roadmap v1</a></h3>
-          <div class="item__small">Design language, typography, colours, components</div>
-        </div>
+        <div class="item"><h3 class="item__title"><a href="UPDATE_CAPTURE.md">Update Capture Log</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="project-gantt.md">Project Gantt</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="CONTROL_TOWER.md">Control Tower</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="agents/README.md">Agent Profiles Index</a></h3></div>
       </div>
     </section>
 
-    <section class="column" aria-label="Live data surfaces">
+    <section class="column" aria-label="UX pack">
       <div class="column__shell">
-        <h2 class="column__header">Live Data Surfaces</h2>
+        <h2 class="column__header">UX Pack</h2>
+        <div class="item"><h3 class="item__title"><a href="ux/JOURNEY_MAPS_V1.md">Journey Maps</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="ux/MASTHEAD_NAV_SPEC_V1.md">Masthead Nav Spec</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md">Status Timeline Spec</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="ux/IA_AND_NAV_V1.md">IA and Navigation</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="ux/ACCEPTANCE_CRITERIA_V1.md">UX Acceptance Criteria</a></h3></div>
+      </div>
+    </section>
 
-        <div class="item">
-          <h3 class="item__title"><a href="kanban.html">Kanban</a></h3>
-          <div class="item__small">Job lifecycle movements and priorities</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="agent-queue.html">Agent Queue</a></h3>
-          <div class="item__small">Tasks by agent and status</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="cv-preview.html">CV Preview</a></h3>
-          <div class="item__small">Document-style CV render target</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="job-pipeline.csv">Job Pipeline CSV</a></h3>
-          <div class="item__small">Source-of-truth role ledger</div>
-        </div>
-
-        <div class="item">
-          <h3 class="item__title"><a href="agent-tasks.csv">Agent Tasks CSV</a></h3>
-          <div class="item__small">Task creation, progress, and status changes</div>
-        </div>
+    <section class="column" aria-label="Downloads">
+      <div class="column__shell">
+        <h2 class="column__header">Review Downloads (PDF)</h2>
+        <div class="item"><h3 class="item__title"><a href="downloads/UX_Journey_Maps_v1.pdf">UX Journey Maps PDF</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="downloads/UX_Wireframes_v1.pdf">UX Wireframes PDF</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="downloads/UX_Sitemap_v1.pdf">UX Sitemap PDF</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="downloads/UI_Design_Language_v1.pdf">UI Design Language PDF</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="downloads/UI_Colour_Palette_v1.pdf">UI Colour Palette PDF</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="downloads/UI_Typography_v1.pdf">UI Typography PDF</a></h3></div>
+        <div class="item"><h3 class="item__title"><a href="downloads/UI_Iconography_and_Imagery_v1.pdf">UI Iconography & Imagery PDF</a></h3></div>
       </div>
     </section>
   </main>
+
+  <script src="ui/nav_v1.js"></script>
 </body>
 </html>

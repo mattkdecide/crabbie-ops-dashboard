@@ -11,12 +11,18 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="topbar" role="banner">
-    <h1 class="topbar__title">Crabbie Employment Pod · Pipeline Kanban</h1>
+    <div class="topbar__row">
+      <a class="home-logo" href="index.html">🏠 Crabbie Ops Home</a>
+      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    </div>
+    <h1 class="topbar__title">Pipeline Kanban</h1>
     <p class="topbar__sub">Operational view. Keyboard: Tab to move between links, Enter to open.</p>
-    <nav class="topbar__actions" aria-label="Primary">
+    <nav class="topbar__actions" data-nav-links aria-label="Primary">
       <a class="btn" href="status.html">Status</a>
+      <a class="btn btn--primary" href="kanban.html">Pipeline</a>
       <a class="btn" href="agent-queue.html">Agent Queue</a>
-      <a class="btn btn--primary" href="cv-preview.html">CV Preview</a>
+      <a class="btn" href="agents.html">Agents</a>
+      <a class="btn" href="cv-preview.html">CV Preview</a>
     </nav>
   </header>
 
@@ -30,6 +36,7 @@
     </noscript>
   </main>
 
+  <script src="ui/nav_v1.js"></script>
   <script type="module" src="ui/kanban_live_v1.js"></script>
 </body>
 </html>
