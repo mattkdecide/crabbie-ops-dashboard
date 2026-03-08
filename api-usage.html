@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>API Usage Tracker · Crabbie Ops</title>
+  <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
+  <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
+  <style>
+    .wrap{padding:16px;max-width:1100px;margin:0 auto}
+    table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border-2);border-radius:12px;overflow:hidden}
+    th,td{padding:10px;border-bottom:1px solid var(--border-2);font-size:12px;text-align:left}
+    .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+    .kpi .item{margin:0}
+  </style>
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="topbar__row">
+      <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
+      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    </div>
+    <h1 class="topbar__title">API Usage Tracker</h1>
+    <p class="topbar__sub">Run-rate visibility for token and cost trend.</p>
+    <nav class="topbar__actions" data-nav-links aria-label="Primary">
+      <a class="btn" href="status.html">Status</a>
+      <a class="btn" href="kanban.html">Pipeline</a>
+      <a class="btn" href="agent-queue.html">Agent Queue</a>
+      <a class="btn btn--primary" href="api-usage.html">API Usage</a>
+      <a class="btn" href="agents.html">Agents</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="main" tabindex="-1">
+    <div class="kpi">
+      <section class="item"><h3 class="item__title">Budget Target</h3><div class="item__meta">USD $2.00/day</div></section>
+      <section class="item"><h3 class="item__title">Last Window Tokens</h3><div class="item__meta" id="tokTotal">-</div></section>
+      <section class="item"><h3 class="item__title">Estimated Cost</h3><div class="item__meta" id="costTotal">-</div></section>
+      <section class="item"><h3 class="item__title">Status</h3><div class="item__meta" id="budgetStatus">-</div></section>
+    </div>
+
+    <section class="item">
+      <h3 class="item__title">Usage Log</h3>
+      <table>
+        <thead><tr><th>Date</th><th>Window</th><th>Model</th><th>In</th><th>Out</th><th>Total</th><th>Est. Cost USD</th><th>Notes</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </section>
+
+    <p class="item__small">Source: <a href="usage/api-usage-log.csv">usage/api-usage-log.csv</a> · Spec: <a href="usage/API_USAGE_TRACKER_V1.md">API_USAGE_TRACKER_V1.md</a></p>
+  </main>
+  <script>
+    async function load(){
+      const txt = await (await fetch('usage/api-usage-log.csv?t='+Date.now(),{cache:'no-store'})).text();
+      const lines = txt.trim().split(/\r?\n/); const h=lines.shift().split(',');
+      const data = lines.map(l=>{const a=[];let c='',q=false;for(let i=0;i<l.length;i++){const ch=l[i],n=l[i+1];if(ch==='"'){if(q&&n==='"'){c+='"';i++;}else q=!q;}else if(ch===','&&!q){a.push(c);c='';}else c+=ch;}a.push(c);return Object.fromEntries(h.map((k,i)=>[k,a[i]||'']));});
+      const tb=document.getElementById('rows'); tb.innerHTML='';
+      data.slice().reverse().forEach(r=>{const tr=document.createElement('tr'); tr.innerHTML=`<td>${r.date_utc}</td><td>${r.window}</td><td>${r.model}</td><td>${r.in_tokens}</td><td>${r.out_tokens}</td><td>${r.total_tokens}</td><td>$${r.estimated_cost_usd}</td><td>${r.notes||''}</td>`; tb.appendChild(tr);});
+      const last = data[data.length-1] || {}; const cost = Number(last.estimated_cost_usd||0); const tot = last.total_tokens||0;
+      document.getElementById('tokTotal').textContent = tot;
+      document.getElementById('costTotal').textContent = '$'+cost.toFixed(2);
+      document.getElementById('budgetStatus').textContent = cost<=2 ? 'On target' : 'Above target';
+    }
+    load();
+  </script>
+  <script src="ui/nav_v1.js"></script>
+</body></html>
