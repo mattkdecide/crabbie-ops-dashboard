@@ -103,7 +103,9 @@ Acceptance criteria:
 3. Items support optional links and severity badges.
 
 Dependencies:
-- `ops/events/` directory and at least one JSONL file (can start with a minimal seed).
+- `ops/events/` directory and at least one JSONL file.
+  - Seed created: `ops/events/events-2026-03.jsonl`.
+- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added.
 
 ## 9) Open questions / blockers
 - Where should event ingestion live (client-side fetch vs server-side precompute in `dashboard-worker.js`)?

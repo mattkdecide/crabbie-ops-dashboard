@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08
+Last updated: 2026-03-08 (12:20 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -79,10 +79,15 @@ Derived activity rules (fallback):
   - `entity_type=task`, `entity_id=task_id`
   - summary: `${status}: ${title}` (include `role_id` prefix if present)
   - href: `agent-queue.html` (v1), later deep-link by id
-- From `ops/job-pipeline.csv`: create an item per row where `updated_at` (or `last_action` date if that is all we have) is within last 7 days.
+- From `ops/job-pipeline.csv`: **no `updated_at` exists yet**, so use `last_action` as the timestamp.
+  - Include rows where `last_action` is within last 7 days.
   - `entity_type=job`, `entity_id=role_id`
   - summary: `${status}: ${title}` + `Next: ${next_action}` when present
   - href: `kanban.html` (v1)
+
+Data hygiene note (important):
+- Add `updated_at` to `ops/job-pipeline.csv` as soon as it is touched by scripts/agents.
+- Once present, switch the derived rule to prefer `updated_at` over `last_action`.
 
 Acceptance check:
 - Satisfies `ops/ux/ACCEPTANCE_CRITERIA_V1.md` AC-5 (event feed OR derived activity fallback).
@@ -101,6 +106,23 @@ Build asks:
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-7, AC-8)
+
+### 1.6 Build handoff (concrete): Seed events feed + parse-first-N proof
+Why: unblocks AC-5 quickly (real events path, not just derived fallback).
+
+Deliverables (static v1):
+1) Ensure `ops/events/` exists and is web-served.
+2) Commit a small seed file: `ops/events/events-2026-03.jsonl` (already created by UX).
+3) Timeline read order:
+   - Try fetch `events/events-2026-03.jsonl` first (or latest by naming convention).
+   - If fetch fails, fall back to derived activity (Section 1.4).
+4) Parse strategy (v1):
+   - Fetch as text.
+   - Split by `\n`.
+   - Parse only first 50 non-empty lines with `JSON.parse`.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
 ---
 
