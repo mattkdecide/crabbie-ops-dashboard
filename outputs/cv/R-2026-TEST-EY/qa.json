@@ -1,10 +1,15 @@
 {
-  "role_id": "R-2026-TEST-EY",
-  "page_estimate": 1.6,
-  "keyword_coverage_pct": 61,
-  "flags": [
-    "stretch_fit_data_governance_depth"
+  "pass": true,
+  "hard_fail_reasons": [],
+  "soft_warnings": [
+    "keyword_coverage_pct<75 (17)"
   ],
-  "pass_for_pdf": false,
-  "reason": "PDF generation blocked until source CV metrics and tighter evidence substantiation added."
+  "metrics": {
+    "must_have_coverage_pct": 75,
+    "keyword_coverage_pct": 17,
+    "nice_to_have_coverage_pct": 67,
+    "page_estimate": 1.0,
+    "placeholder_count": 0,
+    "quantified_bullets": 3
+  }
 }

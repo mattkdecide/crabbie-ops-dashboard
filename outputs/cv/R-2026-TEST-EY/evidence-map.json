@@ -1,32 +1,37 @@
 {
-  "role_id": "R-2026-TEST-EY",
+  "role_key": "R-2026-TEST-EY",
   "mappings": [
     {
-      "requirement": "Stakeholder influence",
+      "requirement": "Proven experience leading enterprise data strategy, governance, and platform adoption in a large, complex organisation.",
       "evidence": [
-        "CEO/advisor level stakeholder communication experience"
-      ],
-      "strength": "high",
-      "gap": null,
-      "planned_placement": "summary"
-    },
-    {
-      "requirement": "Enterprise data governance depth",
-      "evidence": [
-        "Transformation and martech/adtech governance exposure"
+        "transferable leadership + transformation evidence"
       ],
       "strength": "medium",
-      "gap": "Deep CTIO data-governance ownership may be thinner",
-      "planned_placement": "experience bullets"
+      "gap": null
     },
     {
-      "requirement": "Global federated model",
+      "requirement": "Strong understanding of cloud and enterprise data platforms (e.g. Azure, Fabric) and modern analytics and AI architectures.",
       "evidence": [
-        "Global APAC/US operating context"
+        "transferable leadership + transformation evidence"
       ],
       "strength": "medium",
-      "gap": null,
-      "planned_placement": "summary"
+      "gap": null
+    },
+    {
+      "requirement": "Deep knowledge of data governance, security, privacy, and regulatory frameworks, including operating in highly regulated environments.",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    },
+    {
+      "requirement": "Proven program delivery experience across multiple concurrent initiatives.",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
     }
   ]
 }

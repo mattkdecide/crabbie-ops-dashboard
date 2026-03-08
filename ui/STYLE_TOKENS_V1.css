@@ -46,9 +46,6 @@
   --lh-tight: 1.2;
   --lh-body: 1.45;
 
-  /* Numeric rendering (tables, KPIs) */
-  --num-variant: tabular-nums lining-nums;
-
   /* Spacing (4px grid) */
   --s1: 4px;
   --s2: 8px;
@@ -63,7 +60,6 @@
   --r-pill: 999px;
 
   /* Focus */
-  --focus-r: 10px; /* default focus ring corner radius */
   --focus: 0 0 0 2px rgba(42,100,255,.55);
   --focus-strong: 0 0 0 3px rgba(42,100,255,.75);
 
@@ -89,31 +85,15 @@
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-2);line-height:var(--lh-body)}
 
-a{
-  color:var(--link);
-  /* Underlines by default for recognisability and low-vision support. */
-  text-decoration:underline;
-  text-decoration-color:color-mix(in srgb, var(--link) 55%, transparent);
-  text-decoration-thickness:1px;
-  text-underline-offset:2px;
-}
-a:hover{
-  text-decoration-thickness:2px;
-  text-decoration-color:color-mix(in srgb, var(--link) 85%, transparent);
-}
-a:focus-visible{
-  outline:none;
-  box-shadow:var(--focus-strong);
-  border-radius:var(--focus-r);
-  text-decoration-thickness:2px;
-  text-decoration-color:var(--link);
-}
+a{color:var(--link);text-decoration:none;text-underline-offset:2px}
+a:hover{text-decoration:underline;text-decoration-thickness:2px}
+a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;text-decoration:underline;text-decoration-thickness:2px}
 
 /* Text selection should remain readable in dark UI */
 ::selection{background:color-mix(in srgb, var(--accent) 35%, transparent);color:var(--text)}
 
 /* Global keyboard focus guardrail (components may override) */
-button:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:var(--focus-r)}
+button:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:10px}
 
 /* Prevent anchored content hiding behind sticky headers */
 :target{scroll-margin-top: calc(var(--sticky-offset, 88px) + var(--s3))}
@@ -126,7 +106,7 @@ input,select,textarea{
 input:focus-visible,select:focus-visible,textarea:focus-visible{
   outline:none;
   box-shadow:var(--focus-strong);
-  border-radius:var(--focus-r);
+  border-radius:10px;
 }
 
 code{
@@ -153,19 +133,6 @@ code{
     --border-2: color-mix(in srgb, var(--border-2) 55%, #ffffff);
     --focus: 0 0 0 2px rgba(155,192,255,.65);
     --focus-strong: 0 0 0 3px rgba(155,192,255,.9);
-  }
-}
-
-@media (forced-colors: active){
-  /* Windows High Contrast mode: box-shadows can disappear; ensure a real outline. */
-  a:focus-visible,
-  button:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible{
-    outline:2px solid CanvasText;
-    outline-offset:2px;
-    box-shadow:none;
   }
 }
 

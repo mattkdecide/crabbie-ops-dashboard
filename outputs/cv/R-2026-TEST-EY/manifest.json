@@ -1,14 +1,31 @@
 {
-  "role_id": "R-2026-TEST-EY",
-  "generated_at": "2026-03-08T13:12:45.835959Z",
+  "role_key": "R-2026-TEST-EY",
+  "run_at_utc": "2026-03-08T22:38:51.624144Z",
+  "input": {
+    "input_file": "inputs/jobs/R-2026-TEST-EY/job.txt",
+    "title": "Data Lead"
+  },
+  "qa_result": "pass",
+  "qa_hard_fail_reasons": [],
+  "qa_soft_warnings": [
+    "keyword_coverage_pct<75 (17)"
+  ],
   "artefacts": {
+    "intake_txt": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/intake.txt",
     "analysis_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/analysis.json",
     "evidence_map_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/evidence-map.json",
     "draft_md": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/draft.md",
     "qa_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/qa.json",
-    "rationale_txt": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/rationale.txt",
     "final_pdf": null
   },
-  "status": "partial_no_pdf",
-  "sha": "f8185896cccff6f8877ff57c19c50a38c1d4dc94d8eefde8c84d2ecdfeaa5583"
+  "crm_update": {
+    "job_pipeline_status_written": "CV Ready",
+    "next_step_written": "QA passed; generate final.pdf (install fpdf) or proceed with draft.md"
+  },
+  "task_update": {
+    "task_id": "CV-R-2026-TEST-EY-FOLLOWUP",
+    "task_status": "Review"
+  },
+  "pdf_generated": false,
+  "pdf_error": "fpdf_missing"
 }

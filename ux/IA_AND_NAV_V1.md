@@ -2,19 +2,17 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-08 (20:25 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
 
 Current build files in scope:
-- `ops/index.html` (Home)
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
-- `ops/cv-run.html` (CV pipeline command generator)
 - `ops/api-usage.html` (utility page, but currently linked in global nav)
 
 Planned build files (not yet present):
@@ -32,11 +30,10 @@ Build note (current reality):
 - `ops/ui/nav_v1.js` is present and now:
   - toggles the mobile menu reliably (Escape/outside click/link click)
   - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
-- The “home” logo link points to `index.html`, and `ops/index.html` now exists (landing hub).
+- The “home” logo link currently points to `index.html` on at least `status.html` and `api-usage.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
 
 Pragmatic v1 recommendation:
-- Treat `index.html` as “home” (launchpad).
-- Treat `status.html` as the “Status board” (operational artefacts + review surface).
+- Treat `status.html` as “home” until an `index.html` landing page is created.
 
 ---
 
@@ -90,8 +87,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 - Agents tab → `agent-queue.html` (board) and/or `agents.html` (index)
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
 - Design tab → `design/DESIGN_ROADMAP_V1.md`
-- Roadmap tab → `status.html` (status board + artefact hub in current build)
-- Home (logo) → `index.html` (launchpad)
+- Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)
 - Activity tab → `activity.html` (to be created)
 
 ### Active-tab logic (static)
@@ -110,15 +106,8 @@ Rule table (for the *masthead tab state*, independent of the v1 `.topbar` links)
 ---
 
 ## 3) Page-level IA (what belongs where)
-### `ops/index.html` (Home / Launchpad)
+### `ops/status.html` (Overview / Launchpad)
 Job-to-be-done: open one page and jump to the right operational surface.
-
-Should contain:
-- persistent masthead (target) or topbar cross-links (current)
-- links to: Kanban, Agent Queue, Agents, Status, and key docs
-
-### `ops/status.html` (Status board)
-Job-to-be-done: inspect the current build state, artefacts, and recent changes.
 
 Should contain:
 - persistent masthead (target) or topbar cross-links (current)
@@ -157,16 +146,6 @@ Should show:
 - most recent build artefacts + manifest (when available)
 - QA checklist status (when available)
 
-### `ops/cv-run.html` (CV pipeline command generator)
-Job-to-be-done: generate a one-shot local command to run the deterministic CV pipeline, then jump straight into preview.
-
-Should contain:
-- input fields for: role key, role title, input file path, profile (pass/fail)
-- a visible generated command (copy-to-clipboard)
-- a “Open preview” link that routes to:
-  - `cv-preview.html?file=outputs/cv/<role_key>/draft.md`
-- lightweight guidance on expected outputs (draft.md, final.pdf)
-
 ### `ops/api-usage.html` (Utility: spend visibility)
 Job-to-be-done: see run-rate and cost trend quickly.
 
@@ -185,7 +164,7 @@ Should contain:
 ---
 
 ## 5) Open decisions
-1. Now that `index.html` exists: should Roadmap remain landing on `status.html`, or should Roadmap land on `index.html` and rename `status.html` to “Status” explicitly?
+1. Should `status.html` be considered “Roadmap”, or should there be an explicit Overview tab?
 2. Where should global search land first: Pipeline cards, tasks, or artefact filenames?
 3. Does Activity page render client-side from `ops/events/*.jsonl`, or do we precompute a small index (e.g., `ops/events/index.json`)?
 4. Should `cv-preview.html` restrict allowed draft paths to `outputs/cv/**` only (security hardening for hosted environments)?

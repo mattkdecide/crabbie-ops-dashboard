@@ -98,16 +98,9 @@ type TimelineItem = {
 **Handoff item UX-001:** Implement `renderTimeline(items)` component and `timelineAdapter`.
 
 Acceptance criteria:
-1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` and in `ops/activity.html`.
+1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` (or a dedicated `ops/activity.html`).
 2. Adapter can parse a sample JSONL file (first N lines) into `TimelineItem[]`.
 3. Items support optional links and severity badges.
-
-**Handoff item UX-002:** Wire “What changed” (Status) + “Activity” (page) using the same adapter.
-
-Acceptance criteria:
-1. `ops/status.html` shows `What changed` with the 10 most recent items and a `View all →` link to `activity.html`.
-2. `ops/activity.html` renders 50 items (v1) and supports a simple client-side text filter (`/ Search` pattern acceptable).
-3. Both views prefer JSONL events when available, else use derived CSV rules (documented in `ops/ux/HANDOFF_NOTES_V1.md` §1.4).
 
 Dependencies:
 - `ops/events/` directory and at least one JSONL file.

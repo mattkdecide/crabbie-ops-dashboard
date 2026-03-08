@@ -1,33 +1,62 @@
 {
-  "role_id": "R-2026-TEST-EY",
   "must_have": [
-    "Enterprise data strategy leadership",
-    "Data governance/privacy/compliance",
-    "Stakeholder influence across technology/risk/business",
-    "Global federated model operation"
+    "Proven experience leading enterprise data strategy, governance, and platform adoption in a large, complex organisation.",
+    "Strong understanding of cloud and enterprise data platforms (e.g. Azure, Fabric) and modern analytics and AI architectures.",
+    "Deep knowledge of data governance, security, privacy, and regulatory frameworks, including operating in highly regulated environments.",
+    "Proven program delivery experience across multiple concurrent initiatives."
   ],
   "nice_to_have": [
-    "Azure/Fabric familiarity",
-    "Sandbox governance",
-    "Program delivery across multiple initiatives"
+    "Ideally",
+    "Familiarity with automation, infrastructure-as-code, and modern data engineering practices.",
+    "Degree in technology, data, business, or related discipline; post-graduate desirable."
   ],
   "responsibilities": [
-    "Lead Oceania data strategy",
-    "Govern analytics/AI data risk controls",
-    "Represent region in global forums"
+    "Oceania Data Lead - Senior Manager or Associate Director",
+    "Oceania Data Lead \u2013 Senior Manager or Associate Director",
+    "As our Oceania Data Lead, you will be accountable for shaping, governing, and activating EY Oceania\u2019s data strategy in alignment with the firm\u2019s global data vision. This is a senior regional data leadership role with enterprise-wide accountability for enabling secure, compliant, and scalable data platforms, analytics, and AI across Oceania.",
+    "You will provide leadership across data governance, quality, privacy, and platform adoption, while working in close partnership with the Innovation Lead and Sandpit Manager to ensure Oceania\u2019s sandpit environments are governed by strong data policies and risk controls.",
+    "This role sits within the Office of the CTIO and partners closely with Technology, Product, Risk, Innovation, and Service Line leaders to ensure data initiatives deliver measurable business value while meeting regulatory and firm-wide governance expectations.",
+    "Lead the execution of EY Oceania\u2019s data strategy, ensuring alignment with global data standards, platforms, and governance frameworks.",
+    "Oversee data governance, security, privacy, and compliance across all analytics, AI, and data environments, ensuring adherence to local regulatory requirements and firm-wide policies.",
+    "Provide data governance oversight across Oceania\u2019s data and AI sandpit environments, working closely with the Innovation and Product Lead and Sandpit Manager to ensure data policies, integrity, and risk controls are consistently applied.",
+    "Define and enforce data usage standards for sandpit environments, including ensuring client, personal, and confidential data is not used, and partnering with the business to identify appropriate alternatives such as synthetic, anonymised, or sanitised data.",
+    "Coordinate regional analytics and insight initiatives to inform business decision-making and improve service delivery outcomes.",
+    "Act as Oceania\u2019s representative in global data governance and data leadership forums, enabling two-way sharing of insights, requirements, and priorities.",
+    "Partner closely with Technology, Product, Risk, Innovation, and Service Line leaders to embed data-driven ways of working and promote a strong data culture across the region."
   ],
   "keywords": [
-    "data strategy",
-    "governance",
-    "privacy",
-    "compliance",
-    "analytics",
-    "AI",
-    "federated model",
+    "Associate",
+    "Australia",
     "Azure",
-    "Fabric"
+    "CTIO",
+    "Career",
+    "Company",
+    "Competitive",
+    "Comprehensive",
+    "Coordinate",
+    "Data",
+    "Date",
+    "Deep",
+    "Define",
+    "Degree",
+    "Demonstrated",
+    "Description",
+    "Director",
+    "Drive",
+    "Experience",
+    "Fabric",
+    "Familiarity",
+    "Flexible",
+    "Full",
+    "Ideally",
+    "Innovation",
+    "Input",
+    "Join",
+    "Lead",
+    "Line",
+    "Location"
   ],
-  "seniority": "Senior Manager / Associate Director",
-  "domain": "Enterprise Data Leadership",
-  "location_constraints": "Australia (any EY office)"
+  "seniority": "senior",
+  "domain": "marketing/growth/transformation",
+  "location_constraints": "as listed in role input"
 }

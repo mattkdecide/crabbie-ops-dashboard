@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (22:24 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -17,7 +17,6 @@ Target pages:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
-- `ops/cv-run.html`
 - `ops/api-usage.html` (currently in the primary nav; keep consistent)
 
 Implementation approach (static HTML v1):
@@ -126,84 +125,26 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
-### 1.7 Build handoff (concrete): Home landing page + active-link semantics (NOW VALID)
-Why: `nav_v1.js` already implements URL-based active-link semantics, and the ops surface now has a real landing page.
+### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
+Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
 
-Current reality (verified 2026-03-08):
-- `ops/index.html` now exists and functions as the Home/launchpad.
-- All primary ops pages link the logo/home anchor to `index.html`.
-- Per-page hard-coded active classes for nav links have been removed; active state is expressed via `aria-current="page"` + `.btn--primary` applied by `nav_v1.js`.
+Current bug (needs fix):
+- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
 
-Definition-of-done checks (static v1):
-1) Every ops page loads `ui/nav_v1.js`.
-2) The “Home” logo link resolves to `index.html`.
-3) Active link is set programmatically (no per-page drift).
-
-Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1)
-
-### 1.8 Build handoff (concrete): Add `updated_at` to `job-pipeline.csv` + display it
-Why: the Activity fallback currently uses `last_action` as a timestamp (lossy and often non-parseable). A proper `updated_at` unlocks reliable “What changed” sorting, and makes diffs easier to read.
-
-Deliverables (v1):
-1) Add a column `updated_at` (RFC3339, UTC) to `ops/job-pipeline.csv`.
-   - Example value: `2026-03-08T18:22:00Z`
-2) Ensure any script/agent that touches a job row sets `updated_at=now()`.
-   - If multiple fields change, only one timestamp is needed.
-3) In UI, surface `updated_at` in `ops/kanban.html` (secondary meta line is fine):
-   - Label (exact): `Updated <time>`
-4) Update derived-activity logic (Section 1.4) to prefer `updated_at` over `last_action` when present.
+Deliverables (static v1):
+1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
+2) Ensure these pages load `ops/ui/nav_v1.js`:
+   - `ops/status.html`
+   - `ops/kanban.html`
+   - `ops/agent-queue.html`
+   - `ops/agents.html`
+   - `ops/cv-preview.html`
+   - `ops/api-usage.html`
+3) Remove per-page hard-coded “active” classes where present; rely on:
+   - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
 
 Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
-
-### 1.9 Build handoff (concrete): Deep-link + highlight an entity from Activity
-Why: without deep links, Activity becomes a dead-end list. Even before true “detail pages” exist, we can route users to the right surface and visually focus the target row.
-
-Deliverables (v1):
-1) Support query param on `ops/activity.html`: `?focus=task:T-0303` or `?focus=job:R-2026-0010`.
-2) When a timeline item is clicked:
-   - Tasks route to `agent-queue.html?focus=<task_id>`
-   - Jobs route to `kanban.html?focus=<role_id>`
-3) On `ops/agent-queue.html` and `ops/kanban.html`, implement a tiny helper in page JS:
-   - if `focus` is present, scroll the matching row into view and apply a temporary highlight class for ~3 seconds.
-
-Markup expectation (minimal):
-- Add `data-task-id="T-XXXX"` on task rows in `agent-queue.html`.
-- Add `data-role-id="R-YYYY"` on job rows/cards in `kanban.html`.
-
-Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5 usability extension)
-
-### 1.10 Build handoff (concrete): Add focus hooks to live renderers (Kanban + Agent Queue)
-Why: Sections 1.9 + Journey 6 require a stable DOM hook so `?focus=` can scroll/highlight the right item even though cards are rendered client-side.
-
-Deliverables (v1):
-1) `ops/ui/kanban_live_v1.js`
-   - In `renderCard(role)`, add the role id attribute when present:
-     - `<article class="item" ... data-role-id="R-2026-0010">`
-   - Source field: `role.role_id`.
-
-2) `ops/ui/agent_queue_live_v1.js`
-   - In `renderCard(t, ...)`, add the task id attribute when present:
-     - `<article class="item" ... data-task-id="T-0303">`
-   - Source field: `t.task_id`.
-
-3) Add a minimal focus/highlight helper (inline script is fine) on:
-   - `ops/kanban.html` (look for `[data-role-id="..."]`)
-   - `ops/agent-queue.html` (look for `[data-task-id="..."]`)
-
-Exact behaviour:
-- Read `focus` query param.
-- If present, poll for the element for up to 2 seconds (because live JS rendering is async).
-- On match: `scrollIntoView({ block: 'center' })` and apply a `.is-focus` class for ~3 seconds.
-
-CSS hook (v1):
-- Add to `ops/ui/COMPONENTS_V1.css`:
-  - `.item.is-focus { outline: 3px solid var(--focus-r); outline-offset: 2px; }`
-
-Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5 usability extension)
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
 
 ---
 
