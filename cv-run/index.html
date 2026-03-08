@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>CV Run · Crabbie</title>
-  <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
-  <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
+  <link rel="stylesheet" href="../ui/STYLE_TOKENS_V1.css">
+  <link rel="stylesheet" href="../ui/COMPONENTS_V1.css">
   <style>
     .shell{max-width:var(--content-max);margin:0 auto;padding:var(--s4)}
     .grid{display:grid;gap:var(--s3);grid-template-columns:repeat(12,1fr)}
@@ -25,19 +25,19 @@
 
   <header class="topbar" role="banner">
     <div class="topbar__row">
-      <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
+      <a class="home-logo" href="../index.html"><img src="../ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
       <button type="button" class="nav-toggle" data-nav-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
     </div>
     <h1 class="topbar__title">CV Run</h1>
     <p class="topbar__sub">Generate a one-shot local command to run the deterministic CV pipeline and then preview the draft in-browser.</p>
     <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
-      <a class="btn" href="status.html">Status</a>
-      <a class="btn" href="kanban.html">Pipeline</a>
-      <a class="btn" href="agent-queue.html">Agent Queue</a>
-      <a class="btn" href="agents.html">Agents</a>
-      <a class="btn" href="api-usage.html">API Usage</a>
-      <a class="btn" href="cv-preview.html">CV Preview</a>
-      <a class="btn" href="cv-run.html" aria-current="page">CV Run</a>
+      <a class="btn" href="../status.html">Status</a>
+      <a class="btn" href="../kanban.html">Pipeline</a>
+      <a class="btn" href="../agent-queue.html">Agent Queue</a>
+      <a class="btn" href="../agents.html">Agents</a>
+      <a class="btn" href="../api-usage.html">API Usage</a>
+      <a class="btn" href="../cv-preview.html">CV Preview</a>
+      <a class="btn" href="../cv-run.html" aria-current="page">CV Run</a>
     </nav>
   </header>
 
@@ -85,8 +85,8 @@
 
         <div class="row">
           <button class="btn btn--primary" type="button" id="copyBtn">Copy command</button>
-          <a class="btn" id="previewLink" href="cv-preview.html">Open preview</a>
-          <a class="btn" id="kanbanLink" href="kanban.html">Open pipeline</a>
+          <a class="btn" id="previewLink" href="../cv-preview.html">Open preview</a>
+          <a class="btn" id="kanbanLink" href="../kanban.html">Open pipeline</a>
         </div>
       </section>
 
@@ -134,7 +134,7 @@
       document.getElementById('outPdf').textContent = `outputs/cv/${roleKey}/final.pdf`;
 
       const q = encodeURIComponent(`outputs/cv/${roleKey}/draft.md`);
-      document.getElementById('previewLink').setAttribute('href', `cv-preview.html?file=${q}`);
+      document.getElementById('previewLink').setAttribute('href', `../cv-preview.html?file=${q}`);
 
       return cmd;
     }
@@ -171,6 +171,6 @@
 
     buildCommand();
   </script>
-  <script src="ui/nav_v1.js"></script>
+  <script src="../ui/nav_v1.js"></script>
 </body>
 </html>
