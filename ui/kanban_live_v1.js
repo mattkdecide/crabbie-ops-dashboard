@@ -81,7 +81,7 @@ function escapeHtml(s) {
 function safeLink(url) {
   const u = (url ?? '').trim();
   if (!u) return '';
-  return `<a href="${escapeHtml(u)}" target="_blank" rel="noopener">Open listing ↗</a>`;
+  return `<a href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer" aria-label="Open listing (opens in a new tab)">Open listing ↗</a>`;
 }
 
 function cvPreviewLink(roleId) {
@@ -93,14 +93,26 @@ function cvPreviewLink(roleId) {
 }
 
 function renderCard(role) {
-  const title = escapeHtml(role.title || 'Untitled role');
+  const titleText = escapeHtml(role.title || 'Untitled role');
   const company = escapeHtml(role.company || '');
   const location = escapeHtml(role.location || '');
   const meta = [company, location].filter(Boolean).join(' · ');
 
+  const roleId = (role.role_id ?? '').trim();
+  const hasListing = !!(role.url ?? '').trim();
+  const hasCvPreview = !!roleId;
+  const hasAnyLink = hasListing || hasCvPreview;
+
   const lines = [];
-  lines.push(`<div class="item">`);
-  lines.push(`  <h3 class="item__title">${title}</h3>`);
+  lines.push(`<article class="item" role="listitem"${hasAnyLink ? '' : ` tabindex="0" aria-label="${titleText}"`}>`);
+
+  if (hasListing) {
+    const href = escapeHtml((role.url ?? '').trim());
+    lines.push(`  <h3 class="item__title"><a href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${titleText} (open listing in a new tab)">${titleText}</a></h3>`);
+  } else {
+    lines.push(`  <h3 class="item__title">${titleText}</h3>`);
+  }
+
   if (meta) lines.push(`  <div class="item__meta">${meta}</div>`);
 
   const quickLinks = [];
@@ -119,12 +131,13 @@ function renderCard(role) {
   if (role.cv_file) lines.push(`  <div class="item__small">CV: ${escapeHtml(role.cv_file)}</div>`);
   if (role.next_action) lines.push(`  <div class="item__small">Next: ${escapeHtml(role.next_action)}</div>`);
 
-  lines.push(`</div>`);
+  lines.push(`</article>`);
   return lines.join('\n');
 }
 
 function renderColumn(statusLabel, roles) {
-  const header = `${escapeHtml(statusLabel)} (${roles.length})`;
+  const label = escapeHtml(statusLabel);
+  const header = `${label} (${roles.length})`;
   const cards = roles
     .slice()
     .sort((a, b) => (a.role_id || '').localeCompare(b.role_id || ''))
@@ -132,12 +145,12 @@ function renderColumn(statusLabel, roles) {
     .join('\n');
 
   return `
-  <div class="column">
-    <div class="column__shell">
+  <section class="column" role="region" aria-label="Status ${label}">
+    <div class="column__shell" role="list" aria-label="${label} roles">
       <h2 class="column__header">${header}</h2>
       ${cards || ''}
     </div>
-  </div>`;
+  </section>`;
 }
 
 async function loadMapping() {

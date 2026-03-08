@@ -61,11 +61,11 @@ function cvPreviewLink(roleIdRaw) {
   if (!id) return '';
   const file = `outputs/cv/${encodeURIComponent(id)}/draft.md`;
   const q = encodeURIComponent(file);
-  return `<a href="cv-preview.html?file=${q}">CV preview ↗</a>`;
+  return `<a href="cv-preview.html?file=${q}" aria-label="Open CV preview">CV preview ↗</a>`;
 }
 
 function renderCard(t, statusMeta) {
-  const title = escapeHtml(t.title || 'Untitled task');
+  const titleText = escapeHtml(t.title || 'Untitled task');
   const taskId = escapeHtml(t.task_id || '');
   const roleIdRaw = (t.role_id ?? '').trim();
   const roleId = escapeHtml(roleIdRaw || '');
@@ -91,19 +91,22 @@ function renderCard(t, statusMeta) {
   const cvPrev = cvPreviewLink(roleIdRaw);
   if (cvPrev) links.push(cvPrev);
 
+  const hasAnyLink = links.length > 0;
+
   const lines = [];
-  lines.push('<div class="item">');
-  lines.push(`  <h3 class="item__title">${taskId ? `${taskId} · ` : ''}${title}</h3>`);
+  lines.push(`<article class="item" role="listitem"${hasAnyLink ? '' : ` tabindex="0" aria-label="${taskId ? `${taskId}. ` : ''}${titleText}"`}>`);
+  lines.push(`  <h3 class="item__title">${taskId ? `${taskId} · ` : ''}${titleText}</h3>`);
   if (metaParts.length) lines.push(`  <div class="item__meta">${metaParts.join(' · ')}</div>`);
   if (links.length) lines.push(`  <div class="item__small">${links.join(' · ')}</div>`);
   if (badges.length) lines.push(`  <div class="badges">${badges.join('')}</div>`);
   if (notes) lines.push(`  <div class="item__small">Notes: ${escapeHtml(notes)}</div>`);
-  lines.push('</div>');
+  lines.push(`</article>`);
   return lines.join('\n');
 }
 
 function renderColumn(statusKey, statusLabel, tasks) {
-  const header = `${escapeHtml(statusLabel || statusKey)} (${tasks.length})`;
+  const label = escapeHtml(statusLabel || statusKey);
+  const header = `${label} (${tasks.length})`;
   const cards = tasks
     .slice()
     .sort((a, b) => (a.task_id || '').localeCompare(b.task_id || ''))
@@ -111,12 +114,12 @@ function renderColumn(statusKey, statusLabel, tasks) {
     .join('\n');
 
   return `
-  <div class="column">
-    <div class="column__shell">
+  <section class="column" role="region" aria-label="Status ${label}">
+    <div class="column__shell" role="list" aria-label="${label} tasks">
       <h2 class="column__header">${header}</h2>
       ${cards || ''}
     </div>
-  </div>`;
+  </section>`;
 }
 
 async function loadMapping() {

@@ -102,11 +102,28 @@
   padding: var(--s3);
 }
 .item:hover{border-color:color-mix(in srgb, var(--accent) 22%, var(--border-2))}
+
+/* If a card itself is focusable (tabindex="0"), ensure it gets a strong focus ring.
+   (We still keep :focus-within for cards containing links/buttons.) */
+.item:focus-visible{
+  outline:none;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border-2));
+  box-shadow: var(--focus-strong);
+}
+
 .item:focus-within{
   border-color: color-mix(in srgb, var(--accent) 40%, var(--border-2));
   box-shadow: var(--focus);
 }
+
 .item__title{font-weight:700;font-size:var(--fs-2);margin:0 0 var(--s2) 0;line-height:var(--lh-tight)}
+
+/* Title links: inherit text colour so the card reads as a single unit.
+   Underline-on-hover remains via global link styling. */
+.item__title a,
+.item__title a:visited{color:inherit}
+.item__title a{font-weight:inherit}
+
 .item__meta{font-size:var(--fs-1);color:var(--text-2);line-height:1.35}
 .item__small{font-size:var(--fs-1);color:var(--text-3);margin-top:var(--s2)}
 

@@ -1,5 +1,8 @@
 # UX Journey Maps v1
 
+Owner: UX (Vantage)
+Last updated: 2026-03-08 (20:25 UTC)
+
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
 - `ops/job-pipeline.csv` (jobs + next actions)
@@ -41,6 +44,8 @@ UX requirements (implementation-ready):
   - default input value blank (or a known-good demo file), not a role-specific path that may not exist.
 
 Current build note:
+- `ops/cv-run.html` generates a deterministic pipeline command (copy/paste) and links directly to preview via:
+  - `cv-preview.html?file=outputs/cv/<role_key>/draft.md`
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
 - It supports query param `?file=outputs/cv/<role_id>/draft.md`.
 
@@ -69,7 +74,7 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 ## 5) Ops UI Navigation Journey (orientation)
 **Primary artefacts:**
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
-- Pages: `ops/index.html`, `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/api-usage.html`
+- Pages: `ops/index.html`, `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/cv-run.html`, `ops/api-usage.html`
 - Behaviour glue: `ops/ui/nav_v1.js` (active-link semantics + mobile menu)
 
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
@@ -82,29 +87,29 @@ Current build note:
 
 ## 6) Activity Feed Journey (events-first with derived fallback)
 **Primary artefacts:**
-- Future canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
-- Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
-- Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full, to create)
+- Canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
+- Fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
+- UI targets: `ops/status.html` (compact “What changed”), `ops/activity.html` (full feed)
 
 User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.
 
 Journey:
 1. Open `ops/status.html`.
-2. See “What changed” module.
-3. If `ops/events/` exists, render first N events.
-4. If `ops/events/` is missing, render **derived activity**:
-   - job status changes inferred from `job-pipeline.csv` `status` + `last_action` + `updated_at` (if present)
-   - task status changes inferred from `agent-tasks.csv` `status` + `updated_at`
-5. Click through to `ops/activity.html` for the full list.
+2. See “What changed” module (10 most recent items) with `View all →` link.
+3. Open `ops/activity.html` for the full list (50 items v1), filterable.
+
+Source selection (v1):
+- If `ops/events/` exists: render first N events from JSONL.
+- Else: render **derived activity**:
+  - job changes inferred from `ops/job-pipeline.csv` `status` + `next_action` + `updated_at` (if present)
+  - task changes inferred from `ops/agent-tasks.csv` `status` + `updated_at`
 
 Implementation notes (v1, build-ready):
-- Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
-- Prefer events when present. Seed file now exists: `ops/events/events-2026-03.jsonl`.
-- CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
-  - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
-  - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).
-- Derived rules must be explicitly documented in `ops/ux/HANDOFF_NOTES_V1.md` to avoid drift.
+- Normalise UI records to: `{time, entity_type, entity_id, summary, severity, href}`.
+- Prefer events when present. Seed file exists: `ops/events/events-2026-03.jsonl`.
+- Derived rules (exact) live in `ops/ux/HANDOFF_NOTES_V1.md` Section 1.4, and must be kept in sync with build to prevent drift.
+- Data hygiene blocker: `ops/job-pipeline.csv` still lacks `updated_at` (handoff Section 1.8); until added, use `last_action` as best-effort timestamp.
 
 ---
 
@@ -122,4 +127,5 @@ Implementation notes (v1, build-ready):
 - `ops/agent-queue.html` (task workload + blockers)
 - `ops/agents.html` (agent roster/index, secondary entry to Agents workspace)
 - `ops/cv-preview.html` (CV layout/QA/run status; supports `?file=` draft loading)
+- `ops/cv-run.html` (CV command generator; links to preview with correct role_key path)
 - (planned) `ops/activity.html` (global event feed; falls back to derived activity until full events)

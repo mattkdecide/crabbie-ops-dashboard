@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (18:24 UTC)
+Last updated: 2026-03-08 (20:25 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -17,6 +17,7 @@ Target pages:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
+- `ops/cv-run.html`
 - `ops/api-usage.html` (currently in the primary nav; keep consistent)
 
 Implementation approach (static HTML v1):
@@ -155,6 +156,24 @@ Deliverables (v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
+
+### 1.9 Build handoff (concrete): Deep-link + highlight an entity from Activity
+Why: without deep links, Activity becomes a dead-end list. Even before true “detail pages” exist, we can route users to the right surface and visually focus the target row.
+
+Deliverables (v1):
+1) Support query param on `ops/activity.html`: `?focus=task:T-0303` or `?focus=job:R-2026-0010`.
+2) When a timeline item is clicked:
+   - Tasks route to `agent-queue.html?focus=<task_id>`
+   - Jobs route to `kanban.html?focus=<role_id>`
+3) On `ops/agent-queue.html` and `ops/kanban.html`, implement a tiny helper in page JS:
+   - if `focus` is present, scroll the matching row into view and apply a temporary highlight class for ~3 seconds.
+
+Markup expectation (minimal):
+- Add `data-task-id="T-XXXX"` on task rows in `agent-queue.html`.
+- Add `data-role-id="R-YYYY"` on job rows/cards in `kanban.html`.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5 usability extension)
 
 ---
 

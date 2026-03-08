@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-08 (18:24 UTC)
+Last updated: 2026-03-08 (20:25 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -13,6 +13,7 @@ In scope build files:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
+- `ops/cv-run.html`
 - `ops/api-usage.html`
 
 Planned build file:
@@ -34,7 +35,7 @@ Supporting specs:
 - a working “Home” link that resolves to an existing page
   - **v1 rule:** Home MUST link to `index.html` (landing hub)
 - a visible page title (`h1`)
-- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, API Usage
+- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, API Usage, CV Preview, CV Run
 - visible focus states for all interactive elements
 
 **And** the page loads `ui/nav_v1.js` so that:
