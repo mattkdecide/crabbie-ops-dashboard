@@ -21,6 +21,9 @@
 - Control Tower refreshed: reflected `T-0206` as **Blocked** pending nav reuse decision; added decision request on static masthead implementation approach.
 - Control Tower refreshed again: marked decisions resolved (taxonomy + nav copy/paste), captured `T-0204` as **Approved** and `T-0303` as **In Progress**, and updated priority stack accordingly.
 
+## 2026-03-08 (PM Control Tower)
+- Updated Control Tower: unblocked T-0206 (Blocked → Ready) per nav copy/paste decision; refreshed top priorities, blockers/hygiene, and added AC for T-0304 + AC-8 fix.
+
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
   1. latest increment log,
@@ -37,3 +40,7 @@
 - Additional reference direction captured: explicit memory controls/surfaces (memory flush/search/session-memory), visible security-scan trust indicators for downloadable modules, structured memory architecture views, and simple system-overview diagrams for onboarding/explainability.
 - Additional workflow references captured: meeting-to-actions pipeline with approval gating (human-in-loop before task creation), RAG knowledge-base pipeline (multi-source ingest -> embed -> SQLite+vectors -> plain-English query), and advisory-council pattern (parallel specialist analyses plus synthesiser and feedback loop).
 - Additional ops references captured: automated DB discovery/backups with encryption and retention, health monitoring heartbeat/checklist, config/doc drift monitoring, and update notification pattern in chat. Self-update actions remain explicit-approval only.
+
+## 2026-03-08 (BA)
+- Groomed ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md to explicit Draft/Refined/Ready structure; moved PRD-006 to Refined and expanded into implementation-ready acceptance criteria, edge cases, dependencies, and decision requests.
+- Updated ops/agent-tasks.csv: added T-0305 (Squad Business Analyst Continuous) with run notes.

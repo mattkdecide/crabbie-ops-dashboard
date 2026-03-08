@@ -1,17 +1,15 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-08 12:29 UTC
+**Last updated:** 2026-03-08 15:32 UTC
 
 ## 1) Backlog status changes (since last capture)
 
 ### Moved to Done
-- No additional items moved to **Done** since 11:17 UTC capture.
+- No additional items moved to **Done** since 12:29 UTC capture.
 
 ### Status changed (important)
-- **T-0204** Implement canonical CRM status mapping spec (Ledger) → **Ready/Proposed → Approved**
-  - Matt decision bundle captured in `ops/UPDATE_CAPTURE.md`.
-- **T-0303** Spec + handoff for derived Activity feed (Vantage) → **Backlog → In Progress**
-  - Seed events feed added: `ops/events/events-2026-03.jsonl`.
+- **T-0206** Expand live ops site navigation + artefact links (Rivet) → **Blocked → Ready**
+  - Unblocked per Matt decision: v1 approach = **copy/paste masthead/nav block** across static pages; keep the “source-of-truth” snippet in `ops/ux/MASTHEAD_NAV_SPEC_V1.md`.
 
 ### Notable progress (still In Progress)
 - **T-0205** CV pipeline artefact manifest output (Forge) → progressing; AC confirmed below.
@@ -26,10 +24,10 @@
 
 1. **T-0204 – Canonical CRM status mapping spec (Ledger) [Approved]**
    - Goal: lock taxonomy + mapping across CSV/DB/UI so statuses stop drifting.
-2. **T-0205 – CV pipeline artefact manifest output (Forge)**
+2. **T-0206 – Live ops site navigation + artefact links (Rivet) [Ready]**
+   - Goal: implement masthead/nav v1 copy/paste per `ops/ux/MASTHEAD_NAV_SPEC_V1.md`, then finish AC-6 links on `ops/status.html`.
+3. **T-0205 – CV pipeline artefact manifest output (Forge)**
    - Goal: deterministic, role_id-keyed outputs + `qa.json` so CV runs are inspectable and automatable.
-3. **T-0206 – Live ops site navigation + artefact links (Rivet) [Unblocked]**
-   - Goal: implement copy/paste masthead/nav per `ops/ux/MASTHEAD_NAV_SPEC_V1.md`, then finish AC-6 links on `ops/status.html`.
 
 ---
 
@@ -81,10 +79,12 @@
 - Links resolve locally (file paths) and in published mode (relative URLs) without breakage.
 - Includes a single “Latest update” block pulling from `ops/UPDATE_CAPTURE.md` (manual is fine for now).
 
-### T-0303 (Derived Activity feed spec + handoff)
-- `ops/ux/HANDOFF_NOTES_V1.md` section 1.4 is implemented as either:
-  - an `ops/activity.html` page, or
-  - a module rendered inside `ops/status.html`.
-- If `ops/events/events-YYYY-MM.jsonl` exists, timeline renders from it.
-- If it does not exist, timeline renders from derived sources and shows:
-  - `Event feed unavailable, showing derived activity.`
+### T-0304 (Home-link fix + remove per-page active-nav classes)
+- Home/logo link MUST resolve to `status.html` (per AC-1a v1 rule) until an `index.html` home exists.
+- Remove hard-coded “active” classes from pages and rely on `nav_v1.js` + `aria-current="page"`.
+- Confirm `ops/api-usage.html` is included in the primary nav set across pages.
+
+### AC-8 (CV Preview default path) — quick fix
+- Update `ops/cv-preview.html` default draft path to either:
+  - blank + helper text, or
+  - an example file that exists in the repo/site.
