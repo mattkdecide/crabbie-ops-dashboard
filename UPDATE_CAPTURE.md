@@ -21,6 +21,7 @@
 - Control Tower refreshed: reflected `T-0206` as **Blocked** pending nav reuse decision; added decision request on static masthead implementation approach.
 - Control Tower refreshed again: marked decisions resolved (taxonomy + nav copy/paste), captured `T-0204` as **Approved** and `T-0303` as **In Progress**, and updated priority stack accordingly.
 - BA grooming pass: updated `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` to add explicit Grooming vs Delivery fields, and expanded PRD-006 (Activity Timeline) into implementation-ready acceptance criteria + edge cases + decision requests; created task `T-0305` (Activity Timeline implementation) in `ops/agent-tasks.csv`.
+- BA grooming pass: expanded PRD-003 (CV Run Flow) into implementation-ready acceptance criteria + edge cases + decision requests; moved PRD-003 Grooming state to **Ready**; created task `T-0307` (confirm CV Run inputs/QA gate/idempotency decisions) in `ops/agent-tasks.csv`.
 
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
@@ -39,3 +40,4 @@
 - Additional workflow references captured: meeting-to-actions pipeline with approval gating (human-in-loop before task creation), RAG knowledge-base pipeline (multi-source ingest -> embed -> SQLite+vectors -> plain-English query), and advisory-council pattern (parallel specialist analyses plus synthesiser and feedback loop).
 - Additional ops references captured: automated DB discovery/backups with encryption and retention, health monitoring heartbeat/checklist, config/doc drift monitoring, and update notification pattern in chat. Self-update actions remain explicit-approval only.
 - PM Control Tower refresh: marked **T-0204** Done and moved **T-0206** to Ready (unblocked). Priority stack updated to T-0205/T-0206/T-0305.
+- Squad PM Control Tower nightly refresh: aligned `ops/CONTROL_TOWER.md` to current task states (incl. **T-0303** now **Done**), re-ranked next 24–48h priorities, and surfaced decision bundle for PRD-003 (T-0307).

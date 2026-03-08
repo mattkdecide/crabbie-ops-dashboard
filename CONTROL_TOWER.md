@@ -1,12 +1,14 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-08 18:34 UTC
+**Last updated:** 2026-03-08 21:34 UTC
 
 ## 1) Backlog status changes (since last capture)
 
 ### Moved to Done
 - **T-0204** Implement canonical CRM status mapping spec (Ledger) → **Approved/Ready → Done**
   - Delivered: `ops/crm/STATUS_MAPPING_V1.md` + `ops/crm/status-mapping-v1.json`.
+- **T-0303** Spec + handoff for derived Activity feed (Vantage) → **In Progress → Done**
+  - Notes: spec complete; implementation work now sits with Rivet (T-0305).
 
 ### Status changed (important)
 - **T-0206** Expand live ops site navigation + artefact links (Rivet) → **Blocked → Ready**
@@ -14,30 +16,36 @@
 
 ### Notable progress (still In Progress)
 - **T-0205** CV pipeline artefact manifest output (Forge) → progressing; AC confirmed below.
-- **T-0303** Spec + handoff for derived Activity feed (Vantage) → in progress; PRD-006 is implementation-ready.
-- **T-0304** Implement masthead home-link fix + nav_v1.js wiring (Rivet) → in progress.
+- **T-0304** Implement masthead home-link fix + `nav_v1.js` wiring (Rivet) → in progress.
 
 ---
 
 ## 2) Top 3 priorities (next 24–48h)
 
-1. **T-0205 – CV pipeline artefact manifest output (Forge)**
+1. **T-0304 – Masthead home-link fix + `nav_v1.js` wiring (Rivet)**
+   - Goal: remove per-page “active” hacks, ensure `aria-current` is set by JS, and Home link behaviour is consistent.
+   - Why now: reduces UI drift across pages and unblocks clean navigation work in T-0206/T-0305.
+
+2. **T-0205 – CV pipeline artefact manifest output (Forge)**
    - Goal: deterministic, role_id-keyed outputs + `qa.json` so CV runs are inspectable and automatable.
-2. **T-0206 – Live ops site navigation + artefact links (Rivet) [Ready]**
-   - Goal: implement AC-1/AC-6 links on `ops/status.html` and ensure published-mode relative URLs are correct.
+
 3. **T-0305 – Activity Timeline page (Rivet) [Ready]**
-   - Goal: ship `ops/activity.html` events-first JSONL reader with derived fallback (PRD-006).
+   - Goal: ship `ops/activity.html` (events-first JSONL reader with derived fallback) per PRD-006.
 
 ---
 
 ## 3) Blockers + decision requests
 
-### Decisions (resolved)
+### Decisions (locked)
 - **Status taxonomy (T-0204):** locked and implemented. Source-of-truth: `ops/crm/STATUS_MAPPING_V1.md`.
-- **Static masthead/nav approach (T-0206):** locked. v1 method = **copy/paste masthead block** across static pages (with `nav_v1.js` handling active tab styling).
+- **Static masthead/nav approach (T-0206):** locked. v1 method = **copy/paste masthead block** across static pages (with `nav_v1.js` handling active-tab styling).
 
-### Remaining decision requests from Matt
-- **Paused role work (T-0001–T-0006):** confirm when to restart, and which single role to resume first (u&u vs Metro) + provide/confirm role brief inputs.
+### Decision requests from Matt (pending)
+- **Resume paused role work (T-0001–T-0006):** confirm when to restart, and which single role to resume first (u&u vs Metro) + provide/confirm role brief inputs.
+- **PRD-003 CV Run Flow (T-0307):** confirm the v1 decision bundle:
+  1) minimum required inputs + locations,
+  2) QA gate list (must-pass vs warn-only) + `qa.json` schema,
+  3) rerun/idempotency strategy (new-run folders vs atomic overwrite/backups).
 
 ### Operational blockers / hygiene
 - **Task list invariant:** keep `agent-tasks.csv` “task_id is unique” (watch for accidental duplicates).
@@ -49,7 +57,7 @@
 
 ### T-0205 (CV pipeline artefact manifest output)
 - Produces a single manifest file per role run, keyed by **role_id** (and timestamp/run_id).
-- Manifest enumerates artefacts with **paths + content type + human label** (e.g., `cv.md`, `cv.pdf`, `cover_letter.md`, `qa.json`).
+- Manifest enumerates artefacts with **paths + content type + human label** (e.g. `cv.md`, `cv.pdf`, `cover_letter.md`, `qa.json`).
 - Includes a `qa.json` with at minimum:
   - relevance checklist (requirements coverage %, critical gaps list)
   - formatting checklist (2-page constraint indicator, section order validation)
