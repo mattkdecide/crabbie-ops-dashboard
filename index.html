@@ -13,17 +13,18 @@
   <header class="topbar" role="banner">
     <div class="topbar__row">
       <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
-      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
     </div>
     <h1 class="topbar__title">Crabbie Operations</h1>
     <p class="topbar__sub">Live product build hub: pipeline, agents, UX/UI artefacts, architecture, and downloads.</p>
-    <nav class="topbar__actions" data-nav-links aria-label="Primary">
+    <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
       <a class="btn" href="status.html">Status</a>
       <a class="btn" href="kanban.html">Pipeline</a>
       <a class="btn" href="agent-queue.html">Agent Queue</a>
       <a class="btn" href="agents.html">Agents</a>
       <a class="btn" href="api-usage.html">API Usage</a>
       <a class="btn" href="cv-preview.html">CV Preview</a>
+      <a class="btn" href="cv-run.html">CV Run</a>
     </nav>
   </header>
 
@@ -34,6 +35,7 @@
         <div class="item"><h3 class="item__title"><a href="kanban.html">Open Pipeline Kanban</a></h3><div class="item__small">Live job records and stage movement</div></div>
         <div class="item"><h3 class="item__title"><a href="agent-queue.html">Open Agent Queue</a></h3><div class="item__small">Task ownership, status, and blockers</div></div>
         <div class="item"><h3 class="item__title"><a href="agents.html">Open Specialist Agents</a></h3><div class="item__small">Profiles, functions, capacity gauges, editable notes</div></div>
+        <div class="item"><h3 class="item__title"><a href="cv-run.html">Run CV Pipeline (local)</a></h3><div class="item__small">Generate the terminal command, run, then preview the draft</div></div>
       </div>
     </section>
 

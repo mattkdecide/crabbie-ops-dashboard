@@ -20,6 +20,7 @@
 - UI surface iteration pass: responsive layout + a11y affordances (skip-link target/focus), standardised sticky offset vars, and tightened CSS/design language docs (`ops/status.html`, `ops/agent-queue.html`, `ops/cv-preview.html`, `ops/ui/*`).
 - Control Tower refreshed: reflected `T-0206` as **Blocked** pending nav reuse decision; added decision request on static masthead implementation approach.
 - Control Tower refreshed again: marked decisions resolved (taxonomy + nav copy/paste), captured `T-0204` as **Approved** and `T-0303` as **In Progress**, and updated priority stack accordingly.
+- BA grooming pass: updated `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` to add explicit Grooming vs Delivery fields, and expanded PRD-006 (Activity Timeline) into implementation-ready acceptance criteria + edge cases + decision requests; created task `T-0305` (Activity Timeline implementation) in `ops/agent-tasks.csv`.
 
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
@@ -37,3 +38,4 @@
 - Additional reference direction captured: explicit memory controls/surfaces (memory flush/search/session-memory), visible security-scan trust indicators for downloadable modules, structured memory architecture views, and simple system-overview diagrams for onboarding/explainability.
 - Additional workflow references captured: meeting-to-actions pipeline with approval gating (human-in-loop before task creation), RAG knowledge-base pipeline (multi-source ingest -> embed -> SQLite+vectors -> plain-English query), and advisory-council pattern (parallel specialist analyses plus synthesiser and feedback loop).
 - Additional ops references captured: automated DB discovery/backups with encryption and retention, health monitoring heartbeat/checklist, config/doc drift monitoring, and update notification pattern in chat. Self-update actions remain explicit-approval only.
+- PM Control Tower refresh: marked **T-0204** Done and moved **T-0206** to Ready (unblocked). Priority stack updated to T-0205/T-0206/T-0305.

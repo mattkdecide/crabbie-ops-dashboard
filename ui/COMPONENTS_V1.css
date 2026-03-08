@@ -217,8 +217,10 @@
 
 /* Tables (API usage + future logs)
    Accessibility: ensure horizontal scroll on small screens instead of squishing.
+   UX: provide a clear focus ring on the scroll region for keyboard users.
 */
 .table-wrap{overflow:auto;max-width:100%;border-radius:var(--r2)}
+.table-wrap:focus-visible{outline:none;box-shadow:var(--focus-strong)}
 .table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border-2)}
 .table caption{caption-side:top;text-align:left;padding:var(--s3) var(--s3) 0 var(--s3);color:var(--text-2);font-size:var(--fs-1)}
 .table th,.table td{padding:10px;vertical-align:top;border-bottom:1px solid var(--border-2);font-size:var(--fs-1);text-align:left}
