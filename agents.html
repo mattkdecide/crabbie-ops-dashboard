@@ -13,6 +13,8 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <header class="topbar" role="banner">
     <div class="topbar__row">
       <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
@@ -29,7 +31,7 @@
     </nav>
   </header>
 
-  <main class="profiles" id="main"></main>
+  <main class="profiles" id="main" aria-label="Agent profiles" tabindex="-1"></main>
 
   <script>
     const AGENTS = [
@@ -45,7 +47,14 @@
     async function loadProfile(agent){
       const card = document.createElement('section');
       card.className = 'item';
-      card.innerHTML = `<h2 class='item__title'><span class='avatar'>${agent.emoji}</span> ${agent.name}</h2><div class='item__meta'>${agent.fn}</div><div data-agent-owner='${agent.key}'></div><textarea class='textarea' id='ta-${agent.key}'></textarea><div class='item__small'>Live source: agents/${agent.key}.md</div>`;
+      card.innerHTML = `
+        <h2 class='item__title'><span class='avatar'>${agent.emoji}</span> ${agent.name}</h2>
+        <div class='item__meta'>${agent.fn}</div>
+        <div data-agent-owner='${agent.key}'></div>
+        <label class='sr-only' for='ta-${agent.key}'>Local notes for ${agent.name} (saved in this browser only)</label>
+        <textarea class='textarea' id='ta-${agent.key}' aria-label='Local notes for ${agent.name}'></textarea>
+        <div class='item__small'>Live source: agents/${agent.key}.md</div>
+      `;
       document.getElementById('main').appendChild(card);
       const ta = document.getElementById('ta-'+agent.key);
       try {

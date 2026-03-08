@@ -1,56 +1,63 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-08 11:17 UTC
+**Last updated:** 2026-03-08 12:29 UTC
 
 ## 1) Backlog status changes (since last capture)
 
 ### Moved to Done
-- No additional items moved to **Done** since 08:17 UTC capture.
+- No additional items moved to **Done** since 11:17 UTC capture.
 
 ### Status changed (important)
-- **T-0206** Expand live ops site navigation and artefact links (Rivet) → **In Progress → Blocked**
-  - Blocker captured in task notes: need an agreed approach for sharing masthead/nav across static HTML pages (partials vs copy/paste).
+- **T-0204** Implement canonical CRM status mapping spec (Ledger) → **Ready/Proposed → Approved**
+  - Matt decision bundle captured in `ops/UPDATE_CAPTURE.md`.
+- **T-0303** Spec + handoff for derived Activity feed (Vantage) → **Backlog → In Progress**
+  - Seed events feed added: `ops/events/events-2026-03.jsonl`.
 
 ### Notable progress (still In Progress)
-- **T-0302** Squad UI Designer Continuous (Velvet) → continued iteration on ops UI surfaces (responsive layout, a11y affordances, masthead/sticky offset standardisation).
+- **T-0205** CV pipeline artefact manifest output (Forge) → progressing; AC confirmed below.
+- **T-0302** Squad UI Designer Continuous (Velvet) → shipped nav/a11y improvements:
+  - `nav_v1.js` now applies `aria-current` + active styling automatically.
+  - Mobile menu close behaviours (Escape/outside click/link click) + `aria-controls`.
+  - Focus-visible underline rule documented + applied.
 
 ---
 
 ## 2) Top 3 priorities (next 24–48h)
 
-1. **T-0205 – CV pipeline artefact manifest output (Forge)**
+1. **T-0204 – Canonical CRM status mapping spec (Ledger) [Approved]**
+   - Goal: lock taxonomy + mapping across CSV/DB/UI so statuses stop drifting.
+2. **T-0205 – CV pipeline artefact manifest output (Forge)**
    - Goal: deterministic, role_id-keyed outputs + `qa.json` so CV runs are inspectable and automatable.
-2. **T-0204 – Canonical CRM status mapping spec (Ledger)**
-   - Goal: unify taxonomy across CSV/DB/Kanban/UI to prevent drift and rework.
-3. **Unblock T-0206 – Static nav reuse decision (Rivet + Velvet)**
-   - Goal: pick the simplest v1 approach for consistent masthead/nav across `status.html`, `kanban.html`, `agent-queue.html`, `cv-preview.html` so we can keep shipping.
+3. **T-0206 – Live ops site navigation + artefact links (Rivet) [Unblocked]**
+   - Goal: implement copy/paste masthead/nav per `ops/ux/MASTHEAD_NAV_SPEC_V1.md`, then finish AC-6 links on `ops/status.html`.
 
 ---
 
 ## 3) Blockers + decision requests
 
-### Decisions needed from Matt
-1. **Status taxonomy final call (unblocks T-0204):**
-   - Confirm the canonical set for *Job/Application/Task* lifecycles.
-   - Proposed minimal set (edit as needed):
-     - **Job:** Identified → Shortlisted → Dropped
-     - **Application:** Not started → Drafting → Submitted → Interviewing → Offer → Rejected → Withdrawn
-     - **Task:** Backlog → In Progress → Blocked → Done
-2. **Static masthead/nav implementation approach (unblocks T-0206):**
-   - Recommend for v1: **copy/paste the masthead block** into each static HTML page and keep it “source-of-truth” documented in `ops/ux/MASTHEAD_NAV_SPEC_V1.md`.
-   - Alternative: lightweight build step/templating (adds overhead, but avoids drift).
-3. **Resume paused role work? (affects T-0001–T-0006):**
-   - Keep on hold, or pick one role to restart (u&u vs Metro) and provide/confirm the role brief inputs.
-4. **Jobgether “Head of Marketing” go/no-go (affects T-0115–T-0117):**
-   - Proceed with identity validation + role brief, or deprioritise until more signal.
+### Decisions (resolved)
+- **Status taxonomy (T-0204):** approved by Matt (see `ops/UPDATE_CAPTURE.md`). Proceed to implementation + migration notes.
+- **Static masthead/nav approach (T-0206):** approved by Matt. v1 approach = **copy/paste masthead block** across static pages; document the “source-of-truth” snippet in `ops/ux/MASTHEAD_NAV_SPEC_V1.md`.
 
-### Operational blockers
-- **Task list hygiene:** `agent-tasks.csv` currently contains a duplicate `T-0302` row (same task_id twice). Decide whether to de-dupe to preserve “task_id is unique” invariant.
-- **Due dates in `agent-tasks.csv` are stale** (many are 2026-03-01/02). After priority confirmation, roll them forward to restore scheduling signal.
+### Remaining decision requests from Matt
+- **Paused role work (T-0001–T-0006):** confirm when to restart, and which single role to resume first (u&u vs Metro) + provide/confirm role brief inputs.
+
+### Operational blockers / hygiene
+- **Task list invariant:** `agent-tasks.csv` previously had a duplicate `T-0302` row. Re-check and de-dupe if it reappears so “task_id is unique” remains true.
+- **Stale due dates:** many tasks still show 2026-03-01/02. After confirming the next sprint window, roll dates forward so the file regains scheduling signal.
 
 ---
 
 ## 4) Acceptance criteria updates (make work testable)
+
+### T-0204 (Canonical CRM status mapping spec) — implementation-ready
+- Defines canonical enums for Job/Application/Task and a mapping table to:
+  - `job-pipeline.csv` statuses
+  - `agent-tasks.csv` statuses
+  - DB schema (existing + planned)
+  - UI labels/badges
+- Includes transition rules (allowed next states) and “terminal” states.
+- Provides a migration note: what existing rows should map to, plus how to handle unknowns safely.
 
 ### T-0205 (CV pipeline artefact manifest output)
 - Produces a single manifest file per role run, keyed by **role_id** (and timestamp/run_id).
@@ -61,16 +68,11 @@
   - risks/warnings (missing JD fields, low-confidence matches)
 - Output paths are deterministic under a single directory, e.g. `ops/cv-pipeline/out/<role_id>/<run_id>/...`.
 
-### T-0204 (Canonical CRM status mapping spec)
-- Defines canonical enums for Job/Application/Task and a mapping table to:
-  - `agent-tasks.csv` statuses
-  - DB schema (existing + planned)
-  - UI labels/badges
-- Includes transition rules (allowed next states) and “terminal” states.
-- Provides a short migration note: what existing rows should map to.
-
 ### T-0206 (Live ops site navigation + artefact links)
 - Meets AC-1/AC-6 from `ops/ux/ACCEPTANCE_CRITERIA_V1.md`.
+- Masthead/nav consistency is enforced via the agreed v1 method:
+  - identical masthead block copy/pasted across pages
+  - `nav_v1.js` applies active tab (`aria-current`) automatically
 - `ops/status.html` exposes visible links to:
   - Agents docs (`ops/agents/*`)
   - Design roadmap (`ops/design/*`)
