@@ -34,3 +34,8 @@
 - Font family selection for production brand layer
 - Accent palette refinement (neon vs muted premium)
 - Iconography style (outlined vs duotone)
+
+## Brand Direction Update (2026-03-08)
+- Crabbie mascot image adopted as primary site/home logo (`ops/ui/assets/crabbie-logo.jpg`).
+- Subagent visual language should derive emoji/icon choices from the mascot tone: playful but sharp.
+- Palette experiments should include a bright accent lane inspired by mascot colours for non-critical highlights while preserving professional readability.

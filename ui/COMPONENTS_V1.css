@@ -62,6 +62,7 @@
 
 .topbar__row{display:flex;align-items:center;justify-content:space-between;gap:var(--s2)}
 .home-logo{display:inline-flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-weight:700}
+.home-logo img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--border-2)}
 .nav-toggle{display:none}
 .topbar__actions{margin-top:var(--s2);display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
 
