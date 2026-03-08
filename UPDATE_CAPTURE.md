@@ -1,6 +1,9 @@
 # Update Capture
 
 ## 2026-03-03
+
+## 2026-03-08
+- Matt approved decision bundle (1-7): CRM stage model and triage structure, shared static nav approach, two-phase subagent plan, restart u&u role track only, Jobgether no-go, AUSTRAC-style role deprioritisation, CV preview path restriction to `outputs/cv/**`.
 - Master project brief ingested and anchored to `ops/master-project-brief.md`.
 - System audit complete (agents/memory/tools/files/runtime).
 - Gap analysis complete.

@@ -25,7 +25,7 @@ T-0117,R-2026-0010,Draft tailored CV for Head of Marketing remote role,Forge,Hig
 T-0201,,Create agent profile docs and sprint plans,Tide,High,Done,2026-03-07,2026-03-07,2026-03-07,Published under ops/agents
 T-0202,,Produce UX journey map artefacts v1,Vantage,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/ux/JOURNEY_MAPS_V1.md
 T-0203,,Publish design roadmap incl typography and palette decisions,Polish,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/design/DESIGN_ROADMAP_V1.md
-T-0204,,Implement canonical CRM status mapping spec,Ledger,High,In Progress,2026-03-08,2026-03-07,2026-03-07,Align CSV/DB/Kanban taxonomy
+T-0204,,Implement canonical CRM status mapping spec,Ledger,High,Approved,2026-03-08,2026-03-08,2026-03-07,Decision approved by Matt; proceed with implementation.
 T-0205,,Wire CV pipeline artefact manifest output,Forge,High,In Progress,2026-03-08,2026-03-07,2026-03-07,role_id keyed outputs + qa.json
 T-0206,,Expand live ops site navigation and artefact links,Rivet,Medium,Blocked,2026-03-08,2026-03-07,2026-03-08,Blocked: need shared layout/partials or agreed copy-paste strategy for masthead + nav across static HTML pages
 T-0207,,Spec persistent masthead navigation for design/build,Vantage,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/ux/MASTHEAD_NAV_SPEC_V1.md
