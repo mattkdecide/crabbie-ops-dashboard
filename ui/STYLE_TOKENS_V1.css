@@ -58,6 +58,7 @@
   --paper-muted: #475569;
   --paper-border: #e2e8f0;
   --paper-accent: #1d4ed8;
+  --paper-focus: 0 0 0 3px rgba(29,78,216,.35);
 
   /* Elevation + layout */
   --shadow-1: 0 8px 24px rgba(0,0,0,.28);

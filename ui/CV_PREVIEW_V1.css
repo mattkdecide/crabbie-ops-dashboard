@@ -16,7 +16,8 @@
 
 .cv-paper a{color:var(--paper-accent)}
 .cv-paper a:hover{text-decoration:underline}
-.cv-paper a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px}
+/* Use paper-specific focus so the ring doesn’t look too “neon” on white */
+.cv-paper a:focus-visible{outline:none;box-shadow:var(--paper-focus, var(--focus-strong));border-radius:8px}
 
 .cv-h1{font-size:26px;line-height:1.15;margin:0 0 8px 0;letter-spacing:-0.01em}
 .cv-lede{margin:0 0 14px 0;color:var(--paper-muted);font-size:13px;line-height:1.4}

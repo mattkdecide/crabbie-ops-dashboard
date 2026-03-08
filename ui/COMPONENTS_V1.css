@@ -62,10 +62,32 @@
 .item a{color:var(--link)}
 .item a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px}
 
-/* Buttons (dashboard actions) */
-.btn{appearance:none;border:1px solid var(--border-2);background:var(--surface-2);color:var(--text);padding:8px 12px;border-radius:10px;font:inherit;line-height:1.1;cursor:pointer}
+/* Buttons (dashboard actions)
+   Notes:
+   - Designed to work on <button> and <a>.
+   - Use aria-disabled="true" for disabled anchors.
+*/
+.btn{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border:1px solid var(--border-2);
+  background:var(--surface-2);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:10px;
+  font:inherit;
+  line-height:1.1;
+  cursor:pointer;
+  user-select:none;
+  text-decoration:none;
+}
 .btn:hover{border-color:color-mix(in srgb, var(--accent) 40%, var(--border-2));box-shadow:var(--shadow-1)}
+.btn:active{transform:translateY(1px)}
 .btn:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+.btn[disabled], .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;box-shadow:none}
 .btn--primary{background:color-mix(in srgb, var(--accent) 22%, var(--surface-2));border-color:color-mix(in srgb, var(--accent) 45%, var(--border-2))}
 .btn--danger{background:color-mix(in srgb, var(--danger-bg) 70%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 35%, var(--border-2));color:var(--danger-fg)}
 
