@@ -80,8 +80,9 @@ type TimelineItem = {
   - otherwise `info`
 
 ### CSV fallback rules (until full eventing)
-- Job row change: synthesise `summary` from `status` and `last_action`.
+- Job row change: synthesise `summary` from `status` and `last_action` (upgrade to `updated_at` once present in `ops/job-pipeline.csv`; see `ops/ux/HANDOFF_NOTES_V1.md` §1.8).
 - Task row change: synthesise `summary` from `status` + `notes` prefix.
+- Sort order: `occurredAt` descending (most recent first). If a row has no usable timestamp, exclude it from derived Activity to avoid random ordering.
 - Set `severity=warning` when `next_action` contains “Assess/Prep/Chase”, else `info`.
 
 ## 6) Empty, loading, and error states

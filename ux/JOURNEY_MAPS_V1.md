@@ -98,8 +98,10 @@ Implementation notes (v1, build-ready):
 - Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
 - Prefer events when present. Seed file now exists: `ops/events/events-2026-03.jsonl`.
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
-  - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
-  - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).
+  - **Required data hygiene (v1.1):** add `updated_at` (RFC3339) to `ops/job-pipeline.csv` and set it on every automated touch.
+  - Until then, fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
+  - For `ops/agent-tasks.csv`: use `updated_at` (already present).
+- Status labels shown in UI may remain human-friendly, but must normalise to canonical enums for events per `ops/crm/STATUS_MAPPING_V1.md` + `ops/architecture/EVENT_MODEL_V1.md` (see task T-0204).
 - Derived rules must be explicitly documented in `ops/ux/HANDOFF_NOTES_V1.md` to avoid drift.
 
 ---
