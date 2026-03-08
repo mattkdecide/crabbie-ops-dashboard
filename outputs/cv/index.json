@@ -1,0 +1,20 @@
+{
+  "drafts": [
+    {
+      "role_key": "R-2026-0017",
+      "path": "outputs/cv/R-2026-0017/draft.md"
+    },
+    {
+      "role_key": "R-2026-FAIL-001",
+      "path": "outputs/cv/R-2026-FAIL-001/draft.md"
+    },
+    {
+      "role_key": "R-2026-PASS-001",
+      "path": "outputs/cv/R-2026-PASS-001/draft.md"
+    },
+    {
+      "role_key": "R-2026-TEST-EY",
+      "path": "outputs/cv/R-2026-TEST-EY/draft.md"
+    }
+  ]
+}
