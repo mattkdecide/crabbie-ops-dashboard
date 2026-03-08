@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
   <meta charset='utf-8'>
@@ -6,78 +7,78 @@
   <link rel='stylesheet' href='ui/STYLE_TOKENS_V1.css'>
   <link rel='stylesheet' href='ui/COMPONENTS_V1.css'>
   <link rel='stylesheet' href='ui/CV_PREVIEW_V1.css'>
+  <style>
+    .cv-controls{max-width:var(--content-max);margin:12px auto 0;padding:0 var(--s4);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .cv-controls input{background:var(--surface-2);border:1px solid var(--border-2);color:var(--text);border-radius:10px;padding:9px 10px;min-width:300px;max-width:100%}
+    .cv-note{font-size:12px;color:var(--text-2)}
+    #renderedMd p{margin:0 0 10px 0;line-height:1.5}
+    #renderedMd h1,#renderedMd h2,#renderedMd h3{margin:14px 0 8px 0;line-height:1.2}
+    #renderedMd ul{margin:8px 0 12px 20px}
+    @media (max-width:640px){.cv-controls{padding:0 var(--s3)} .cv-controls input{min-width:100%}}
+  </style>
 </head>
 <body>
   <div class='topbar'>
     <h1 class='topbar__title'>CV Preview</h1>
-    <div class='topbar__sub'>Paper-in-dark presentation for on-screen review before PDF export.</div>
+    <div class='topbar__sub'>Document-quality preview. Load any generated draft markdown and print to PDF.</div>
     <div class='topbar__actions'>
       <button class='btn btn--primary' type='button' onclick='window.print()'>Print / Save PDF</button>
-      <a class='btn' href='kanban.html' style='display:inline-flex;align-items:center;gap:8px;text-decoration:none'>Back to Kanban</a>
+      <a class='btn' href='kanban.html'>Back to Kanban</a>
+      <a class='btn' href='status.html'>Status</a>
     </div>
+  </div>
+
+  <div class='cv-controls'>
+    <label class='cv-note' for='mdPath'>Draft file path</label>
+    <input id='mdPath' value='outputs/cv/R-2026-0017/draft.md' />
+    <button class='btn' id='loadBtn' type='button'>Load Draft</button>
+    <span class='cv-note'>Tip: use query param <code>?file=outputs/cv/&lt;role_id&gt;/draft.md</code></span>
   </div>
 
   <div class='cv-shell'>
     <article class='cv-paper' aria-label='Curriculum vitae preview'>
       <header>
         <h2 class='cv-h1'>Matt Kain</h2>
-        <p class='cv-lede'>Executive leader across growth, transformation, and digital strategy. Brisbane, AU · <a href='mailto:matt@example.com'>matt@example.com</a> · <a href='https://linkedin.com/in/...' target='_blank' rel='noopener'>LinkedIn</a></p>
+        <p class='cv-lede'>Strategic operator in growth, transformation, and digital performance. Brisbane, AU · <a href='mailto:hello@mattkain.com'>hello@mattkain.com</a></p>
       </header>
 
-      <div class='cv-grid'>
-        <section>
-          <div class='cv-section'>
-            <h3 class='cv-section__title'>Summary</h3>
-            <p style='margin:0;font-size:13.5px;line-height:1.5'>Replace this stub with the generated role-targeted summary. Keep to 3–4 lines for scanability.</p>
-          </div>
-
-          <div class='cv-section'>
-            <h3 class='cv-section__title'>Experience</h3>
-
-            <div class='cv-role'>
-              <p class='cv-role__title'>Role Title · Company</p>
-              <p class='cv-role__meta'>2022–2025 · Brisbane · Function/Domain</p>
-              <ul class='cv-role__bullets'>
-                <li>Outcome-first bullet with metrics (revenue, margin, CAC, pipeline, cycle time).</li>
-                <li>Second bullet: transformation programme scope, operating model, or platform work.</li>
-                <li>Third bullet: stakeholder leadership, governance, or board-level comms.</li>
-              </ul>
-            </div>
-
-            <div class='cv-role'>
-              <p class='cv-role__title'>Role Title · Company</p>
-              <p class='cv-role__meta'>2019–2022 · Location</p>
-              <ul class='cv-role__bullets'>
-                <li>Keep bullets tight: 1–2 lines each, no hanging orphans where possible.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <aside>
-          <div class='cv-section'>
-            <h3 class='cv-section__title'>Core strengths</h3>
-            <div>
-              <span class='cv-pill'>Growth strategy</span>
-              <span class='cv-pill'>Transformation</span>
-              <span class='cv-pill'>MarTech/AdTech</span>
-              <span class='cv-pill'>Operating models</span>
-              <span class='cv-pill'>Executive comms</span>
-            </div>
-          </div>
-
-          <div class='cv-section'>
-            <h3 class='cv-section__title'>Education</h3>
-            <p style='margin:0;color:var(--paper-muted);font-size:12.5px;line-height:1.45'>Degree, Institution (Year)</p>
-          </div>
-
-          <div class='cv-section'>
-            <h3 class='cv-section__title'>Links</h3>
-            <p style='margin:0;font-size:12.5px;line-height:1.6'>Portfolio: <a href='https://example.com' target='_blank' rel='noopener'>example.com</a></p>
-          </div>
-        </aside>
+      <div id='renderedMd'>
+        <p><strong>Ready for live content.</strong> Load a generated draft above to preview your actual role-tailored CV in this paper surface.</p>
+        <p>This view is now set up for responsive display and print export, and no longer relies on placeholder role bullets.</p>
       </div>
     </article>
   </div>
+
+  <script>
+    function mdToHtml(md){
+      let html = md
+        .replace(/^###\s+(.*)$/gm,'<h3>$1</h3>')
+        .replace(/^##\s+(.*)$/gm,'<h2>$1</h2>')
+        .replace(/^#\s+(.*)$/gm,'<h1>$1</h1>')
+        .replace(/^\-\s+(.*)$/gm,'<li>$1</li>');
+      html = html.replace(/(<li>.*<\/li>\n?)+/g, m => '<ul>'+m+'</ul>');
+      html = html.split(/\n\n+/).map(b => /<(h\d|ul|li)/.test(b) ? b : '<p>'+b.replace(/\n/g,'<br>')+'</p>').join('\n');
+      return html;
+    }
+
+    async function loadDraft(path){
+      const target = document.getElementById('renderedMd');
+      target.innerHTML = '<p>Loading draft…</p>';
+      try{
+        const res = await fetch(path + (path.includes('?') ? '&' : '?') + 't=' + Date.now());
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const md = await res.text();
+        target.innerHTML = mdToHtml(md);
+      }catch(e){
+        target.innerHTML = '<p><strong>Could not load draft.</strong> Check the file path and ensure it exists in the published site.</p><p class="cv-note">'+String(e)+'</p>';
+      }
+    }
+
+    const params = new URLSearchParams(location.search);
+    const qFile = params.get('file');
+    if(qFile) document.getElementById('mdPath').value = qFile;
+
+    document.getElementById('loadBtn').addEventListener('click', ()=>loadDraft(document.getElementById('mdPath').value.trim()));
+  </script>
 </body>
 </html>

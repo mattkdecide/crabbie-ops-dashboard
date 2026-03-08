@@ -93,5 +93,20 @@
 
 /* Density and readability guardrails */
 @media (max-width: 960px){
-  .column{min-width: 300px;max-width: 300px}
+  .topbar{padding:var(--s3) var(--s3)}
+  .topbar__title{font-size:18px}
+  .topbar__actions{gap:8px}
+  .btn{padding:8px 10px}
+  .board{padding:var(--s3)}
+  .column{min-width: 88vw;max-width: 88vw}
+}
+
+@media (max-width: 640px){
+  .topbar{position:sticky;top:0}
+  .topbar__sub{font-size:11px}
+  .topbar__actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{width:100%}
+  .board{gap:var(--s2)}
+  .column{min-width: 92vw;max-width: 92vw}
+  .item{margin:var(--s2);padding:var(--s2)}
 }
