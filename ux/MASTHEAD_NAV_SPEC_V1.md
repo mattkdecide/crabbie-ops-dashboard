@@ -80,15 +80,21 @@ Focus/accessibility:
 - Active tab should be obvious without relying on colour alone
 
 ## 6) Build Handoff (implementation tasks)
-1. Add masthead partial/component to shared template layer.
-2. Inject same masthead into:
-   - `ops/index.html`
+1. Implement masthead markup (copy-paste is acceptable for static v1).
+2. Inject the same masthead into (current build surfaces):
+   - `ops/status.html` (treat as “home” until `ops/index.html` exists)
    - `ops/kanban.html`
    - `ops/agent-queue.html`
+   - `ops/agents.html`
    - `ops/cv-preview.html`
-3. Add route-based active-tab binding.
-4. Add keyboard shortcut listener.
-5. Add badge data adapter (initially from CSV counts, later DB/API).
+3. Home link rule (avoid broken nav):
+   - Masthead logo/title link MUST go to `status.html` (not `index.html`) in v1.
+4. Active-tab + mobile menu behaviour:
+   - Prefer the existing script `ops/ui/nav_v1.js` to set `aria-current="page"` and apply `.btn--primary` based on URL.
+   - Do not hard-code active styles per page if `nav_v1.js` is present.
+5. Optional enhancements (v1+):
+   - Keyboard shortcut listener.
+   - Badge data adapter (initially from CSV counts, later DB/API).
 
 ## 7) Definition of Done
 - Same masthead rendered on all major pages.

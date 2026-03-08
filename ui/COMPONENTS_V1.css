@@ -62,9 +62,14 @@
 
 .topbar__row{display:flex;align-items:center;justify-content:space-between;gap:var(--s2)}
 .home-logo{display:inline-flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;font-weight:700}
+.home-logo:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:12px}
 .home-logo img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--border-2)}
+
 .nav-toggle{display:none}
+.nav-toggle:hover{border-color:color-mix(in srgb, var(--accent) 40%, var(--border-2));box-shadow:var(--shadow-1)}
+.nav-toggle:active{transform:translateY(1px)}
 .nav-toggle:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+
 .topbar__actions{margin-top:var(--s2);display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
 
 .board{display:flex;gap:var(--s3);overflow:auto;padding:var(--s4)}

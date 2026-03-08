@@ -66,9 +66,13 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 ## 5) Ops UI Navigation Journey (orientation)
 **Primary artefacts:**
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
-- Pages: `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/cv-preview.html`
+- Pages: `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/api-usage.html`
+- Behaviour glue: `ops/ui/nav_v1.js` (active-link semantics + mobile menu)
 
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
+
+Current build note:
+- Home/logo link must resolve to `status.html` (do not link to `index.html` until it exists).
 
 ---
 
@@ -112,4 +116,6 @@ Implementation notes (v1, build-ready):
 - `ops/status.html` (overview/launchpad, should link to UX artefacts + host compact Activity module)
 - `ops/kanban.html` (pipeline decisions, must surface next action per role)
 - `ops/agent-queue.html` (task workload + blockers)
+- `ops/agents.html` (agent roster/index, secondary entry to Agents workspace)
 - `ops/cv-preview.html` (CV layout/QA/run status; supports `?file=` draft loading)
+- (planned) `ops/activity.html` (global event feed; falls back to derived activity until full events)

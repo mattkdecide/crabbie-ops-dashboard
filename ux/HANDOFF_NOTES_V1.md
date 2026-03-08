@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (12:23 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -15,11 +15,13 @@ Target pages:
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
+- `ops/agents.html`
 - `ops/cv-preview.html`
+- `ops/api-usage.html` (currently in the primary nav; keep consistent)
 
 Implementation approach (static HTML v1):
 - Replace current `.topbar` blocks with a masthead component.
-- If a shared partial is not available, accept **copy-paste duplication** for v1 but keep the markup identical.
+- If a shared partial is not available, accept copy-paste duplication for v1 but keep the markup identical.
 - Ensure active tab is correct per page.
 
 Design dependencies:
@@ -44,7 +46,7 @@ Minimal v1 is acceptable:
 Target file: `ops/status.html`
 
 Current reality (verified 2026-03-08):
-- Status now links the full UX pack:
+- Status links the full UX pack:
   - `ux/JOURNEY_MAPS_V1.md`
   - `ux/MASTHEAD_NAV_SPEC_V1.md`
   - `ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
@@ -61,14 +63,14 @@ Source specs:
 - `ops/ux/IA_AND_NAV_V1.md` (Activity tab target)
 
 Deliverables (static v1):
-1) **Create `ops/activity.html`**
+1) Create `ops/activity.html`
    - Must include masthead (AC-1) and a page title `Activity`.
    - Must render a `<ol class="timeline">` list.
    - Data source order:
      1. if `ops/events/events-YYYY-MM.jsonl` exists → render first 50 lines
      2. else → render derived activity from CSVs (below)
 
-2) **Add compact module to `ops/status.html`**
+2) Add compact module to `ops/status.html`
    - Heading: `What changed` + link `View all →` to `activity.html`.
    - Render first 10 items using the same Timeline markup.
    - Empty state copy (exact): `No recent activity.`
@@ -78,7 +80,7 @@ Derived activity rules (fallback):
   - `entity_type=task`, `entity_id=task_id`
   - summary: `${status}: ${title}` (include `role_id` prefix if present)
   - href: `agent-queue.html` (v1), later deep-link by id
-- From `ops/job-pipeline.csv`: **no `updated_at` exists yet**, so use `last_action` as the timestamp.
+- From `ops/job-pipeline.csv`: no `updated_at` exists yet, so use `last_action` as the timestamp.
   - Include rows where `last_action` is within last 7 days.
   - `entity_type=job`, `entity_id=role_id`
   - summary: `${status}: ${title}` + `Next: ${next_action}` when present
@@ -97,10 +99,10 @@ Target file: `ops/cv-preview.html`
 Current reality (verified 2026-03-08):
 - Draft loader exists (input + fetch + lightweight markdown rendering).
 - Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
-- Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely **non-existent** on a fresh publish, creating a “broken by default” first impression.
+- Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish, creating a “broken by default” first impression.
 
 Build asks:
-- Set default to **blank** and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.
+- Set default to blank and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.
 - If hosted publicly, restrict load paths to `outputs/cv/**` only (same-origin) to reduce accidental file exposure.
 
 Acceptance reference:
@@ -122,6 +124,27 @@ Deliverables (static v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
+
+### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
+Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
+
+Current bug (needs fix):
+- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
+
+Deliverables (static v1):
+1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
+2) Ensure these pages load `ops/ui/nav_v1.js`:
+   - `ops/status.html`
+   - `ops/kanban.html`
+   - `ops/agent-queue.html`
+   - `ops/agents.html`
+   - `ops/cv-preview.html`
+   - `ops/api-usage.html`
+3) Remove per-page hard-coded “active” classes where present; rely on:
+   - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
 
 ---
 
@@ -155,9 +178,9 @@ Use the acceptance criteria checklist:
 ---
 
 ## 5) Risks + mitigations
-- **Static duplication risk:** masthead copied into 4 pages can drift.
+- Static duplication risk: masthead copied into multiple pages can drift.
   - Mitigation: keep markup identical, consider a small build step later.
-- **Event feed risk:** JSONL parsing in browser may be slow for large files.
+- Event feed risk: JSONL parsing in browser may be slow for large files.
   - Mitigation: only read first N lines in v1; add an index/precompute step later.
-- **Draft loader risk:** unrestricted `fetch()` paths can leak files in some hosting contexts.
+- Draft loader risk: unrestricted `fetch()` paths can leak files in some hosting contexts.
   - Mitigation: restrict to `outputs/cv/**` and enforce same-origin only.

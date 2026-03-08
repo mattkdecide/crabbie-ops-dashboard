@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-08 (12:23 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -12,6 +12,7 @@ In scope build files:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
+- `ops/api-usage.html`
 
 Planned build file:
 - `ops/activity.html`
@@ -20,21 +21,27 @@ Supporting specs:
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
 - `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
 - `ops/ux/IA_AND_NAV_V1.md`
+- `ops/ui/nav_v1.js`
 
 ---
 
 ## AC-1: Global header navigation is present and consistent (v1 → v2)
 ### AC-1a (v1): `.topbar` header is consistent across pages
-**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview)
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
 **When** the page renders
 **Then** a header renders at the top with:
-- a working “Home” link (must resolve to an existing page, e.g., `status.html` until `index.html` exists)
+- a working “Home” link that resolves to an existing page
+  - **v1 rule:** Home MUST link to `status.html` until `index.html` exists
 - a visible page title (`h1`)
-- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview
+- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, API Usage
 - visible focus states for all interactive elements
 
+**And** the page loads `ui/nav_v1.js` so that:
+- the mobile menu can be toggled and dismissed (Escape, outside click)
+- the active link is expressed via `aria-current="page"` (not colour-only)
+
 ### AC-1b (target): Persistent masthead (spec)
-**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview)
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
 **When** the page renders
 **Then** a masthead renders at the top with:
 - Left zone: product name `Crabbie Ops` and context label `Employment Pod`.

@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-08 (12:23 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -13,6 +13,7 @@ Current build files in scope:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
+- `ops/api-usage.html` (utility page, but currently linked in global nav)
 
 Planned build files (not yet present):
 - `ops/activity.html`
@@ -22,11 +23,14 @@ UX source specs (this folder):
 - `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
 - `ops/ux/JOURNEY_MAPS_V1.md`
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md`
+- `ops/ux/HANDOFF_NOTES_V1.md`
 
 Build note (current reality):
 - The HTML pages currently use a simpler `.topbar` header with cross-links.
-- The “home” logo link currently points to `index.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
-- The target end-state is the persistent masthead described in `MASTHEAD_NAV_SPEC_V1.md`.
+- `ops/ui/nav_v1.js` is present and now:
+  - toggles the mobile menu reliably (Escape/outside click/link click)
+  - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
+- The “home” logo link currently points to `index.html` on at least `status.html` and `api-usage.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
 
 Pragmatic v1 recommendation:
 - Treat `status.html` as “home” until an `index.html` landing page is created.
@@ -68,6 +72,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
      - `ops/EXECUTION_PLAN_2026-03-03.md`
      - `ops/project-gantt.md`
      - `ops/UPDATE_CAPTURE.md`
+     - (utility) `ops/api-usage.html`
 
 6. **Activity**
    - Purpose: global event feed, filterable
@@ -86,16 +91,16 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 - Activity tab → `activity.html` (to be created)
 
 ### Active-tab logic (static)
-Because these are standalone HTML pages, “active tab” can be:
-- hard-coded per page, or
-- set via a small script that inspects `window.location.pathname`.
+Current implementation direction:
+- Prefer `ops/ui/nav_v1.js` to set `aria-current="page"` and apply `.btn--primary` automatically.
+- Avoid per-page hard-coded active classes where possible (reduces drift).
 
-Rule table:
+Rule table (for the *masthead tab state*, independent of the v1 `.topbar` links):
 - `*/kanban.html` → active=Pipeline
-- `*/agent-queue.html` → active=Agents
+- `*/agent-queue.html` or `*/agents.html` → active=Agents
 - `*/ux/*` → active=UX
 - `*/design/*` OR `*/ui/*` → active=Design
-- `*/EXECUTION_PLAN_*` OR `*/project-gantt*` OR `*/UPDATE_CAPTURE*` OR `*/status.html` → active=Roadmap
+- `*/EXECUTION_PLAN_*` OR `*/project-gantt*` OR `*/UPDATE_CAPTURE*` OR `*/status.html` OR `*/api-usage.html` → active=Roadmap
 - `*/activity.html` OR `*/events/*` → active=Activity
 
 ---
@@ -141,12 +146,20 @@ Should show:
 - most recent build artefacts + manifest (when available)
 - QA checklist status (when available)
 
+### `ops/api-usage.html` (Utility: spend visibility)
+Job-to-be-done: see run-rate and cost trend quickly.
+
+Should contain:
+- same global nav pattern as other ops pages
+- KPI tiles (budget target, tokens, estimated cost, status)
+- a simple log table sourced from `usage/api-usage-log.csv`
+
 ---
 
 ## 4) Build implementation notes (thin)
 - Reuse CSS: `ops/ui/STYLE_TOKENS_V1.css` + `ops/ui/COMPONENTS_V1.css`.
 - Implement masthead as a copy-paste partial first; later migrate to a shared template.
-- Prefer *keyboard-first*: visible focus rings, no click-only controls.
+- Prefer keyboard-first: visible focus rings, no click-only controls.
 
 ---
 
@@ -155,3 +168,4 @@ Should show:
 2. Where should global search land first: Pipeline cards, tasks, or artefact filenames?
 3. Does Activity page render client-side from `ops/events/*.jsonl`, or do we precompute a small index (e.g., `ops/events/index.json`)?
 4. Should `cv-preview.html` restrict allowed draft paths to `outputs/cv/**` only (security hardening for hosted environments)?
+5. Should API Usage live under Roadmap (current), or become a first-class “Metrics” workspace later?
