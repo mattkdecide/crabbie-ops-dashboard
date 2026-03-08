@@ -11,6 +11,7 @@
 
 ## 2026-03-08
 - Control Tower created: `ops/CONTROL_TOWER.md` (priorities, blockers/decisions, acceptance criteria, and backlog status movement).
+- Shipped live data wiring for `ops/kanban.html`: now renders directly from `ops/job-pipeline.csv` via `ops/ui/kanban_live_v1.js` (+ `ops/ui/csv_v1.js`).
 
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
