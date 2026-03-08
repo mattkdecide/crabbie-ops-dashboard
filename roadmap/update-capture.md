@@ -9,6 +9,9 @@
 - CRM schema v0 created: `ops/crm-schema-v0.sql`.
 - Model/cost routing strategy created: `ops/MODEL_COST_STRATEGY.md`.
 
+## 2026-03-08
+- Control Tower created: `ops/CONTROL_TOWER.md` (priorities, blockers/decisions, acceptance criteria, and backlog status movement).
+
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
   1. latest increment log,

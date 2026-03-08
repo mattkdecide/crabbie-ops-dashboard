@@ -27,5 +27,7 @@ T-0202,,Produce UX journey map artefacts v1,Vantage,High,Done,2026-03-07,2026-03
 T-0203,,Publish design roadmap incl typography and palette decisions,Polish,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/design/DESIGN_ROADMAP_V1.md
 T-0204,,Implement canonical CRM status mapping spec,Ledger,High,In Progress,2026-03-08,2026-03-07,2026-03-07,Align CSV/DB/Kanban taxonomy
 T-0205,,Wire CV pipeline artefact manifest output,Forge,High,In Progress,2026-03-08,2026-03-07,2026-03-07,role_id keyed outputs + qa.json
-T-0206,,Expand live ops site navigation and artefact links,Rivet,Medium,In Progress,2026-03-08,2026-03-07,2026-03-07,Add agent/docs/design/ux views
+T-0206,,Expand live ops site navigation and artefact links,Rivet,Medium,Blocked,2026-03-08,2026-03-07,2026-03-08,Blocked: need shared layout/partials or agreed copy-paste strategy for masthead + nav across static HTML pages
 T-0207,,Spec persistent masthead navigation for design/build,Vantage,High,Done,2026-03-07,2026-03-07,2026-03-07,Published ops/ux/MASTHEAD_NAV_SPEC_V1.md
+T-0301,,Squad UX Strategist Continuous (journeys/IA/nav/AC/hand-off),Vantage,High,In Progress,,2026-03-08,2026-03-08,Cron: adc1481d-61ab-4a0f-8f8e-8a0c3adfb22c | Maintain ops/ux artefacts tied to current build files | Last run 2026-03-08 08:19 UTC
+T-0302,,Squad UI Designer Continuous (responsive/a11y improvements),Velvet,High,In Progress,,2026-03-08,2026-03-08,Cron: 3bf4fdd4-3b38-4c1a-a9ed-5d846732ef3c | Maintain ops/ui + ops/*.html surfaces | Last run 2026-03-08 08:20 UTC

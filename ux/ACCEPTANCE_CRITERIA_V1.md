@@ -1,0 +1,107 @@
+# UX Acceptance Criteria v1 (Ops surfaces)
+
+Owner: UX (Vantage)
+Status: Ready for build
+Last updated: 2026-03-08
+
+This file consolidates implementation-ready acceptance criteria for the current static build files.
+
+In scope build files:
+- `ops/status.html`
+- `ops/kanban.html`
+- `ops/agent-queue.html`
+- `ops/cv-preview.html`
+
+Supporting specs:
+- `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
+- `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
+- `ops/ux/IA_AND_NAV_V1.md`
+
+---
+
+## AC-1: Persistent masthead is present and consistent
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, CV Preview)
+**When** the page renders
+**Then** a masthead renders at the top with:
+- Left zone: product name `Crabbie Ops` and context label `Employment Pod`.
+- Centre tabs: Pipeline, Agents, UX, Design, Roadmap, Activity.
+- Right zone: search trigger (or stub), `+ New` button (or stub), updated timestamp.
+
+**And** the current page tab appears active (not colour-only).
+
+**And** the masthead is sticky (remains visible on scroll) on desktop widths.
+
+**And** focus states are visible for all interactive elements.
+
+Notes for static v1:
+- If search and `+ New` are not implemented yet, they must still render as disabled/stub controls with tooltips.
+
+---
+
+## AC-2: Keyboard navigation shortcuts (minimal v1)
+**Given** I am focused anywhere on the page
+**When** I type:
+- `g p`
+**Then** I navigate to `ops/kanban.html`
+
+**When** I type:
+- `g a`
+**Then** I navigate to `ops/agent-queue.html`
+
+**When** I type:
+- `g x`
+**Then** I navigate to `ops/activity.html` (or show “Not implemented” toast until page exists)
+
+**When** I type:
+- `/`
+**Then** focus moves to the search input (or opens search modal if implemented).
+
+---
+
+## AC-3: Kanban cards show next action as first-class
+**Given** I open `ops/kanban.html`
+**Then** each card must show:
+- role title
+- org + location
+- role_id (e.g., `R-2026-0006`)
+- status column label
+- tier badge (Tier A/B/C)
+- **Next:** line (derived from `job-pipeline.csv` `next_action`)
+- link to source listing
+
+**And** if a CV filename/artefact exists, it must be displayed and clickable.
+
+---
+
+## AC-4: Agent Queue shows blockers explicitly
+**Given** I open `ops/agent-queue.html`
+**Then** each task row must show:
+- status, priority
+- agent owner
+- title
+- role_id when available
+
+**And** if status is `Blocked`, the row must render a visible blocker reason (not hidden in a hover).
+
+---
+
+## AC-5: Timeline component renders in at least one place
+**Given** I open `ops/status.html` (or `ops/activity.html` if created)
+**When** there is an events feed available at `ops/events/events-YYYY-MM.jsonl`
+**Then** the UI renders a Timeline list from the first N events.
+
+**And** if the events feed is missing
+**Then** the UI renders a derived timeline from `job-pipeline.csv` and `agent-tasks.csv` and shows the inline note:
+`Event feed unavailable, showing derived activity.`
+
+---
+
+## AC-6: UX artefacts are discoverable from Status
+**Given** I open `ops/status.html`
+**Then** there are visible links to:
+- `ops/ux/JOURNEY_MAPS_V1.md`
+- `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
+- `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
+- `ops/ux/IA_AND_NAV_V1.md`
+
+(They may sit under an “Execution Artefacts” list.)

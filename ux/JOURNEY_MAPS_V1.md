@@ -1,36 +1,84 @@
 # UX Journey Maps v1
 
-## 1) Job Intake -> Prioritise -> Act
-1. Digest surfaces shortlisted role
-2. Matt labels: Pin / No / Hold
-3. System updates pipeline + creates task
-4. CV pipeline run requested
-5. Output bundle delivered (draft + PDF + rationale)
+## 1) Job Intake -> Prioritise -> Act (file-first)
+**Primary artefacts:**
+- `ops/job-pipeline.csv` (jobs + next actions)
+- `ops/agent-tasks.csv` (work queue)
+- (next) `ops/events/events-YYYY-MM.jsonl` (audit + activity feed) per `ops/architecture/EVENT_MODEL_V1.md`
 
-Pain points:
-- Status mapping inconsistency across CSV/UI/DB
-- Follow-up actions buried in notes
+Steps:
+1. Digest surfaces candidate roles (email/chat scrape -> shortlist).
+2. Matt triages each role: **Pinned / Ignored / Hold / Assessing**.
+3. System writes triage decision to `ops/job-pipeline.csv` (`status`, `last_action`, `next_action`, `owner`, `notes`).
+4. System creates/updates the highest-leverage task in `ops/agent-tasks.csv` (role brief, alignment score, CV draft, QA/PDF, follow-up).
+5. When CV work is requested: CV pipeline run requested and `outputs/cv/<role_id>/` artefacts produced.
+6. Deliverable bundle is linked from the job row and shown in UI (draft MD, final PDF, rationale, QA checklist).
 
-## 2) CV Build Journey
-Input -> Analysis -> Evidence Map -> Draft -> QA -> PDF -> Delivery
+Pain points (current):
+- **Status mapping drift** between `ops/job-pipeline.csv` labels (e.g., `Pinned`, `Applied`) and canonical enums in `ops/architecture/EVENT_MODEL_V1.md`.
+- Follow-up actions are buried in `notes` rather than expressed as structured `next_action` + task.
 
-UX requirements:
-- user-visible analysis summary
-- explicit quality gate before final PDF
-- one-click access to all artefacts
+UX decisions (v1):
+- Keep CSV labels for human readability, but **normalise for events** (see T-0204) and UI badges.
+- Treat `next_action` as a first-class field displayed on every card/list row.
 
-## 3) Application Tracking Journey
-New -> Assessing -> CV Ready -> Applied -> Interview -> Offer/Closed
+---
+
+## 2) CV Build Journey (role_id keyed)
+**Primary artefacts:**
+- Inputs: `inputs/cv/` (base PDFs), role brief (TBD), job URL
+- Outputs: `outputs/cv/<role_id>/` (drafts + manifest)
+
+Journey:
+Input -> Analysis summary -> Evidence map -> Draft -> QA gate -> PDF -> Delivery
+
+UX requirements (implementation-ready):
+- User-visible **analysis summary** at top of the CV run page (1 screen, scannable).
+- Explicit quality gate: QA checklist must be acknowledged before final PDF is considered “ready”.
+- One-click access to all artefacts for a role: draft, PDF, manifest, QA, and source links.
+
+---
+
+## 3) Application Tracking Journey (job ↔ application)
+**Primary artefacts:**
+- Near-term: `ops/job-pipeline.csv`
+- Event stream: `ops/events/...jsonl` (activity feed + reminders)
+
+Visible journey states (human labels):
+- New -> Assessing -> CV Ready -> Applied -> Interview -> Offer/Closed
 
 System actions:
-- stage changes write events
-- follow-up tasks auto-generated
-- next action always visible on card
+- Stage changes emit canonical events (`crm.job.status_changed.v1`, `crm.application.status_changed.v1`).
+- Follow-up tasks auto-generated (e.g., “Chase recruiter in 5 business days”).
+- Next action always visible on the card.
+
+---
 
 ## 4) Daily Operator Brief Journey
-Inbox alerts + job digest + pipeline status + blockers -> single concise brief
+Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single concise brief (today/next 48h)
 
-## Next UX Deliverables
-- Journey diagram pages for each flow
-- Status/event timeline component spec
-- Form/input pattern for role triage actions
+---
+
+## 5) Ops UI Navigation Journey (orientation)
+**Primary artefacts:**
+- `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
+- Pages: `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/cv-preview.html`
+
+Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
+
+---
+
+## Next UX Deliverables (tracked)
+- **IA + navigation map (static v1)**: `ops/ux/IA_AND_NAV_V1.md`.
+- **Acceptance criteria pack (build-ready)**: `ops/ux/ACCEPTANCE_CRITERIA_V1.md`.
+- **Handoff notes** (copy/paste partial strategy + timeline seed): `ops/ux/HANDOFF_NOTES_V1.md`.
+- **Status/event timeline component spec**: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`.
+- Status normalisation mapping table spec (T-0204, Ledger).
+- Form/input pattern for role triage actions (Pinned/Ignored/Hold/Assessing) with keyboard-first interactions.
+
+## Build files explicitly tied to this journey set
+- `ops/status.html` (overview/launchpad, should link to UX artefacts + host compact Activity module)
+- `ops/kanban.html` (pipeline decisions, must surface next action per role)
+- `ops/agent-queue.html` (task workload + blockers)
+- `ops/cv-preview.html` (CV layout/QA/run status)
+
