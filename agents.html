@@ -7,9 +7,25 @@
   <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
   <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
   <style>
-    .profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;padding:16px}
-    .avatar{font-size:28px}
-    .textarea{width:100%;min-height:180px;background:var(--surface-2);color:var(--text);border:1px solid var(--border-2);border-radius:10px;padding:10px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace}
+    .profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--s3);padding:var(--s4)}
+    .avatar{font-size:28px;line-height:1}
+    .textarea{
+      width:100%;
+      min-height:clamp(160px, 24vh, 240px);
+      resize:vertical;
+      background:var(--surface-2);
+      color:var(--text);
+      border:1px solid var(--border-2);
+      border-radius:10px;
+      padding:10px;
+      font: var(--fs-1)/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .textarea:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+
+    @media (max-width: 640px){
+      .profiles{padding:var(--s3);grid-template-columns:1fr}
+      .textarea{min-height:clamp(140px, 22vh, 200px)}
+    }
   </style>
 </head>
 <body>
@@ -21,12 +37,12 @@
       <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
     </div>
     <h1 class="topbar__title">Specialist Agent Profiles</h1>
-    <p class="topbar__sub">Live-loaded from each agent markdown profile. Editable boxes are local-only notes for review.</p>
+    <p class="topbar__sub">Loaded from each agent markdown profile. Edits in the text areas save locally in your browser (they do not overwrite the repo).</p>
     <nav class="topbar__actions" data-nav-links aria-label="Primary">
       <a class="btn" href="status.html">Status</a>
       <a class="btn" href="kanban.html">Pipeline</a>
       <a class="btn" href="agent-queue.html">Agent Queue</a>
-      <a class="btn btn--primary" href="agents.html">Agents</a>
+      <a class="btn" href="agents.html">Agents</a>
       <a class="btn" href="api-usage.html">API Usage</a>
       <a class="btn" href="cv-preview.html">CV Preview</a>
     </nav>
@@ -49,15 +65,18 @@
       const card = document.createElement('section');
       card.className = 'item';
       card.innerHTML = `
-        <h2 class='item__title'><span class='avatar'>${agent.emoji}</span> ${agent.name}</h2>
+        <h2 class='item__title'><span class='avatar' aria-hidden='true'>${agent.emoji}</span> ${agent.name}</h2>
         <div class='item__meta'>${agent.fn}</div>
         <div data-agent-owner='${agent.key}'></div>
-        <label class='sr-only' for='ta-${agent.key}'>Local notes for ${agent.name} (saved in this browser only)</label>
-        <textarea class='textarea' id='ta-${agent.key}' aria-label='Local notes for ${agent.name}'></textarea>
-        <div class='item__small'>Live source: agents/${agent.key}.md</div>
+        <label class='sr-only' for='ta-${agent.key}'>Profile text for ${agent.name}. Edits save locally in your browser only.</label>
+        <textarea class='textarea' id='ta-${agent.key}' aria-label='Profile text for ${agent.name}. Edits save locally in your browser only.' spellcheck='false'></textarea>
+        <div class='item__small'>Live source: <a href='agents/${agent.key}.md'>agents/${agent.key}.md</a></div>
       `;
       document.getElementById('main').appendChild(card);
+
       const ta = document.getElementById('ta-'+agent.key);
+      const localKey = `agent-edit-${agent.key}`;
+
       try {
         const res = await fetch(`agents/${agent.key}.md?t=${Date.now()}`);
         const txt = await res.text();
@@ -65,12 +84,14 @@
       } catch (e) {
         ta.value = 'Could not load profile markdown.';
       }
-      const localKey = `agent-edit-${agent.key}`;
+
       if(localStorage.getItem(localKey)) ta.value = localStorage.getItem(localKey);
       ta.addEventListener('input', ()=>localStorage.setItem(localKey, ta.value));
     }
+
     AGENTS.forEach(loadProfile);
   </script>
+
   <script src="ui/agent_capacity_v1.js"></script>
   <script>window.initAgentCapacity && window.initAgentCapacity();</script>
   <script src="ui/nav_v1.js"></script>

@@ -203,12 +203,24 @@
   .btn{border-color:var(--border)}
 }
 
-.cap-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-.cap-meta{font-size:12px;color:var(--text-2)}
-.cap-val{font-size:12px;color:var(--text);font-weight:700}
+/* Capacity gauge (agent profiles) */
+.cap-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px}
+.cap-meta{font-size:var(--fs-1);color:var(--text-2)}
+.cap-val{font-size:var(--fs-1);color:var(--text);font-weight:700;white-space:nowrap}
 .cap-track{height:10px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:999px;overflow:hidden;margin-top:6px}
 .cap-fill{height:100%}
-.cap-fill.success{background:#22c55e}
-.cap-fill.warning{background:#f59e0b}
-.cap-fill.danger{background:#ef4444}
-.cap-sub{font-size:11px;color:var(--text-2);margin-top:6px}
+/* Use state tokens to keep palette consistent and maintain contrast in dark UI */
+.cap-fill.success{background:color-mix(in srgb, var(--success-fg) 55%, #22c55e)}
+.cap-fill.warning{background:color-mix(in srgb, var(--warning-fg) 55%, #f59e0b)}
+.cap-fill.danger{background:color-mix(in srgb, var(--danger-fg) 55%, #ef4444)}
+.cap-sub{font-size:var(--fs-0);color:var(--text-2);margin-top:6px}
+
+/* Tables (API usage + future logs)
+   Accessibility: ensure horizontal scroll on small screens instead of squishing.
+*/
+.table-wrap{overflow:auto;max-width:100%;border-radius:var(--r2)}
+.table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border-2)}
+.table caption{caption-side:top;text-align:left;padding:var(--s3) var(--s3) 0 var(--s3);color:var(--text-2);font-size:var(--fs-1)}
+.table th,.table td{padding:10px;vertical-align:top;border-bottom:1px solid var(--border-2);font-size:var(--fs-1);text-align:left}
+.table thead th{position:sticky;top:0;background:color-mix(in srgb, var(--surface) 90%, var(--bg));z-index:1}
+.table tr:hover td{background:color-mix(in srgb, var(--accent) 8%, var(--surface))}
