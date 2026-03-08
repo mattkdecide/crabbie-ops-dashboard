@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-08 (16:24 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -31,7 +31,7 @@ Supporting specs:
 **When** the page renders
 **Then** a header renders at the top with:
 - a working “Home” link that resolves to an existing page
-  - **v1 rule:** Home MUST link to `status.html` (operational home). `index.html` may exist as an entry/launchpad, but keep the logo target consistent across pages.
+  - **v1 rule:** Home MUST link to `status.html` until `index.html` exists
 - a visible page title (`h1`)
 - a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, API Usage
 - visible focus states for all interactive elements

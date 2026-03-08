@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (16:24 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -125,18 +125,15 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
-### 1.7 Build handoff (concrete): Standardise “home” link + delegate active-link semantics to `nav_v1.js`
-Why: IA treats `status.html` as the operational home, and `nav_v1.js` already implements URL-based active link semantics.
+### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
+Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
 
-Current reality (verified 2026-03-08):
-- `ops/index.html` now exists as an entry/launchpad.
-- The logo/home anchor across ops pages resolves to `status.html` (intentional: fastest path to artefacts and jump links).
+Current bug (needs fix):
+- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
 
 Deliverables (static v1):
-1) Keep the logo/title href consistent across ops pages:
-   - **Recommended:** `status.html` (operational home)
+1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
 2) Ensure these pages load `ops/ui/nav_v1.js`:
-   - `ops/index.html`
    - `ops/status.html`
    - `ops/kanban.html`
    - `ops/agent-queue.html`
@@ -148,24 +145,6 @@ Deliverables (static v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
-
-### 1.8 Build handoff (concrete): Add `updated_at` to job pipeline + surface `next_action` everywhere
-Why: unlocks reliable derived Activity ordering (AC-5) and makes the operator loop “see next step” without opening notes.
-
-Deliverables (v1, file-backed):
-1) Update `ops/job-pipeline.csv` schema (add column): `updated_at` (RFC3339, UTC)
-   - Set `updated_at` whenever any script/agent modifies a row.
-   - For existing rows, backfill with `last_action` when `updated_at` is blank.
-
-2) UI surfacing:
-   - `ops/kanban.html`: ensure every card shows a `Next:` line (use `next_action`, else `—`).
-   - `ops/status.html`: ensure any “Pinned/Assessing” list rows show `next_action` in-line.
-
-3) Derived Activity switch-over rule:
-   - When `updated_at` exists in `job-pipeline.csv`, prefer it over `last_action` for derived Activity timestamps.
-
-Acceptance references:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-3, AC-5)
 
 ---
 
