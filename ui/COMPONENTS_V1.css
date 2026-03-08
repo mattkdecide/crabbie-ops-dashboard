@@ -191,3 +191,13 @@
   .item{border-color:var(--border)}
   .btn{border-color:var(--border)}
 }
+
+.cap-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.cap-meta{font-size:12px;color:var(--text-2)}
+.cap-val{font-size:12px;color:var(--text);font-weight:700}
+.cap-track{height:10px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:999px;overflow:hidden;margin-top:6px}
+.cap-fill{height:100%}
+.cap-fill.success{background:#22c55e}
+.cap-fill.warning{background:#f59e0b}
+.cap-fill.danger{background:#ef4444}
+.cap-sub{font-size:11px;color:var(--text-2);margin-top:6px}

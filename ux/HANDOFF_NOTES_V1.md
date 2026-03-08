@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (12:20 UTC)
+Last updated: 2026-03-08 (12:23 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -40,17 +40,16 @@ Minimal v1 is acceptable:
 - Support empty/missing states.
 - Hard-code sample data until `ops/events/` exists.
 
-### 1.3 Add UX artefact links to Status (small but high-leverage)
+### 1.3 UX artefact links on Status (DONE)
 Target file: `ops/status.html`
 
-Current reality:
-- Status links `ux/JOURNEY_MAPS_V1.md` but does **not** yet link the rest of the UX pack.
-
-Add links for:
-- `ux/MASTHEAD_NAV_SPEC_V1.md`
-- `ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
-- `ux/IA_AND_NAV_V1.md`
-- `ux/ACCEPTANCE_CRITERIA_V1.md`
+Current reality (verified 2026-03-08):
+- Status now links the full UX pack:
+  - `ux/JOURNEY_MAPS_V1.md`
+  - `ux/MASTHEAD_NAV_SPEC_V1.md`
+  - `ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
+  - `ux/IA_AND_NAV_V1.md`
+  - `ux/ACCEPTANCE_CRITERIA_V1.md`
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-6)
@@ -95,14 +94,14 @@ Acceptance check:
 ### 1.5 CV Preview UX tightening (quick wins)
 Target file: `ops/cv-preview.html`
 
-Current reality:
+Current reality (verified 2026-03-08):
 - Draft loader exists (input + fetch + lightweight markdown rendering).
 - Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
-- Default path currently points to a role folder that may not exist.
+- Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely **non-existent** on a fresh publish, creating a “broken by default” first impression.
 
 Build asks:
-- Set default to blank (or to a known-good demo file that exists in repo).
-- If hosted publicly, consider restricting load paths to `outputs/cv/**` only.
+- Set default to **blank** and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.
+- If hosted publicly, restrict load paths to `outputs/cv/**` only (same-origin) to reduce accidental file exposure.
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-7, AC-8)

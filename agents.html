@@ -45,7 +45,7 @@
     async function loadProfile(agent){
       const card = document.createElement('section');
       card.className = 'item';
-      card.innerHTML = `<h2 class='item__title'><span class='avatar'>${agent.emoji}</span> ${agent.name}</h2><div class='item__meta'>${agent.fn}</div><textarea class='textarea' id='ta-${agent.key}'></textarea><div class='item__small'>Live source: agents/${agent.key}.md</div>`;
+      card.innerHTML = `<h2 class='item__title'><span class='avatar'>${agent.emoji}</span> ${agent.name}</h2><div class='item__meta'>${agent.fn}</div><div data-agent-owner='${agent.key}'></div><textarea class='textarea' id='ta-${agent.key}'></textarea><div class='item__small'>Live source: agents/${agent.key}.md</div>`;
       document.getElementById('main').appendChild(card);
       const ta = document.getElementById('ta-'+agent.key);
       try {
@@ -61,6 +61,8 @@
     }
     AGENTS.forEach(loadProfile);
   </script>
+  <script src="ui/agent_capacity_v1.js"></script>
+  <script>window.initAgentCapacity && window.initAgentCapacity();</script>
   <script src="ui/nav_v1.js"></script>
 </body>
 </html>

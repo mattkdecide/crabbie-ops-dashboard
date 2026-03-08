@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-08
+Last updated: 2026-03-08 (12:23 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -11,6 +11,7 @@ Current build files in scope:
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
+- `ops/agents.html`
 - `ops/cv-preview.html`
 
 Planned build files (not yet present):
@@ -24,7 +25,11 @@ UX source specs (this folder):
 
 Build note (current reality):
 - The HTML pages currently use a simpler `.topbar` header with cross-links.
+- The “home” logo link currently points to `index.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
 - The target end-state is the persistent masthead described in `MASTHEAD_NAV_SPEC_V1.md`.
+
+Pragmatic v1 recommendation:
+- Treat `status.html` as “home” until an `index.html` landing page is created.
 
 ---
 
@@ -43,8 +48,10 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 
 2. **Agents**
    - Purpose: see tasks by agent and current blockers
-   - Current page: `ops/agent-queue.html`
-   - Source data: `ops/agent-tasks.csv`
+   - Current pages:
+     - `ops/agent-queue.html` (task board)
+     - `ops/agents.html` (agent roster/index)
+   - Source data: `ops/agent-tasks.csv` + `ops/agents/*`
 
 3. **UX**
    - Purpose: navigation + journeys + component specs
@@ -72,7 +79,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 ## 2) Navigation model (URLs + active tab rules)
 ### Canonical routes (static v1)
 - Pipeline tab → `kanban.html`
-- Agents tab → `agent-queue.html`
+- Agents tab → `agent-queue.html` (board) and/or `agents.html` (index)
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
 - Design tab → `design/DESIGN_ROADMAP_V1.md`
 - Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)

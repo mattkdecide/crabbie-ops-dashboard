@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-08
+Last updated: 2026-03-08 (12:23 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -10,6 +10,7 @@ In scope build files:
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
+- `ops/agents.html`
 - `ops/cv-preview.html`
 
 Planned build file:
@@ -22,8 +23,18 @@ Supporting specs:
 
 ---
 
-## AC-1: Persistent masthead is present and consistent
-**Given** I open any of the ops pages (Status, Kanban, Agent Queue, CV Preview)
+## AC-1: Global header navigation is present and consistent (v1 → v2)
+### AC-1a (v1): `.topbar` header is consistent across pages
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview)
+**When** the page renders
+**Then** a header renders at the top with:
+- a working “Home” link (must resolve to an existing page, e.g., `status.html` until `index.html` exists)
+- a visible page title (`h1`)
+- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview
+- visible focus states for all interactive elements
+
+### AC-1b (target): Persistent masthead (spec)
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview)
 **When** the page renders
 **Then** a masthead renders at the top with:
 - Left zone: product name `Crabbie Ops` and context label `Employment Pod`.
@@ -34,14 +45,14 @@ Supporting specs:
 
 **And** the masthead is sticky (remains visible on scroll) on desktop widths.
 
-**And** focus states are visible for all interactive elements.
-
 Notes for static v1:
 - If search and `+ New` are not implemented yet, they must still render as disabled/stub controls with tooltips.
 
 ---
 
-## AC-2: Keyboard navigation shortcuts (minimal v1)
+## AC-2: Keyboard navigation shortcuts (minimal)
+Status: not implemented in current build (spec retained for when masthead lands).
+
 **Given** I am focused anywhere on the page
 **When** I type:
 - `g p`
@@ -130,9 +141,12 @@ Non-goals (v1):
 ## AC-8: CV Preview default path does not mislead
 **Given** I open `ops/cv-preview.html` with no query param
 **When** the default path is shown
-**Then** it should either:
+**Then** it must either:
 - point to an example file that exists in the repo/site, or
 - be blank with helper text.
+
+Test note (current build):
+- The default value is `outputs/cv/R-2026-0017/draft.md` which is unlikely to exist on a fresh publish. This should be updated.
 
 Rationale:
 - Avoids a “broken by default” first impression.
