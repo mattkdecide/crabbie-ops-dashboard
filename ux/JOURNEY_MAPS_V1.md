@@ -17,6 +17,7 @@ Steps:
 Pain points (current):
 - **Status mapping drift** between `ops/job-pipeline.csv` labels (e.g., `Pinned`, `Applied`) and canonical enums in `ops/architecture/EVENT_MODEL_V1.md`.
 - Follow-up actions are buried in `notes` rather than expressed as structured `next_action` + task.
+- `ops/job-pipeline.csv` lacks an `updated_at` field, which makes derived Activity feeds unreliable (timestamp must not be scraped from free-text `last_action`).
 
 UX decisions (v1):
 - Keep CSV labels for human readability, but **normalise for events** (see T-0204) and UI badges.
@@ -36,6 +37,8 @@ UX requirements (implementation-ready):
 - User-visible **analysis summary** at top of the CV run page (1 screen, scannable).
 - Explicit quality gate: QA checklist must be acknowledged before final PDF is considered “ready”.
 - One-click access to all artefacts for a role: draft, PDF, manifest, QA, and source links.
+- CV Preview draft loader should be **non-broken by default**:
+  - default input value blank (or a known-good demo file), not a role-specific path that may not exist.
 
 Current build note:
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
@@ -66,13 +69,14 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 ## 5) Ops UI Navigation Journey (orientation)
 **Primary artefacts:**
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
-- Pages: `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/api-usage.html`
+- Pages: `ops/index.html`, `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/api-usage.html`
 - Behaviour glue: `ops/ui/nav_v1.js` (active-link semantics + mobile menu)
 
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
 
 Current build note:
-- Home/logo link must resolve to `status.html` (do not link to `index.html` until it exists).
+- Home/logo link resolves to `index.html` (landing hub).
+- `status.html` is treated as the status/artefact board, not the home landing page.
 
 ---
 

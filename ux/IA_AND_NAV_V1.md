@@ -2,12 +2,13 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-08 (18:24 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
 
 Current build files in scope:
+- `ops/index.html` (Home)
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
@@ -30,10 +31,11 @@ Build note (current reality):
 - `ops/ui/nav_v1.js` is present and now:
   - toggles the mobile menu reliably (Escape/outside click/link click)
   - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
-- The “home” logo link currently points to `index.html` on at least `status.html` and `api-usage.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
+- The “home” logo link points to `index.html`, and `ops/index.html` now exists (landing hub).
 
 Pragmatic v1 recommendation:
-- Treat `status.html` as “home” until an `index.html` landing page is created.
+- Treat `index.html` as “home” (launchpad).
+- Treat `status.html` as the “Status board” (operational artefacts + review surface).
 
 ---
 
@@ -87,7 +89,8 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 - Agents tab → `agent-queue.html` (board) and/or `agents.html` (index)
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
 - Design tab → `design/DESIGN_ROADMAP_V1.md`
-- Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)
+- Roadmap tab → `status.html` (status board + artefact hub in current build)
+- Home (logo) → `index.html` (launchpad)
 - Activity tab → `activity.html` (to be created)
 
 ### Active-tab logic (static)
@@ -106,8 +109,15 @@ Rule table (for the *masthead tab state*, independent of the v1 `.topbar` links)
 ---
 
 ## 3) Page-level IA (what belongs where)
-### `ops/status.html` (Overview / Launchpad)
+### `ops/index.html` (Home / Launchpad)
 Job-to-be-done: open one page and jump to the right operational surface.
+
+Should contain:
+- persistent masthead (target) or topbar cross-links (current)
+- links to: Kanban, Agent Queue, Agents, Status, and key docs
+
+### `ops/status.html` (Status board)
+Job-to-be-done: inspect the current build state, artefacts, and recent changes.
 
 Should contain:
 - persistent masthead (target) or topbar cross-links (current)
@@ -164,7 +174,7 @@ Should contain:
 ---
 
 ## 5) Open decisions
-1. Should `status.html` be considered “Roadmap”, or should there be an explicit Overview tab?
+1. Now that `index.html` exists: should Roadmap remain landing on `status.html`, or should Roadmap land on `index.html` and rename `status.html` to “Status” explicitly?
 2. Where should global search land first: Pipeline cards, tasks, or artefact filenames?
 3. Does Activity page render client-side from `ops/events/*.jsonl`, or do we precompute a small index (e.g., `ops/events/index.json`)?
 4. Should `cv-preview.html` restrict allowed draft paths to `outputs/cv/**` only (security hardening for hosted environments)?

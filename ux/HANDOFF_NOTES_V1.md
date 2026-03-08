@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-08 (18:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -125,26 +125,36 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
-### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
-Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
+### 1.7 Build handoff (concrete): Home landing page + active-link semantics (NOW VALID)
+Why: `nav_v1.js` already implements URL-based active-link semantics, and the ops surface now has a real landing page.
 
-Current bug (needs fix):
-- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
+Current reality (verified 2026-03-08):
+- `ops/index.html` now exists and functions as the Home/launchpad.
+- All primary ops pages link the logo/home anchor to `index.html`.
+- Per-page hard-coded active classes for nav links have been removed; active state is expressed via `aria-current="page"` + `.btn--primary` applied by `nav_v1.js`.
 
-Deliverables (static v1):
-1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
-2) Ensure these pages load `ops/ui/nav_v1.js`:
-   - `ops/status.html`
-   - `ops/kanban.html`
-   - `ops/agent-queue.html`
-   - `ops/agents.html`
-   - `ops/cv-preview.html`
-   - `ops/api-usage.html`
-3) Remove per-page hard-coded “active” classes where present; rely on:
-   - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
+Definition-of-done checks (static v1):
+1) Every ops page loads `ui/nav_v1.js`.
+2) The “Home” logo link resolves to `index.html`.
+3) Active link is set programmatically (no per-page drift).
 
 Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1)
+
+### 1.8 Build handoff (concrete): Add `updated_at` to `job-pipeline.csv` + display it
+Why: the Activity fallback currently uses `last_action` as a timestamp (lossy and often non-parseable). A proper `updated_at` unlocks reliable “What changed” sorting, and makes diffs easier to read.
+
+Deliverables (v1):
+1) Add a column `updated_at` (RFC3339, UTC) to `ops/job-pipeline.csv`.
+   - Example value: `2026-03-08T18:22:00Z`
+2) Ensure any script/agent that touches a job row sets `updated_at=now()`.
+   - If multiple fields change, only one timestamp is needed.
+3) In UI, surface `updated_at` in `ops/kanban.html` (secondary meta line is fine):
+   - Label (exact): `Updated <time>`
+4) Update derived-activity logic (Section 1.4) to prefer `updated_at` over `last_action` when present.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
 ---
 

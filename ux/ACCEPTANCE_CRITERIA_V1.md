@@ -2,11 +2,12 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-08 (18:24 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
 In scope build files:
+- `ops/index.html` (Home)
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
@@ -27,11 +28,11 @@ Supporting specs:
 
 ## AC-1: Global header navigation is present and consistent (v1 → v2)
 ### AC-1a (v1): `.topbar` header is consistent across pages
-**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
+**Given** I open any of the ops pages (Home, Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
 **When** the page renders
 **Then** a header renders at the top with:
 - a working “Home” link that resolves to an existing page
-  - **v1 rule:** Home MUST link to `status.html` until `index.html` exists
+  - **v1 rule:** Home MUST link to `index.html` (landing hub)
 - a visible page title (`h1`)
 - a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, API Usage
 - visible focus states for all interactive elements
@@ -41,7 +42,7 @@ Supporting specs:
 - the active link is expressed via `aria-current="page"` (not colour-only)
 
 ### AC-1b (target): Persistent masthead (spec)
-**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
+**Given** I open any of the ops pages (Home, Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
 **When** the page renders
 **Then** a masthead renders at the top with:
 - Left zone: product name `Crabbie Ops` and context label `Employment Pod`.
