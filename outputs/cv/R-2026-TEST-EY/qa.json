@@ -1,0 +1,10 @@
+{
+  "role_id": "R-2026-TEST-EY",
+  "page_estimate": 1.6,
+  "keyword_coverage_pct": 61,
+  "flags": [
+    "stretch_fit_data_governance_depth"
+  ],
+  "pass_for_pdf": false,
+  "reason": "PDF generation blocked until source CV metrics and tighter evidence substantiation added."
+}

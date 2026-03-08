@@ -1,0 +1,32 @@
+{
+  "role_id": "R-2026-TEST-EY",
+  "mappings": [
+    {
+      "requirement": "Stakeholder influence",
+      "evidence": [
+        "CEO/advisor level stakeholder communication experience"
+      ],
+      "strength": "high",
+      "gap": null,
+      "planned_placement": "summary"
+    },
+    {
+      "requirement": "Enterprise data governance depth",
+      "evidence": [
+        "Transformation and martech/adtech governance exposure"
+      ],
+      "strength": "medium",
+      "gap": "Deep CTIO data-governance ownership may be thinner",
+      "planned_placement": "experience bullets"
+    },
+    {
+      "requirement": "Global federated model",
+      "evidence": [
+        "Global APAC/US operating context"
+      ],
+      "strength": "medium",
+      "gap": null,
+      "planned_placement": "summary"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "role_id": "R-2026-TEST-EY",
+  "generated_at": "2026-03-08T13:12:45.835959Z",
+  "artefacts": {
+    "analysis_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/analysis.json",
+    "evidence_map_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/evidence-map.json",
+    "draft_md": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/draft.md",
+    "qa_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/qa.json",
+    "rationale_txt": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-TEST-EY/rationale.txt",
+    "final_pdf": null
+  },
+  "status": "partial_no_pdf",
+  "sha": "f8185896cccff6f8877ff57c19c50a38c1d4dc94d8eefde8c84d2ecdfeaa5583"
+}

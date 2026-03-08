@@ -1,0 +1,33 @@
+{
+  "role_id": "R-2026-TEST-EY",
+  "must_have": [
+    "Enterprise data strategy leadership",
+    "Data governance/privacy/compliance",
+    "Stakeholder influence across technology/risk/business",
+    "Global federated model operation"
+  ],
+  "nice_to_have": [
+    "Azure/Fabric familiarity",
+    "Sandbox governance",
+    "Program delivery across multiple initiatives"
+  ],
+  "responsibilities": [
+    "Lead Oceania data strategy",
+    "Govern analytics/AI data risk controls",
+    "Represent region in global forums"
+  ],
+  "keywords": [
+    "data strategy",
+    "governance",
+    "privacy",
+    "compliance",
+    "analytics",
+    "AI",
+    "federated model",
+    "Azure",
+    "Fabric"
+  ],
+  "seniority": "Senior Manager / Associate Director",
+  "domain": "Enterprise Data Leadership",
+  "location_constraints": "Australia (any EY office)"
+}
