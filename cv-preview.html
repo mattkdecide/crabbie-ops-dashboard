@@ -149,9 +149,16 @@
 
     const params = new URLSearchParams(location.search);
     const qFile = params.get('file');
+    const qLocal = params.get('local');
     if(qFile) document.getElementById('mdPath').value = qFile;
 
-    loadIndex().then(()=>{ if(qFile) loadDraft(qFile); });
+    loadIndex().then(()=>{
+      if(qLocal){
+        const txt = localStorage.getItem('cvDraft:'+qLocal);
+        if(txt){ document.getElementById('renderedMd').innerHTML = mdToHtml(txt); announce('Local draft loaded'); return; }
+      }
+      if(qFile) loadDraft(qFile);
+    });
   </script>
   <script src='ui/nav_v1.js'></script>
 </body>
