@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ops.mattkain.com/schemas/ops.task.status_changed/v1",
+  "title": "ops.task.status_changed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["task_id", "to_status"],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^T-\\d{4}$"
+    },
+    "from_status": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/definitions/taskStatus"}
+      ],
+      "description": "Previous canonical status. Null allowed for first-known state."
+    },
+    "to_status": {
+      "$ref": "#/definitions/taskStatus",
+      "description": "New canonical status."
+    },
+    "reason": {"type": "string"},
+    "owner": {"type": "string", "description": "Agent/person handle (e.g., Forge, Ledger, Matt)"},
+    "source": {"type": "string", "description": "Producer-specific source label (e.g., control-tower-api, csv-import)"},
+    "effective_at": {
+      "type": "string",
+      "description": "Optional: time the change should be considered effective; must be <= envelope occurred_at when validated by producer/consumer.",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    }
+  },
+  "definitions": {
+    "taskStatus": {
+      "type": "string",
+      "enum": ["backlog", "in_progress", "blocked", "done"]
+    }
+  }
+}

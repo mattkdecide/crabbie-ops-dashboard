@@ -91,7 +91,8 @@ Agents/tools should:
    - Read events from `ops/events/*.jsonl` (if present)
 
 2. **Start writing events on every mutation**
-   - When a task status changes, append `crm.task.status_changed.v1` (or introduce `ops.task.status_changed.v1` if you want to keep CRM events separate)
+   - When a task status changes, append `ops.task.status_changed.v1` for Control Tower task-board changes (schema: `ops/architecture/schemas/ops.task.status_changed.v1.schema.json`).
+   - Use `crm.task.status_changed.v1` only when the task is a CRM task entity (schema: `ops/architecture/schemas/crm.task.status_changed.v1.schema.json`).
 
 3. **Gradually move writes off CSV**
    - Introduce `ops/data/tasks.sqlite` or `ops/data/tasks.json` as the API write target

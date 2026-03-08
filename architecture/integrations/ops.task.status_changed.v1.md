@@ -21,8 +21,8 @@ Emit a durable event whenever a task changes status. This supports:
 ```json
 {
   "task_id": "T-0206",
-  "from_status": "In Progress",
-  "to_status": "Blocked",
+  "from_status": "in_progress",
+  "to_status": "blocked",
   "reason": "Need agreed approach for shared masthead/nav partials",
   "owner": "Rivet",
   "source": "control-tower-api",
@@ -34,7 +34,7 @@ Emit a durable event whenever a task changes status. This supports:
 
 - `task_id` MUST match `^T-\d{4}$`
 - `from_status` MAY be null for first-known state
-- `to_status` MUST be one of: `Backlog | In Progress | Blocked | Done`
+- `to_status` MUST be one of: `backlog | in_progress | blocked | done`
 - If `effective_at` is present, it MUST be <= envelope `occurred_at`
 
 ## Mapping to existing artefacts

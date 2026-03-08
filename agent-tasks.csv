@@ -35,3 +35,5 @@ T-0303,,Spec + handoff for derived Activity feed (events JSONL fallback to CSV),
 T-0501,,Review CV draft for R-2026-TEST-EY before apply,Forge,High,In Progress,2026-03-09,2026-03-08,2026-03-08,Created by hero workflow test
 T-0304,,Implement masthead home-link fix + nav_v1.js wiring (remove per-page active classes),Rivet,High,In Progress,2026-03-09,2026-03-08,2026-03-08,Started 2026-03-08: implement HANDOFF_NOTES 1.7 across ops/*.html; ensure logo links to status.html and nav_v1.js sets aria-current
 T-0305,,Implement Activity Timeline page (PRD-006) + JSONL reader + derived fallback,Rivet,High,Ready,2026-03-10,2026-03-08,2026-03-08,Implement ops/activity.html per PRD-006; events-first (ops/events/events-YYYY-MM.jsonl) with safe parse + derived fallback from agent-tasks.csv and job-pipeline.csv; include simple search filter + day grouping.
+
+T-0306,,Improve API Usage table scanability (numeric alignment + zebra rows),Velvet,Medium,Done,2026-03-09,2026-03-08,2026-03-08,Shipped: .table .num right-align + tabular nums; subtle zebra rows; api-usage.html numeric columns flagged

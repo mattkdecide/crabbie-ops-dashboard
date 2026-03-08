@@ -57,10 +57,10 @@
               <th scope="col">Date (UTC)</th>
               <th scope="col">Window</th>
               <th scope="col">Model</th>
-              <th scope="col">In</th>
-              <th scope="col">Out</th>
-              <th scope="col">Total</th>
-              <th scope="col">Est. Cost (USD)</th>
+              <th scope="col" class="num">In</th>
+              <th scope="col" class="num">Out</th>
+              <th scope="col" class="num">Total</th>
+              <th scope="col" class="num">Est. Cost (USD)</th>
               <th scope="col">Notes</th>
             </tr>
           </thead>
@@ -106,10 +106,10 @@
             <td>${r.date_utc||''}</td>
             <td>${r.window||''}</td>
             <td>${r.model||''}</td>
-            <td>${r.in_tokens||''}</td>
-            <td>${r.out_tokens||''}</td>
-            <td>${r.total_tokens||''}</td>
-            <td>${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
+            <td class="num">${r.in_tokens||''}</td>
+            <td class="num">${r.out_tokens||''}</td>
+            <td class="num">${r.total_tokens||''}</td>
+            <td class="num">${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
             <td>${r.notes||''}</td>`;
           tb.appendChild(tr);
         });

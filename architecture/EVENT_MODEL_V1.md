@@ -88,6 +88,7 @@ Each payload includes:
 
 ### B) Pipeline run events
 4. `pipeline.cv_run.completed.v1`
+5. `ops.task.status_changed.v1` (optional, for Control Tower task-board semantics distinct from CRM tasks)
 
 Payload includes:
 - `role_id`
@@ -96,6 +97,18 @@ Payload includes:
 - `artefacts` (optional inline summary; full detail remains in manifest)
 - `qa_path` (optional convenience pointer)
 - `result` (`success|partial|failed`)
+
+### C) Ops task-board status change event
+5. `ops.task.status_changed.v1`
+
+Payload includes:
+- `task_id` (e.g., `T-0206`)
+- `from_status` (nullable for first-known state)
+- `to_status` (canonical: `backlog|in_progress|blocked|done`)
+- `reason` (optional)
+- `owner` (optional)
+- `source` (optional)
+- `effective_at` (optional, RFC3339 UTC)
 
 ---
 
@@ -127,6 +140,7 @@ Defined in this increment:
 - `crm.application.status_changed.v1.schema.json`
 - `crm.task.status_changed.v1.schema.json`
 - `pipeline.cv_run.completed.v1.schema.json`
+- `ops.task.status_changed.v1.schema.json`
 
 ---
 

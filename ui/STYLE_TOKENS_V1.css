@@ -46,6 +46,9 @@
   --lh-tight: 1.2;
   --lh-body: 1.45;
 
+  /* Numeric rendering (tables, KPIs) */
+  --num-variant: tabular-nums lining-nums;
+
   /* Spacing (4px grid) */
   --s1: 4px;
   --s2: 8px;
