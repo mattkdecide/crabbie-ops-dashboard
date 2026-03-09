@@ -38,7 +38,7 @@
   border:1px solid var(--border-2);
   color:var(--text);
   transform:translateY(-140%);
-  transition:transform 140ms ease;
+  transition:transform var(--motion-fast, 140ms) ease;
 }
 .skip-link:focus,
 .skip-link:focus-visible{
@@ -178,6 +178,11 @@
   cursor:pointer;
   user-select:none;
   text-decoration:none;
+  transition:
+    border-color var(--motion-fast, 140ms) ease,
+    box-shadow var(--motion-fast, 140ms) ease,
+    transform var(--motion-fast, 140ms) ease,
+    background-color var(--motion-fast, 140ms) ease;
 }
 .btn:hover{border-color:color-mix(in srgb, var(--accent) 40%, var(--border-2));box-shadow:var(--shadow-1)}
 .btn:active{transform:translateY(1px)}

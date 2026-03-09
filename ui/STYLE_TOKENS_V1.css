@@ -63,6 +63,10 @@
   --focus: 0 0 0 2px rgba(42,100,255,.55);
   --focus-strong: 0 0 0 3px rgba(42,100,255,.75);
 
+  /* Motion (keep short; respect prefers-reduced-motion in components/JS) */
+  --motion-fast: 140ms;
+  --motion-med: 220ms;
+
   /* CV / document surfaces (paper inside dark UI) */
   --paper-bg: #ffffff;
   --paper-text: #0f172a;
