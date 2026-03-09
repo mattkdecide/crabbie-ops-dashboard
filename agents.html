@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
   <style>
     .profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--s3);padding:var(--s4)}
-    .avatar{font-size:28px;line-height:1}
+    .avatar{font-size:28px;line-height:1;display:inline-block;filter:saturate(1.1)}
     .textarea{
       width:100%;
       min-height:clamp(160px, 24vh, 240px);
@@ -53,13 +53,13 @@
 
   <script>
     const AGENTS = [
-      {key:'tide', emoji:'😎', name:'Tide', fn:'PM Control Tower'},
-      {key:'vantage', emoji:'🧐', name:'Vantage', fn:'UX Strategist / Role Analyst'},
-      {key:'polish', emoji:'🤡', name:'Polish', fn:'UI Designer / Visual Quality'},
-      {key:'forge', emoji:'😤', name:'Forge', fn:'CV Strategist'},
-      {key:'ledger', emoji:'😬', name:'Ledger', fn:'CRM Manager'},
-      {key:'radar', emoji:'😵', name:'Radar', fn:'Opportunity Scout'},
-      {key:'atlas', emoji:'🥶', name:'Atlas', fn:'Research & Contact Intel'}
+      {key:'tide', emoji:'🎈🦀', name:'Crabbie', fn:'PM Control Tower'},
+      {key:'vantage', emoji:'🎈🔭', name:'Vantage', fn:'UX Strategist / Role Analyst'},
+      {key:'polish', emoji:'🎈🎨', name:'Polish', fn:'UI Designer / Visual Quality'},
+      {key:'forge', emoji:'🎈⚒️', name:'Forge', fn:'CV Strategist'},
+      {key:'ledger', emoji:'🎈📊', name:'Ledger', fn:'CRM Manager'},
+      {key:'radar', emoji:'🎈📡', name:'Radar', fn:'Opportunity Scout'},
+      {key:'atlas', emoji:'🎈🧭', name:'Atlas', fn:'Research & Contact Intel'}
     ];
 
     async function loadProfile(agent){
