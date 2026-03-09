@@ -98,9 +98,23 @@ type TimelineItem = {
 **Handoff item UX-001:** Implement `renderTimeline(items)` component and `timelineAdapter`.
 
 Acceptance criteria:
-1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` (or a dedicated `ops/activity.html`).
+1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` and/or `ops/activity.html`.
 2. Adapter can parse a sample JSONL file (first N lines) into `TimelineItem[]`.
 3. Items support optional links and severity badges.
+
+**Handoff item UX-002:** URL-param filtering contract (static-first, progressive enhancement).
+
+Why: lets Matt share a focused view without adding complex UI state management.
+
+Contract (v1):
+- `activity.html?domain=task` filters to a single domain.
+- `activity.html?days=1|7|30` restricts items to last N days (apply only when `occurredAt` is parseable).
+- Multiple params can combine: `?domain=job&days=7`.
+
+Acceptance criteria:
+1. With hard-coded items, filtering works client-side.
+2. If params are absent or invalid, default is “all domains” and “7 days”.
+3. Filtering does not break the CSV-derived fallback mode.
 
 Dependencies:
 - `ops/events/` directory and at least one JSONL file.
@@ -109,4 +123,5 @@ Dependencies:
 
 ## 9) Open questions / blockers
 - Where should event ingestion live (client-side fetch vs server-side precompute in `dashboard-worker.js`)?
-- Decide whether Activity is a dedicated page (`/activity`) or embedded on Pipeline + Agents first.
+- Activity page does not yet exist (`ops/activity.html`). Build task is queued (`T-0311`).
+- `ops/job-pipeline.csv` missing `updated_at` makes derived job activity timestamps lossy until added (see `ops/ux/HANDOFF_NOTES_V1.md` 1.8).

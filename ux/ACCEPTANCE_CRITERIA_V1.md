@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (00:27 UTC)
+Last updated: 2026-03-09 (02:27 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -39,8 +39,10 @@ Supporting specs:
 - visible focus states for all interactive elements
 
 **And** the page loads `ui/nav_v1.js` so that:
-- the mobile menu can be toggled and dismissed (Escape, outside click)
+- the mobile menu can be toggled and dismissed (Escape, outside click, link click)
 - the active link is expressed via `aria-current="page"` (not colour-only)
+
+**And** if `nav_v1.js` is present, pages SHOULD NOT hard-code `aria-current` or active classes in HTML (to avoid drift); allow the script to set the active state based on URL.
 
 ### AC-1b (target): Persistent masthead (spec)
 **Given** I open any of the ops pages (Home, Status, Kanban, Agent Queue, Agents, CV Preview, CV Run, API Usage)

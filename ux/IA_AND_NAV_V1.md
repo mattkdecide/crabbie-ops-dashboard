@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-09 (00:27 UTC)
+Last updated: 2026-03-09 (02:27 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -32,6 +32,7 @@ Build note (current reality):
 - `ops/ui/nav_v1.js` is present and now:
   - toggles the mobile menu reliably (Escape/outside click/link click)
   - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
+- Some pages still hard-code `aria-current` in markup (e.g., Status). This is harmless, but not preferred; drift risk is lower if active state is delegated entirely to `nav_v1.js`.
 - The “home” logo link currently points to `index.html` across the ops pages, and `ops/index.html` **does** now exist (so the link is valid in the current build).
 
 Pragmatic v1 recommendation:

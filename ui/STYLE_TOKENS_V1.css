@@ -99,6 +99,9 @@ a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;te
 /* Global keyboard focus guardrail (components may override) */
 button:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:10px}
 
+/* Reduce tap highlight noise on touch devices (keeps focus-visible styling intact) */
+:where(a,button,input,select,textarea,.btn){-webkit-tap-highlight-color: transparent}
+
 /* Prevent anchored content hiding behind sticky headers */
 :target{scroll-margin-top: calc(var(--sticky-offset, 88px) + var(--s3))}
 
@@ -129,6 +132,22 @@ code{
 .badge--success{background:var(--success-bg);color:var(--success-fg)}
 .badge--warning{background:var(--warning-bg);color:var(--warning-fg)}
 .badge--danger{background:var(--danger-bg);color:var(--danger-fg)}
+
+@media (forced-colors: active){
+  /* High-contrast / Windows forced colours: ensure focus remains visible.
+     Box-shadows are often suppressed, so fall back to outlines.
+  */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible{
+    outline:2px solid CanvasText;
+    outline-offset:2px;
+    box-shadow:none !important;
+  }
+}
 
 @media (prefers-contrast: more){
   :root{

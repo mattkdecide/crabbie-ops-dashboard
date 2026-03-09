@@ -88,6 +88,8 @@ Focus/accessibility:
    - `ops/agent-queue.html`
    - `ops/agents.html`
    - `ops/cv-preview.html`
+   - `ops/cv-run.html` (utility)
+   - `ops/activity.html` (planned page, create it as part of Activity work)
 3. Home link rule:
    - Masthead logo/title link MUST go to `index.html` (Home) in v1.
 4. Active-tab + mobile menu behaviour:

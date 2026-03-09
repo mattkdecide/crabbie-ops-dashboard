@@ -192,6 +192,7 @@
 .btn[aria-current="page"]{
   background:color-mix(in srgb, var(--accent) 22%, var(--surface-2));
   border-color:color-mix(in srgb, var(--accent) 45%, var(--border-2));
+  font-weight:700; /* non-colour affordance for “current page” */
 }
 .btn--danger{background:color-mix(in srgb, var(--danger-bg) 70%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 35%, var(--border-2));color:var(--danger-fg)}
 
@@ -209,6 +210,22 @@
 }
 .input::placeholder{color:color-mix(in srgb, var(--text-3) 80%, transparent)}
 .input:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+
+/* Notices (inline feedback)
+   Use for: copy-to-clipboard feedback, load errors, warnings.
+*/
+.notice{
+  border:1px solid var(--border-2);
+  background:var(--surface-2);
+  color:var(--text);
+  border-radius:var(--r1);
+  padding:10px 12px;
+  font-size:var(--fs-1);
+}
+.notice--info{background:color-mix(in srgb, var(--info-bg) 65%, var(--surface-2));border-color:color-mix(in srgb, var(--info-fg) 22%, var(--border-2));color:var(--info-fg)}
+.notice--success{background:color-mix(in srgb, var(--success-bg) 65%, var(--surface-2));border-color:color-mix(in srgb, var(--success-fg) 22%, var(--border-2));color:var(--success-fg)}
+.notice--warning{background:color-mix(in srgb, var(--warning-bg) 65%, var(--surface-2));border-color:color-mix(in srgb, var(--warning-fg) 22%, var(--border-2));color:var(--warning-fg)}
+.notice--danger{background:color-mix(in srgb, var(--danger-bg) 65%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 22%, var(--border-2));color:var(--danger-fg)}
 
 /* Density and readability guardrails */
 @media (max-width: 960px){
@@ -231,6 +248,22 @@
   .board{gap:var(--s2)}
   .column{min-width: 92vw;max-width: 92vw}
   .item{margin:var(--s2);padding:var(--s2)}
+}
+
+@media (max-width: 420px){
+  /* Two-column action grids get cramped; switch to a single column. */
+  .topbar__actions{grid-template-columns:1fr}
+}
+
+@media (forced-colors: active){
+  .btn,
+  .notice,
+  .column__shell,
+  .item,
+  .input{
+    forced-color-adjust:auto;
+    outline:1px solid CanvasText;
+  }
 }
 
 @media (prefers-contrast: more){

@@ -43,6 +43,7 @@ UX requirements (implementation-ready):
 Current build note:
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
 - It supports query param `?file=outputs/cv/<role_id>/draft.md`.
+- Known UX papercut (still present in build as of 2026-03-09): the default input value points at `outputs/cv/R-2026-0017/draft.md` which is unlikely to exist on a fresh publish. This should be blank (or a known-good demo file) per AC-8 + handoff 1.5.
 
 ---
 
@@ -83,7 +84,8 @@ Current build note:
 **Primary artefacts:**
 - Future canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
 - Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
-- Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full)
+- Current UI targets: `ops/status.html` (compact)
+- Planned UI targets (not yet built): `ops/activity.html` (full) (see task `T-0311` in `ops/agent-tasks.csv`)
 
 User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.

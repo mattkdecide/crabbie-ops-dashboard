@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (00:27 UTC)
+Last updated: 2026-03-09 (02:27 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -41,6 +41,7 @@ Minimal v1 is acceptable:
 - Render 10 items.
 - Support empty/missing states.
 - Hard-code sample data until `ops/events/` exists.
+- Implement URL-param filtering contract (UX-002): `?domain=…&days=…` (progressive enhancement).
 
 ### 1.3 UX artefact links on Status (DONE)
 Target file: `ops/status.html`
@@ -141,8 +142,10 @@ Deliverables (static v1):
    - `ops/agents.html`
    - `ops/cv-preview.html`
    - `ops/api-usage.html`
-3) Remove per-page hard-coded “active” classes where present; rely on:
+3) Remove per-page hard-coded “active” classes / `aria-current` where present; rely on:
    - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
+
+Current build note (2026-03-09): `ops/status.html` still hard-codes `aria-current="page"` on the Status link. Not harmful, but worth cleaning up to keep all pages consistent and script-driven.
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
