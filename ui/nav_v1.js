@@ -9,9 +9,34 @@
 
   const setExpanded = (next) => {
     if (!btn) return;
+
+    const wasOpen = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(next));
     nav.classList.toggle('is-open', !!next);
+
+    // Hide collapsed nav from assistive tech when the toggle is in play (mobile pattern).
+    // On desktop, the toggle is display:none, but keeping aria-hidden synced is harmless.
+    nav.setAttribute('aria-hidden', String(!next));
+
+    // Focus management: when opening, move focus into the menu (first link).
+    // When closing, if focus was inside the nav, return it to the toggle.
+    try {
+      const active = document.activeElement;
+      if (next && !wasOpen) {
+        requestAnimationFrame(() => {
+          const firstLink = nav.querySelector('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+          if (firstLink && firstLink.focus) firstLink.focus();
+        });
+      } else if (!next && wasOpen) {
+        if (active && nav.contains(active)) btn.focus();
+      }
+    } catch (_) {
+      // no-op
+    }
   };
+
+  // Initialise aria-hidden to match the current expanded state.
+  if (btn) setExpanded(btn.getAttribute('aria-expanded') === 'true');
 
   // 1) Mobile menu toggle behaviour
   if (btn) {

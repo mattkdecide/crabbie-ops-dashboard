@@ -146,7 +146,10 @@
   border-radius: var(--r1);
 }
 .item--link .item__link:hover{
-  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  background: var(--surface-hover);
+}
+.item--link .item__link:active{
+  background: var(--surface-press);
 }
 .item--link .item__link:focus-visible{
   outline:none;
