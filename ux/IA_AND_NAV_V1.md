@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-09 (18:28 UTC)
+Last updated: 2026-03-09 (20:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -19,6 +19,7 @@ Current build files in scope:
 
 Planned build files (not yet present):
 - `ops/activity.html`
+- `ops/team-ops.html` (control-tower summary; tracked in tasks as T-0306)
 
 UX source specs (this folder):
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
@@ -94,7 +95,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 ## 2) Navigation model (URLs + active tab rules)
 ### Canonical routes (static v1)
 - Pipeline tab → `kanban.html`
-- Agents tab → `agent-queue.html` (board) and/or `agents.html` (index)
+- Agents tab → `agent-queue.html` (board), `agents.html` (index), and `team-ops.html` (control-tower summary, when published)
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
 - Design tab → `design/DESIGN_ROADMAP_V1.md`
 - Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)
@@ -107,7 +108,7 @@ Current implementation direction:
 
 Rule table (for the *masthead tab state*, independent of the v1 `.topbar` links):
 - `*/kanban.html` → active=Pipeline
-- `*/agent-queue.html` or `*/agents.html` → active=Agents
+- `*/agent-queue.html` or `*/agents.html` or `*/team-ops.html` → active=Agents
 - `*/ux/*` → active=UX
 - `*/design/*` OR `*/ui/*` → active=Design
 - `*/EXECUTION_PLAN_*` OR `*/project-gantt*` OR `*/UPDATE_CAPTURE*` OR `*/status.html` OR `*/api-usage.html` → active=Roadmap
@@ -142,6 +143,14 @@ Must show per task row:
 - owner agent
 - role_id (if applicable)
 - blocker reason (if status=Blocked)
+
+### `ops/team-ops.html` (Agents: control tower)
+Job-to-be-done: get a single scannable view of workload and blockers.
+
+Should contain:
+- KPI strip (In progress / Blocked / Due soon)
+- Top blockers list with visible reasons
+- Links back to Agent Queue and Kanban
 
 ### `ops/cv-preview.html` (CV build target)
 Job-to-be-done: evaluate layout and export readiness.

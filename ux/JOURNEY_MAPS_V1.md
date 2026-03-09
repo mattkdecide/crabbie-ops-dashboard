@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-09 (18:28 UTC)
+Last updated: 2026-03-09 (20:28 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -108,6 +108,7 @@ Implementation notes (v1, build-ready):
 - Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
 - Prefer events when present.
   - Seed file exists now: `ops/events/events-2026-03.jsonl`.
+  - Canonical envelope fields are `{event_type, occurred_at, data}` (not legacy `{type, payload}`); see `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
   - When falling back, show the inline note (exact): `Event feed unavailable, showing derived activity.`
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.

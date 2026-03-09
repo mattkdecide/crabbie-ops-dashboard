@@ -59,7 +59,7 @@ Interaction:
 ## 5) Data contract (UI adapter)
 ### Input (normalised record)
 Build should implement a small adapter that maps either:
-- event envelope objects (preferred), or
+- canonical **EventEnvelope** objects (preferred), or
 - CSV-derived records
 into:
 ```ts
@@ -75,15 +75,30 @@ type TimelineItem = {
 }
 ```
 
+Canonical event envelope fields (v1):
+- `event_type` (NOT `type`)
+- `occurred_at` (NOT `occurredAt`)
+- `data` (NOT `payload`)
+
+Reference: `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
+
 ### Mapping rules (events → TimelineItem)
-- `event_type` prefix maps to `domain`.
-- `data.old_status`/`data.new_status` produce the “moved” summary line.
-- `data.reason` maps to `detail`.
-- `producer.name` or `data.changed_by` maps to `actor`.
+- `occurredAt` = `event.occurred_at`.
+- `domain`:
+  - map from `event.event_type` prefix (e.g., `crm.job.*` → `job`, `crm.application.*` → `application`, `crm.task.*` → `task`, `ops.*` → `pipeline`).
+- `summary`:
+  - if `data.old_status` + `data.new_status` exist, use: `Moved: <old> → <new>` (prefix with entity label when available).
+  - else fall back to `event.event_type` (humanised).
+- `detail`:
+  - use `data.reason` when present; else omit.
+- `actor`:
+  - prefer `data.changed_by` (event-specific attribution), else `producer.name`.
 - `severity`:
-  - `danger` when `new_status` is a terminal negative (`rejected`, `withdrawn`, `dropped`) or `TaskStatus=blocked`
-  - `warning` for `drafting` / `interviewing` (attention needed)
-  - otherwise `info`
+  - `danger` when `data.new_status` is a terminal negative (`rejected`, `withdrawn`, `dropped`) or when a task status indicates blocked.
+  - `warning` for attention states (drafting/interviewing or soon-due follow-ups).
+  - otherwise `info`.
+
+Legacy compatibility note (if needed): if an envelope arrives as `{type, payload}`, translate it to `{event_type, data}` before mapping.
 
 ### CSV fallback rules (until full eventing)
 - Job row change: synthesise `summary` from `status` and `last_action`.
@@ -146,5 +161,6 @@ Acceptance criteria:
 3. When `ops/events/` fetch fails, UI renders derived items and shows the inline note from Section 6.
 
 ## 9) Open questions / blockers
+- **Envelope shape drift risk:** dashboards must consume canonical `{event_type, occurred_at, data}` (not `{type, payload}`); see `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
 - Where should event ingestion live (client-side fetch vs server-side precompute in `dashboard-worker.js`)?
 - Decide whether Activity is a dedicated page (`/activity`) or embedded on Pipeline + Agents first.

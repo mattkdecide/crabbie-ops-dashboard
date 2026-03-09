@@ -8,6 +8,7 @@
 - API Usage (`api-usage.html`)
 - CV Preview (`cv-preview.html`)
 - CV Run (`cv-run.html`)
+- Team Ops (`team-ops.html`, planned)
 - Activity (`activity.html`, planned)
 
 ## Documentation branches

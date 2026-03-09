@@ -101,6 +101,11 @@ Interaction feedback:
    - `ops/agent-queue.html`
    - `ops/agents.html`
    - `ops/cv-preview.html`
+   - `ops/api-usage.html`
+
+   And into planned surfaces when they land:
+   - `ops/activity.html`
+   - `ops/team-ops.html`
 3. Home link rule (avoid broken nav):
    - Masthead logo/title link SHOULD go to `index.html` when present (current build).
    - If `index.html` is not available in an environment, fall back to `status.html`.

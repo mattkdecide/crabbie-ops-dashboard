@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (18:28 UTC)
+Last updated: 2026-03-09 (20:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -47,6 +47,25 @@ Minimal v1 is acceptable:
 - Render 10 items.
 - Support empty/missing states.
 - Hard-code sample data until `ops/events/` exists.
+
+**Handoff item UX-004 (concrete): Align timeline parsing to canonical EventEnvelope fields**
+Why: OpenAPI + JSON Schema now standardise on `{event_type, occurred_at, data}`; avoid UI breakage from `{type, payload}` drift.
+
+Reference:
+- `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`
+
+Implementation notes (static JS v1):
+- When parsing JSONL lines, accept canonical first:
+  - `event.event_type`, `event.occurred_at`, `event.data`
+- Optionally support legacy by translating:
+  - `event.type -> event_type`
+  - `event.payload -> data`
+- Adapter must output the UI contract in `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` Section 5.
+
+Acceptance:
+1) A JSONL line with `{event_type, occurred_at, data}` renders without errors.
+2) A JSONL line with `{type, payload}` still renders (if legacy support is enabled), but the code path is clearly marked for removal.
+3) Missing `occurred_at` does not crash the page; item is skipped with `console.warn`.
 
 ### 1.3 UX artefact links on Status (DONE)
 Target file: `ops/status.html`
@@ -213,6 +232,7 @@ Deliverables (static v1):
 1) Create `ops/team-ops.html`
    - Include the standard header/nav (`ui/nav_v1.js`), consistent with AC-1.
    - Page title: `Team Ops`.
+   - Ensure the nav set includes a route to Team Ops (either as a primary link or a clearly-labelled utility link under Agents).
 2) Render 3 KPI tiles from `ops/agent-tasks.csv`:
    - `In progress` (count of `status=In Progress`)
    - `Blocked` (count of `status=Blocked`)

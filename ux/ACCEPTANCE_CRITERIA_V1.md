@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (18:28 UTC)
+Last updated: 2026-03-09 (20:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -30,7 +30,7 @@ Supporting specs:
 
 ## AC-1: Global header navigation is present and consistent (v1 → v2)
 ### AC-1a (v1): `.topbar` header is consistent across pages
-**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage, and Team Ops if published)
 **When** the page renders
 **Then** a header renders at the top with:
 - a working “Home” link that resolves to an existing page
