@@ -1,0 +1,71 @@
+# Job Test Input
+
+## Title
+Oceania Data Lead - Senior Manager or Associate Director
+
+## Company
+EY
+
+## Location
+Sydney (or any EY office across Australia)
+
+## Date
+2 Mar 2026
+
+## Requisition ID
+1684872
+
+## Full Description
+At EY, we’re all in to shape your future with confidence.
+
+We’ll help you succeed in a globally connected powerhouse of diverse teams and take your career wherever you want it to go.
+
+Join EY and help to build a better working world.
+
+Oceania Data Lead – Senior Manager or Associate Director
+
+The opportunity
+As our Oceania Data Lead, you will be accountable for shaping, governing, and activating EY Oceania’s data strategy in alignment with the firm’s global data vision. This is a senior regional data leadership role with enterprise-wide accountability for enabling secure, compliant, and scalable data platforms, analytics, and AI across Oceania.
+
+You will provide leadership across data governance, quality, privacy, and platform adoption, while working in close partnership with the Innovation Lead and Sandpit Manager to ensure Oceania’s sandpit environments are governed by strong data policies and risk controls.
+
+Operating within a federated global model, you will represent Oceania in global data governance forums and contribute to the evolution of firmwide data standards and priorities.
+
+This role sits within the Office of the CTIO and partners closely with Technology, Product, Risk, Innovation, and Service Line leaders to ensure data initiatives deliver measurable business value while meeting regulatory and firm-wide governance expectations.
+
+This role can be performed from any of our EY offices across Australia.
+
+Our roles can potentially be adjusted to work flexibly with reduced hours.
+
+Please speak with us about potential options.
+
+Your key responsibilities
+- Lead the execution of EY Oceania’s data strategy, ensuring alignment with global data standards, platforms, and governance frameworks.
+- Oversee data governance, security, privacy, and compliance across all analytics, AI, and data environments, ensuring adherence to local regulatory requirements and firm-wide policies.
+- Provide data governance oversight across Oceania’s data and AI sandpit environments, working closely with the Innovation and Product Lead and Sandpit Manager to ensure data policies, integrity, and risk controls are consistently applied.
+- Define and enforce data usage standards for sandpit environments, including ensuring client, personal, and confidential data is not used, and partnering with the business to identify appropriate alternatives such as synthetic, anonymised, or sanitised data.
+- Drive data quality, analytics, and synthetic data initiatives to enable advanced insights, AI model development, experimentation, and privacy-preserving innovation.
+- Coordinate regional analytics and insight initiatives to inform business decision-making and improve service delivery outcomes.
+- Act as Oceania’s representative in global data governance and data leadership forums, enabling two-way sharing of insights, requirements, and priorities.
+- Partner closely with Technology, Product, Risk, Innovation, and Service Line leaders to embed data-driven ways of working and promote a strong data culture across the region.
+- Support adoption of global data platforms (e.g. Azure, Fabric) and ensure effective localisation to meet Oceania business needs.
+
+Skills and attributes for success
+- Proven experience leading enterprise data strategy, governance, and platform adoption in a large, complex organisation.
+- Strong understanding of cloud and enterprise data platforms (e.g. Azure, Fabric) and modern analytics and AI architectures.
+- Deep knowledge of data governance, security, privacy, and regulatory frameworks, including operating in highly regulated environments.
+- Demonstrated ability to operate effectively in a federated global model, balancing local priorities with global standards.
+- Strong stakeholder management and communication skills, with the ability to influence senior leaders across technology, risk, and business domains.
+
+Ideally
+- Senior leadership experience in data, analytics, AI, or platform enablement roles.
+- Experience supporting innovation or sandbox environments through strong data governance rather than direct operational ownership.
+- Familiarity with automation, infrastructure-as-code, and modern data engineering practices.
+- Proven program delivery experience across multiple concurrent initiatives.
+- Degree in technology, data, business, or related discipline; post-graduate desirable.
+
+What EY offers
+- Career development support
+- Flexible work arrangements
+- Comprehensive benefits package
+- Competitive salary (negotiable based on experience)

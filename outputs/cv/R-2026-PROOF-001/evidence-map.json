@@ -1,0 +1,37 @@
+{
+  "role_key": "R-2026-PROOF-001",
+  "mappings": [
+    {
+      "requirement": "Proven experience leading enterprise data strategy, governance, and platform adoption in a large, complex organisation.",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    },
+    {
+      "requirement": "Strong understanding of cloud and enterprise data platforms (e.g. Azure, Fabric) and modern analytics and AI architectures.",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    },
+    {
+      "requirement": "Deep knowledge of data governance, security, privacy, and regulatory frameworks, including operating in highly regulated environments.",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    },
+    {
+      "requirement": "Proven program delivery experience across multiple concurrent initiatives.",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    }
+  ]
+}

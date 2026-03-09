@@ -1,0 +1,40 @@
+{
+  "role_key": "R-2026-PROOF-001",
+  "run_at_utc": "2026-03-09T15:07:13.734772Z",
+  "input": {
+    "input_file": "/home/kain/.openclaw/workspace/inputs/jobs/R-2026-TEST-EY/job.txt",
+    "title": "Data Lead"
+  },
+  "qa_result": "pass",
+  "qa_hard_fail_reasons": [],
+  "qa_soft_warnings": [
+    "keyword_coverage_pct<75 (17)"
+  ],
+  "artefacts": {
+    "intake_txt": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/intake.txt",
+    "analysis_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/analysis.json",
+    "evidence_map_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/evidence-map.json",
+    "draft_md": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/draft.md",
+    "qa_json": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/qa.json",
+    "qa_summary_md": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/qa_summary.md",
+    "final_pdf": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/final.pdf"
+  },
+  "crm_update": {
+    "job_pipeline_status_written": "CV Ready",
+    "next_step_written": "Ready to apply (final.pdf generated)",
+    "role_id": "R-2026-PROOF-001",
+    "row_action": "created"
+  },
+  "task_update": {
+    "task_id": "CV-R-2026-PROOF-001-FOLLOWUP",
+    "task_status": "Review"
+  },
+  "linkage": {
+    "role_key": "R-2026-PROOF-001",
+    "manifest_path": "/home/kain/.openclaw/workspace/outputs/cv/R-2026-PROOF-001/manifest.json",
+    "crm_role_id": "R-2026-PROOF-001",
+    "task_id": "CV-R-2026-PROOF-001-FOLLOWUP"
+  },
+  "pdf_generated": true,
+  "pdf_error": null
+}

@@ -1,0 +1,17 @@
+{
+  "date_utc": "2026-03-09",
+  "estimate_confidence": "low",
+  "method": "run-class approximation from observed cron behaviour until workflow-usage-log.csv is fully populated",
+  "estimated": {
+    "api_calls_24h": 58,
+    "total_tokens_24h": 540000,
+    "estimated_daily_cost_usd": 1.35
+  },
+  "top_cost_drivers": [
+    {"workflow_id": "jobs_digest_am_pm", "estimated_share_pct": 37},
+    {"workflow_id": "priority_inbox_alerts", "estimated_share_pct": 24},
+    {"workflow_id": "ui_visual_style_daily", "estimated_share_pct": 11},
+    {"workflow_id": "ux_workflow_design_daily", "estimated_share_pct": 10},
+    {"workflow_id": "squad_build_engineer_continuous", "estimated_share_pct": 8}
+  ]
+}
