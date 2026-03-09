@@ -2,18 +2,20 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-09 (00:27 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
 
 Current build files in scope:
+- `ops/index.html` (Home)
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
 - `ops/agents.html`
-- `ops/cv-preview.html`
 - `ops/api-usage.html` (utility page, but currently linked in global nav)
+- `ops/cv-preview.html`
+- `ops/cv-run.html` (utility page, but currently linked in global nav)
 
 Planned build files (not yet present):
 - `ops/activity.html`
@@ -30,10 +32,10 @@ Build note (current reality):
 - `ops/ui/nav_v1.js` is present and now:
   - toggles the mobile menu reliably (Escape/outside click/link click)
   - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
-- The “home” logo link currently points to `index.html` on at least `status.html` and `api-usage.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
+- The “home” logo link currently points to `index.html` across the ops pages, and `ops/index.html` **does** now exist (so the link is valid in the current build).
 
 Pragmatic v1 recommendation:
-- Treat `status.html` as “home” until an `index.html` landing page is created.
+- Treat `index.html` as “home”, and treat `status.html` as the operational overview/launchpad page linked prominently from Home.
 
 ---
 
@@ -83,6 +85,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 
 ## 2) Navigation model (URLs + active tab rules)
 ### Canonical routes (static v1)
+- Home → `index.html`
 - Pipeline tab → `kanban.html`
 - Agents tab → `agent-queue.html` (board) and/or `agents.html` (index)
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
@@ -96,6 +99,7 @@ Current implementation direction:
 - Avoid per-page hard-coded active classes where possible (reduces drift).
 
 Rule table (for the *masthead tab state*, independent of the v1 `.topbar` links):
+- `*/index.html` → active=Roadmap (Home/Overview)
 - `*/kanban.html` → active=Pipeline
 - `*/agent-queue.html` or `*/agents.html` → active=Agents
 - `*/ux/*` → active=UX

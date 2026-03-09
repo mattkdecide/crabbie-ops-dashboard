@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-09 (00:27 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -125,15 +125,16 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
-### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
-Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
+### 1.7 Build handoff (concrete): Confirm “home” link + delegate active-link semantics to `nav_v1.js`
+Why: the build now has a real `ops/index.html` landing page, and `nav_v1.js` already implements URL-based active link semantics.
 
-Current bug (needs fix):
-- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
+Current reality (as of 2026-03-09):
+- `ops/index.html` exists and is the correct Home target.
 
 Deliverables (static v1):
-1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
+1) On each ops page header/masthead, set the logo/title href to `index.html`.
 2) Ensure these pages load `ops/ui/nav_v1.js`:
+   - `ops/index.html`
    - `ops/status.html`
    - `ops/kanban.html`
    - `ops/agent-queue.html`
@@ -145,6 +146,19 @@ Deliverables (static v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
+
+### 1.8 Build handoff (concrete): Add `updated_at` to `ops/job-pipeline.csv` (unblocks accurate Activity)
+Why: Derived Activity fallback currently uses `last_action` as a proxy timestamp (lossy). Adding `updated_at` makes the Activity feed reliable even without full events.
+
+Deliverables (data + UI):
+1) Update `ops/job-pipeline.csv` header to include `updated_at` (ISO8601 UTC) near `created_at/last_action`.
+2) Update any writers (scripts/agents/manual guidance) so whenever a row is touched, `updated_at` is set.
+   - Minimum v1: manual edits update it.
+   - Preferred: any automation that changes `status/next_action/owner/notes` must set it.
+3) Update Derived Activity rule (Section 1.4): prefer `updated_at`, fall back to `last_action`.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
 ---
 

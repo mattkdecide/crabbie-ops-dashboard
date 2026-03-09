@@ -36,6 +36,9 @@ UX requirements (implementation-ready):
 - User-visible **analysis summary** at top of the CV run page (1 screen, scannable).
 - Explicit quality gate: QA checklist must be acknowledged before final PDF is considered “ready”.
 - One-click access to all artefacts for a role: draft, PDF, manifest, QA, and source links.
+- Safe-by-default draft loader:
+  - default path should be blank (no broken demo path on load)
+  - restrict load paths to `outputs/cv/**` (same-origin) to reduce accidental file exposure
 
 Current build note:
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
@@ -72,7 +75,7 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
 
 Current build note:
-- Home/logo link must resolve to `status.html` (do not link to `index.html` until it exists).
+- Home/logo link must resolve to `index.html` (fallback: `status.html` if Home is ever unavailable).
 
 ---
 
@@ -80,27 +83,27 @@ Current build note:
 **Primary artefacts:**
 - Future canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
 - Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
-- Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full, to create)
+- Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full)
 
 User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.
 
 Journey:
 1. Open `ops/status.html`.
-2. See “What changed” module.
-3. If `ops/events/` exists, render first N events.
-4. If `ops/events/` is missing, render **derived activity**:
-   - job status changes inferred from `job-pipeline.csv` `status` + `last_action` + `updated_at` (if present)
-   - task status changes inferred from `agent-tasks.csv` `status` + `updated_at`
-5. Click through to `ops/activity.html` for the full list.
+2. See “What changed” module (10 items) + link to `activity.html`.
+3. If `ops/events/` exists, render first N JSONL events (parse-first-N).
+4. If `ops/events/` is missing or fetch fails, render **derived activity**:
+   - job changes inferred from `job-pipeline.csv` `status` + timestamp (prefer `updated_at`, else fallback to `last_action`)
+   - task changes inferred from `agent-tasks.csv` `status` + `updated_at`
+5. Click through to `ops/activity.html` for the full list (50 items).
 
 Implementation notes (v1, build-ready):
 - Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
-- Prefer events when present. Seed file now exists: `ops/events/events-2026-03.jsonl`.
-- CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
-  - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
-  - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).
-- Derived rules must be explicitly documented in `ops/ux/HANDOFF_NOTES_V1.md` to avoid drift.
+- Prefer events when present. Seed file exists: `ops/events/events-2026-03.jsonl`.
+- Derived activity is inherently lossy until `ops/job-pipeline.csv` also carries an `updated_at` column.
+  - Current fallback for `ops/job-pipeline.csv`: use `last_action` as best-available timestamp.
+  - `ops/agent-tasks.csv`: `updated_at` already exists.
+- Derived rules MUST remain documented in `ops/ux/HANDOFF_NOTES_V1.md` (single source of truth) to avoid drift.
 
 ---
 
