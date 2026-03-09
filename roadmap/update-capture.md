@@ -26,6 +26,7 @@
 - Expanded PRD-006 (Activity Timeline) into implementation-ready acceptance criteria + edge cases, including JSONL discovery, CSV fallback derivation rules, and explicit decision requests.
 - Expanded PRD-002 (Live Kanban) into implementation-ready acceptance criteria + edge cases (parse contract, sorting, deep-link highlight, safe unknown handling), and added explicit decision requests for job-pipeline v1 contract.
 - Control Tower refresh: marked T-0303 Done; unblocked T-0206 (nav + artefact links) and moved to In Progress; added read-model drift hygiene decision ask; reiterated CV Preview default-path AC fix.
+- Control Tower refresh (03:36 UTC): captured T-0311 as Approved (build Activity Timeline), and marked T-0502/T-0308/T-0312 Done; updated top priorities + decision requests (PRD-002 job-pipeline contract confirmations).
 
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
