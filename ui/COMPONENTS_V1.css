@@ -73,6 +73,9 @@
 .topbar__actions{margin-top:var(--s2);display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
 
 .board{display:flex;gap:var(--s3);overflow:auto;padding:var(--s4);
+  /* iOS home indicator / safe-area: ensure last row of cards isn't obscured */
+  padding-bottom: calc(var(--s4) + env(safe-area-inset-bottom));
+
   /* Prevent "scroll chaining" and reduce layout shift when scrollbars appear */
   overscroll-behavior-x: contain;
   scrollbar-gutter: stable;
@@ -218,7 +221,7 @@
   .topbar__title{font-size:18px}
   .topbar__actions{gap:8px}
   .btn{padding:8px 10px}
-  .board{padding:var(--s3)}
+  .board{padding:var(--s3);padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom))}
   .column{min-width: 88vw;max-width: 88vw}
 }
 
@@ -229,7 +232,7 @@
   .topbar__actions{display:none;grid-template-columns:1fr 1fr;gap:8px}
   .topbar__actions.is-open{display:grid}
   .btn{width:100%}
-  .board{gap:var(--s2)}
+  .board{gap:var(--s2);padding:var(--s3);padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom))}
   .column{min-width: 92vw;max-width: 92vw}
   .item{margin:var(--s2);padding:var(--s2)}
 }
