@@ -7,15 +7,38 @@
   if (!nav.id) nav.id = `nav-${Math.random().toString(16).slice(2)}`;
   if (btn) btn.setAttribute('aria-controls', nav.id);
 
+  // NOTE: the nav is only "collapsible" when the toggle button is actually visible.
+  // If we set aria-hidden while the toggle is display:none (desktop), screen readers
+  // can lose access to the primary nav even though it is visible.
+  const isCollapsible = () => {
+    if (!btn) return false;
+    try {
+      return window.getComputedStyle(btn).display !== 'none';
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const syncDesktopA11y = () => {
+    if (isCollapsible()) return;
+    // Desktop: nav should always be available to assistive tech.
+    nav.removeAttribute('aria-hidden');
+    nav.classList.remove('is-open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  };
+
   const setExpanded = (next) => {
     if (!btn) return;
+    if (!isCollapsible()) {
+      syncDesktopA11y();
+      return;
+    }
 
     const wasOpen = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', String(next));
     nav.classList.toggle('is-open', !!next);
 
-    // Hide collapsed nav from assistive tech when the toggle is in play (mobile pattern).
-    // On desktop, the toggle is display:none, but keeping aria-hidden synced is harmless.
+    // Mobile: hide collapsed nav from assistive tech.
     nav.setAttribute('aria-hidden', String(!next));
 
     // Focus management: when opening, move focus into the menu (first link).
@@ -35,8 +58,30 @@
     }
   };
 
-  // Initialise aria-hidden to match the current expanded state.
-  if (btn) setExpanded(btn.getAttribute('aria-expanded') === 'true');
+  // Initialise a11y state.
+  syncDesktopA11y();
+  if (btn && isCollapsible()) setExpanded(btn.getAttribute('aria-expanded') === 'true');
+
+  // Keep aria-hidden semantics correct when crossing breakpoints (mobile ↔ desktop).
+  // We avoid matchMedia here because the source of truth is actual toggle visibility.
+  try {
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(() => {
+        if (!btn) {
+          syncDesktopA11y();
+          return;
+        }
+        if (!isCollapsible()) {
+          syncDesktopA11y();
+        } else {
+          // Mobile: ensure aria-hidden matches expanded state.
+          setExpanded(btn.getAttribute('aria-expanded') === 'true');
+        }
+      });
+    });
+  } catch (_) {
+    // no-op
+  }
 
   // 1) Mobile menu toggle behaviour
   if (btn) {
