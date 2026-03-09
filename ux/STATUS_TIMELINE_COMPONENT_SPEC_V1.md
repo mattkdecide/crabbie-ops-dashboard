@@ -98,44 +98,15 @@ type TimelineItem = {
 **Handoff item UX-001:** Implement `renderTimeline(items)` component and `timelineAdapter`.
 
 Acceptance criteria:
-1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` and/or `ops/activity.html`.
+1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` (or a dedicated `ops/activity.html`).
 2. Adapter can parse a sample JSONL file (first N lines) into `TimelineItem[]`.
 3. Items support optional links and severity badges.
-
-**Handoff item UX-002:** URL-param filtering contract (static-first, progressive enhancement).
-
-Why: lets Matt share a focused view without adding complex UI state management.
-
-Contract (v1):
-- `activity.html?domain=task` filters to a single domain.
-- `activity.html?days=1|7|30` restricts items to last N days (apply only when `occurredAt` is parseable).
-- Multiple params can combine: `?domain=job&days=7`.
-
-Acceptance criteria:
-1. With hard-coded items, filtering works client-side.
-2. If params are absent or invalid, default is “all domains” and “7 days”.
-3. Filtering does not break the CSV-derived fallback mode.
-
-**Handoff item UX-003:** JSONL discovery + tolerant parsing (pick “latest” events file).
-
-Why: build should not require a hard-coded month to show activity.
-
-Contract (v1):
-- Look for `events/events-*.jsonl`.
-- Choose the lexicographically highest filename (works with `events-YYYY-MM.jsonl`).
-- Fetch it, then parse **first N non-empty lines** (`N=50` default).
-- Count invalid JSON lines and surface a small inline warning (`3 lines skipped`).
-
-Implementation note (static hosting reality): browsers cannot list directories. v1 options:
-- Maintain a small hard-coded candidate list in `activity.html` (acceptable for now), or
-- Add an `events/index.json` manifest later.
 
 Dependencies:
 - `ops/events/` directory and at least one JSONL file.
   - Seed created: `ops/events/events-2026-03.jsonl`.
-- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added (see `ops/ux/HANDOFF_NOTES_V1.md` 1.8).
+- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added.
 
 ## 9) Open questions / blockers
 - Where should event ingestion live (client-side fetch vs server-side precompute in `dashboard-worker.js`)?
-- Activity page does not yet exist (`ops/activity.html`). Build task is queued (`T-0311`).
-- `ops/job-pipeline.csv` missing `updated_at` makes derived job activity timestamps lossy until added (see `ops/ux/HANDOFF_NOTES_V1.md` 1.8).
+- Decide whether Activity is a dedicated page (`/activity`) or embedded on Pipeline + Agents first.

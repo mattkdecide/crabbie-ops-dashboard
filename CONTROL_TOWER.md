@@ -1,90 +1,90 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-09 03:36 UTC
+**Last updated:** 2026-03-08 12:29 UTC
 
 ## 1) Backlog status changes (since last capture)
 
 ### Moved to Done
-- **T-0502** BA: Expand PRD-002 AC + edge cases (Tide) → **In Progress → Done**
-  - PRD-002 now includes v1 CSV contract, sorting rules, deep-link highlight behaviour, and explicit decision requests.
-- **T-0308** Status page: convert list cards to full-card links + add scannable meta copy (Velvet) → **In Progress → Done**
-  - Improves scan-ability and hit targets; aligns with `.item--link` pattern.
-- **T-0312** Kanban deep-link highlight respects prefers-reduced-motion (Velvet) → **In Progress → Done**
-  - `scrollIntoView` only smooth-scrolls when reduced motion is not requested.
+- No additional items moved to **Done** since 11:17 UTC capture.
 
 ### Status changed (important)
-- **T-0311** Implement Activity Timeline page (Rivet) → **Backlog → Approved**
-  - Build can proceed against PRD-006 + UX handoff notes.
+- **T-0204** Implement canonical CRM status mapping spec (Ledger) → **Ready/Proposed → Approved**
+  - Matt decision bundle captured in `ops/UPDATE_CAPTURE.md`.
+- **T-0303** Spec + handoff for derived Activity feed (Vantage) → **Backlog → In Progress**
+  - Seed events feed added: `ops/events/events-2026-03.jsonl`.
 
 ### Notable progress (still In Progress)
-- **T-0206** Expand live ops site navigation and artefact links (Rivet) → continues **In Progress**
-  - Scope includes consistent nav injection + visible “Latest update” block sourced from `ops/UPDATE_CAPTURE.md`.
-- **T-0205** Wire CV pipeline artefact manifest output (Forge) → continues **In Progress**
-- **T-0301 / T-0302** Continuous UX + UI streams (Vantage / Velvet) → ongoing incremental shipping.
+- **T-0205** CV pipeline artefact manifest output (Forge) → progressing; AC confirmed below.
+- **T-0302** Squad UI Designer Continuous (Velvet) → shipped nav/a11y improvements:
+  - `nav_v1.js` now applies `aria-current` + active styling automatically.
+  - Mobile menu close behaviours (Escape/outside click/link click) + `aria-controls`.
+  - Focus-visible underline rule documented + applied.
 
 ---
 
 ## 2) Top 3 priorities (next 24–48h)
 
-1. **T-0311 – Implement Activity Timeline page (Rivet) [Approved]**
-   - Goal: ship `ops/activity.html` events-first feed with CSV-derived fallback, deep links, and visible warning counters.
-2. **T-0206 – Live ops site navigation + artefact links (Rivet) [In Progress]**
-   - Goal: land nav consistency across ops surfaces + wire “Latest update” block from `ops/UPDATE_CAPTURE.md`.
-3. **T-0205 – CV pipeline artefact manifest output (Forge) [In Progress]**
-   - Goal: deterministic role_id-keyed outputs + manifest + `qa.json` gating so CV runs become inspectable and automatable.
-
-(Next up: **T-0204** implement the approved canonical CRM status mapping end-to-end.)
+1. **T-0204 – Canonical CRM status mapping spec (Ledger) [Approved]**
+   - Goal: lock taxonomy + mapping across CSV/DB/UI so statuses stop drifting.
+2. **T-0205 – CV pipeline artefact manifest output (Forge)**
+   - Goal: deterministic, role_id-keyed outputs + `qa.json` so CV runs are inspectable and automatable.
+3. **T-0206 – Live ops site navigation + artefact links (Rivet) [Unblocked]**
+   - Goal: implement copy/paste masthead/nav per `ops/ux/MASTHEAD_NAV_SPEC_V1.md`, then finish AC-6 links on `ops/status.html`.
 
 ---
 
 ## 3) Blockers + decision requests
 
-### Decision requests for Matt (to unblock build correctness)
-- **PRD-002 (Live Kanban) data contract confirmations**
-  1. Confirm required columns v1 for `ops/job-pipeline.csv` (spec proposes: `job_id`, `company`, `role_title`, `stage`; optional: `close_reason`, `location`, `url`, `notes`, `created_at`, `updated_at`).
-  2. Confirm unknown stage policy: render in **Unknown** bucket vs forcibly map to **Triage**.
-  3. Confirm de-duplication rule for duplicate `job_id`: latest `updated_at` wins vs last-row wins.
-- **Paused role work (T-0001–T-0006):** confirm when to restart, and provide the minimum brief inputs needed to proceed.
-  - Note: prior bundle decision was “restart u&u track only”, but the work is still blocked on inputs.
+### Decisions (resolved)
+- **Status taxonomy (T-0204):** approved by Matt (see `ops/UPDATE_CAPTURE.md`). Proceed to implementation + migration notes.
+- **Static masthead/nav approach (T-0206):** approved by Matt. v1 approach = **copy/paste masthead block** across static pages; document the “source-of-truth” snippet in `ops/ux/MASTHEAD_NAV_SPEC_V1.md`.
+
+### Remaining decision requests from Matt
+- **Paused role work (T-0001–T-0006):** confirm when to restart, and which single role to resume first (u&u vs Metro) + provide/confirm role brief inputs.
 
 ### Operational blockers / hygiene
-- **Read-model drift:** `ops/read_models/v1/status_summary.json` + `kanban_board.json` currently show empty counts/tasks.
-  - Decision ask: treat read models as deprecated (UI reads CSV directly), or add a small publish step that regenerates them so status dashboards remain trustworthy.
-- **Stale due dates:** several tasks still carry 2026-03-01/02.
-  - Once the next sprint window is confirmed, roll dates forward to restore scheduling signal.
+- **Task list invariant:** `agent-tasks.csv` previously had a duplicate `T-0302` row. Re-check and de-dupe if it reappears so “task_id is unique” remains true.
+- **Stale due dates:** many tasks still show 2026-03-01/02. After confirming the next sprint window, roll dates forward so the file regains scheduling signal.
 
 ---
 
 ## 4) Acceptance criteria updates (make work testable)
 
-### T-0311 (Activity Timeline page) — implementation-ready (build)
-- Page exists at `ops/activity.html` and is linked from primary nav.
-- Data source selection:
-  - Prefer JSONL: `ops/events/events-YYYY-MM.jsonl` for current month; if missing, fall back to latest `ops/events/events-*.jsonl` by filename sort.
-  - If no JSONL exists, derive a feed from `ops/job-pipeline.csv` + `ops/agent-tasks.csv`.
-- Rendering:
-  - Strict reverse-chronological ordering.
-  - Invalid JSON lines are skipped and increment a visible warning counter.
-  - Entries include deep links where possible:
-    - Jobs → `ops/kanban.html#<job_id>`
-    - Tasks → `ops/agent-queue.html#<task_id>`
-- Empty state guidance when no events and CSV inputs are empty/unreadable.
-- Performance target: renders within ~1 second for up to 5,000 events (no O(N^2) DOM build).
+### T-0204 (Canonical CRM status mapping spec) — implementation-ready
+- Defines canonical enums for Job/Application/Task and a mapping table to:
+  - `job-pipeline.csv` statuses
+  - `agent-tasks.csv` statuses
+  - DB schema (existing + planned)
+  - UI labels/badges
+- Includes transition rules (allowed next states) and “terminal” states.
+- Provides a migration note: what existing rows should map to, plus how to handle unknowns safely.
 
 ### T-0205 (CV pipeline artefact manifest output)
-- Produces a single manifest file per run keyed by **role_id** (and timestamp/run_id).
+- Produces a single manifest file per role run, keyed by **role_id** (and timestamp/run_id).
 - Manifest enumerates artefacts with **paths + content type + human label** (e.g., `cv.md`, `cv.pdf`, `cover_letter.md`, `qa.json`).
-- Includes `qa.json` with, at minimum:
-  - relevance checklist (coverage %, critical gaps)
+- Includes a `qa.json` with at minimum:
+  - relevance checklist (requirements coverage %, critical gaps list)
   - formatting checklist (2-page constraint indicator, section order validation)
   - risks/warnings (missing JD fields, low-confidence matches)
-- Output paths deterministic under `outputs/cv/<role_id>/<run_id>/...` (align with CV preview path restrictions).
+- Output paths are deterministic under a single directory, e.g. `ops/cv-pipeline/out/<role_id>/<run_id>/...`.
 
 ### T-0206 (Live ops site navigation + artefact links)
-- Meets **AC-1/AC-6** from `ops/ux/ACCEPTANCE_CRITERIA_V1.md`.
-- v1 enforcement method:
-  - identical masthead/nav block copy/pasted across pages
-  - `nav_v1.js` applies active tab (`aria-current`) automatically (no per-page hard-coded active classes)
-- “Latest update” block pulls from `ops/UPDATE_CAPTURE.md` (single source of truth).
-- Confirm/fix AC-8 papercut:
-  - `ops/cv-preview.html` default path is blank or points to a known-existing example (avoid “broken by default”).
+- Meets AC-1/AC-6 from `ops/ux/ACCEPTANCE_CRITERIA_V1.md`.
+- Masthead/nav consistency is enforced via the agreed v1 method:
+  - identical masthead block copy/pasted across pages
+  - `nav_v1.js` applies active tab (`aria-current`) automatically
+- `ops/status.html` exposes visible links to:
+  - Agents docs (`ops/agents/*`)
+  - Design roadmap (`ops/design/*`)
+  - UX artefacts (`ops/ux/*`)
+  - CV pipeline README + latest outputs
+- Links resolve locally (file paths) and in published mode (relative URLs) without breakage.
+- Includes a single “Latest update” block pulling from `ops/UPDATE_CAPTURE.md` (manual is fine for now).
+
+### T-0303 (Derived Activity feed spec + handoff)
+- `ops/ux/HANDOFF_NOTES_V1.md` section 1.4 is implemented as either:
+  - an `ops/activity.html` page, or
+  - a module rendered inside `ops/status.html`.
+- If `ops/events/events-YYYY-MM.jsonl` exists, timeline renders from it.
+- If it does not exist, timeline renders from derived sources and shows:
+  - `Event feed unavailable, showing derived activity.`

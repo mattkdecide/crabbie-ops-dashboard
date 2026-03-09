@@ -2,19 +2,17 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (04:28 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
 In scope build files:
-- `ops/index.html`
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
 - `ops/agents.html`
-- `ops/api-usage.html`
 - `ops/cv-preview.html`
-- `ops/cv-run.html`
+- `ops/api-usage.html`
 
 Planned build file:
 - `ops/activity.html`
@@ -29,23 +27,21 @@ Supporting specs:
 
 ## AC-1: Global header navigation is present and consistent (v1 → v2)
 ### AC-1a (v1): `.topbar` header is consistent across pages
-**Given** I open any of the ops pages (Home, Status, Kanban, Agent Queue, Agents, CV Preview, CV Run, API Usage)
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
 **When** the page renders
 **Then** a header renders at the top with:
 - a working “Home” link that resolves to an existing page
-  - **v1 rule:** Home MUST link to `index.html` now that it exists (fallback: `status.html` if Home is ever temporarily unavailable).
+  - **v1 rule:** Home MUST link to `status.html` until `index.html` exists
 - a visible page title (`h1`)
-- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, CV Run, API Usage
+- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, API Usage
 - visible focus states for all interactive elements
 
 **And** the page loads `ui/nav_v1.js` so that:
-- the mobile menu can be toggled and dismissed (Escape, outside click, link click)
+- the mobile menu can be toggled and dismissed (Escape, outside click)
 - the active link is expressed via `aria-current="page"` (not colour-only)
 
-**And** if `nav_v1.js` is present, pages SHOULD NOT hard-code `aria-current` or active classes in HTML (to avoid drift); allow the script to set the active state based on URL.
-
 ### AC-1b (target): Persistent masthead (spec)
-**Given** I open any of the ops pages (Home, Status, Kanban, Agent Queue, Agents, CV Preview, CV Run, API Usage)
+**Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
 **When** the page renders
 **Then** a masthead renders at the top with:
 - Left zone: product name `Crabbie Ops` and context label `Employment Pod`.
@@ -157,9 +153,7 @@ Non-goals (v1):
 - be blank with helper text.
 
 Test note (current build):
-- The default value is `outputs/cv/R-2026-0017/draft.md`.
-  - In-repo, this file exists.
-  - Acceptance criterion is about the *published* site: if `outputs/` is not deployed, the default should be blank (or changed to a deliberately-shipped demo file).
+- The default value is `outputs/cv/R-2026-0017/draft.md` which is unlikely to exist on a fresh publish. This should be updated.
 
 Rationale:
 - Avoids a “broken by default” first impression.

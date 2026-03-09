@@ -18,9 +18,7 @@
   --text-2: #b7c6ef;
   --text-3: #9eb0de;
   --link: #9bc0ff;
-  --link-visited: color-mix(in srgb, var(--link) 70%, #caa8ff);
   --accent: #2a64ff;
-  --accent-fg: #eaf0ff; /* text/icon colour when placed on --accent */
 
   --success-bg: #123b27;
   --success-fg: #bff3d6;
@@ -65,10 +63,6 @@
   --focus: 0 0 0 2px rgba(42,100,255,.55);
   --focus-strong: 0 0 0 3px rgba(42,100,255,.75);
 
-  /* Motion (keep short; respect prefers-reduced-motion in components/JS) */
-  --motion-fast: 140ms;
-  --motion-med: 220ms;
-
   /* CV / document surfaces (paper inside dark UI) */
   --paper-bg: #ffffff;
   --paper-text: #0f172a;
@@ -92,7 +86,6 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-2);line-height:var(--lh-body)}
 
 a{color:var(--link);text-decoration:none;text-underline-offset:2px}
-a:visited{color:var(--link-visited)}
 a:hover{text-decoration:underline;text-decoration-thickness:2px}
 a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;text-decoration:underline;text-decoration-thickness:2px}
 
@@ -101,9 +94,6 @@ a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;te
 
 /* Global keyboard focus guardrail (components may override) */
 button:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:10px}
-
-/* Reduce tap highlight noise on touch devices (keeps focus-visible styling intact) */
-:where(a,button,input,select,textarea,.btn){-webkit-tap-highlight-color: transparent}
 
 /* Prevent anchored content hiding behind sticky headers */
 :target{scroll-margin-top: calc(var(--sticky-offset, 88px) + var(--s3))}
@@ -135,22 +125,6 @@ code{
 .badge--success{background:var(--success-bg);color:var(--success-fg)}
 .badge--warning{background:var(--warning-bg);color:var(--warning-fg)}
 .badge--danger{background:var(--danger-bg);color:var(--danger-fg)}
-
-@media (forced-colors: active){
-  /* High-contrast / Windows forced colours: ensure focus remains visible.
-     Box-shadows are often suppressed, so fall back to outlines.
-  */
-  a:focus-visible,
-  button:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible,
-  [role="button"]:focus-visible{
-    outline:2px solid CanvasText;
-    outline-offset:2px;
-    box-shadow:none !important;
-  }
-}
 
 @media (prefers-contrast: more){
   :root{

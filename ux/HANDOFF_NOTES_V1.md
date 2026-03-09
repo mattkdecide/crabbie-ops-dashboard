@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (04:28 UTC)
+Last updated: 2026-03-08 (14:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -41,7 +41,6 @@ Minimal v1 is acceptable:
 - Render 10 items.
 - Support empty/missing states.
 - Hard-code sample data until `ops/events/` exists.
-- Implement URL-param filtering contract (UX-002): `?domain=…&days=…` (progressive enhancement).
 
 ### 1.3 UX artefact links on Status (DONE)
 Target file: `ops/status.html`
@@ -97,12 +96,10 @@ Acceptance check:
 ### 1.5 CV Preview UX tightening (quick wins)
 Target file: `ops/cv-preview.html`
 
-Current reality (verified 2026-03-09):
+Current reality (verified 2026-03-08):
 - Draft loader exists (input + fetch + lightweight markdown rendering).
 - Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
-- Default input value is currently `outputs/cv/R-2026-0017/draft.md`.
-  - In-repo, this file exists.
-  - If `outputs/` is not deployed/served on a given publish target, this will appear broken by default.
+- Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish, creating a “broken by default” first impression.
 
 Build asks:
 - Set default to blank and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.
@@ -128,55 +125,26 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
-### 1.7 Build handoff (concrete): Confirm “home” link + delegate active-link semantics to `nav_v1.js`
-Why: the build now has a real `ops/index.html` landing page, and `nav_v1.js` already implements URL-based active link semantics.
+### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
+Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
 
-Current reality (as of 2026-03-09):
-- `ops/index.html` exists and is the correct Home target.
+Current bug (needs fix):
+- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
 
 Deliverables (static v1):
-1) On each ops page header/masthead, set the logo/title href to `index.html`.
+1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
 2) Ensure these pages load `ops/ui/nav_v1.js`:
-   - `ops/index.html`
    - `ops/status.html`
    - `ops/kanban.html`
    - `ops/agent-queue.html`
    - `ops/agents.html`
    - `ops/cv-preview.html`
    - `ops/api-usage.html`
-3) Remove per-page hard-coded “active” classes / `aria-current` where present; rely on:
+3) Remove per-page hard-coded “active” classes where present; rely on:
    - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
-
-Current build note (2026-03-09): `ops/status.html` still hard-codes `aria-current="page"` on the Status link. Not harmful, but worth cleaning up to keep all pages consistent and script-driven.
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
-
-### 1.8 Build handoff (concrete): Add `updated_at` to `ops/job-pipeline.csv` (unblocks accurate Activity)
-Why: Derived Activity fallback currently uses `last_action` as a proxy timestamp (lossy). Adding `updated_at` makes the Activity feed reliable even without full events.
-
-Deliverables (data + UI):
-1) Update `ops/job-pipeline.csv` header to include `updated_at` (ISO8601 UTC) near `created_at/last_action`.
-2) Update any writers (scripts/agents/manual guidance) so whenever a row is touched, `updated_at` is set.
-   - Minimum v1: manual edits update it.
-   - Preferred: any automation that changes `status/next_action/owner/notes` must set it.
-3) Update Derived Activity rule (Section 1.4): prefer `updated_at`, fall back to `last_action`.
-
-Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
-
-### 1.9 Build handoff (concrete): Events JSONL “latest file” manifest (removes hard-coded month)
-Why: browsers cannot list directories on static hosting, so the Activity page needs a deterministic way to find the current `events-YYYY-MM.jsonl` without code changes each month.
-
-Deliverables (static v1):
-1) Create `ops/events/index.json` with a simple shape (seed added by UX):
-   - `{ "latest": "events-2026-03.jsonl", "files": ["events-2026-03.jsonl"] }`
-2) In `activity.html`, fetch `events/index.json`, then fetch `events/<latest>`.
-3) If `index.json` missing, fall back to a hard-coded candidate list (acceptable v1).
-4) Parse first 50 non-empty lines, count invalid JSON lines, and show an inline warning when `bad > 0`.
-
-Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
 ---
 
