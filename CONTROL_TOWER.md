@@ -1,20 +1,19 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-09 06:36 UTC
+**Last updated:** 2026-03-09 09:36 UTC
 
 ## 1) Backlog status changes (since last capture)
 
 ### Moved to Done
-- **T-0303** Spec + handoff for derived Activity feed (Vantage) → **In Progress → Done**
-  - UX artefacts + seed events file confirmed (`ops/events/events-2026-03.jsonl`).
+- (None captured in this window.)
 
 ### Status changed (important)
-- **T-0206** Expand live ops site navigation + artefact links (Rivet) → **Blocked → In Progress**
-  - Unblocked because Matt approved v1 copy/paste masthead + nav approach.
+- **T-0305** Implement Activity Timeline page (Rivet) → **Backlog → In Progress**
+  - Now executing against PRD-006 (events JSONL first, derived fallback).
 
 ### New / newly-visible delivery work
-- **T-0305** Implement Activity Timeline page (Rivet) → **Backlog**
-  - Implements PRD-006 (events JSONL with derived fallback).
+- **T-0306** Implement Team Operations Board page (Rivet) → **Backlog**
+  - Implements PRD-005 (agent workload gauges + movement feed + blockers panel).
 
 ---
 
@@ -24,7 +23,7 @@
    - Goal: lock taxonomy + mapping across CSV/DB/UI so statuses stop drifting.
 2. **T-0206 – Live ops site navigation + artefact links (Rivet)**
    - Goal: implement AC-1 + AC-6 consistently across pages (Home resolves to `index.html`, fallback `status.html`).
-3. **T-0305 – Activity Timeline page (Rivet)**
+3. **T-0305 – Activity Timeline page (Rivet) [In Progress]**
    - Goal: ship `ops/activity.html` per PRD-006 with error states + performance limits.
 
 ---
@@ -42,6 +41,9 @@
   - DR1: confirm canonical `type` enum list (recommended: release, decision, build, data, incident, task)
   - DR2: confirm retention window (recommended: last 30 days)
   - DR3: confirm whether derived activity is suppressed when events exist (recommended: hide derived when events present)
+- **PRD-005 decision requests (Team Ops board):**
+  - DR1: confirm whether “Approved” is distinct from “Review” in v1 UI (recommend: bucket=Review; chip=Approved).
+  - DR2: confirm canonical status buckets to display in gauges (recommend: Backlog, In Progress, Blocked, Review, Done).
 
 ### Operational blockers / hygiene
 - **Task list invariant:** `agent-tasks.csv` previously had a duplicate `T-0302` row. Re-check and de-dupe if it reappears so “task_id is unique” remains true.
@@ -89,3 +91,14 @@
 - If missing/unreadable, timeline renders from derived sources and shows:
   - `Event feed unavailable, showing derived activity.`
 - Large feed guard: if JSONL exceeds ~2 MB, show latest N only (default 250) and show “Showing latest 250 events”.
+
+### T-0306 (Team Operations Board page)
+- Implements PRD-005 from `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`.
+- `ops/team-ops.html` exists and renders within the standard masthead/navigation shell.
+- Loads tasks from `ops/agent-tasks.csv` using shared CSV loader and maps statuses using `ops/crm/status-mapping-v1.json`.
+- Renders:
+  - workload gauge cards per agent (counts by canonical bucket)
+  - recent movement feed (derived from `updated_at`, latest 25, extend to 100)
+  - blockers panel (bucket == Blocked) with overdue visual flag
+- Filters by agent + status bucket; persists via query string and restores on load.
+- Resilience: if CSV fetch fails, show visible error banner + empty-state shell (no crash).
