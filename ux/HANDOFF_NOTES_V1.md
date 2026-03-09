@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (04:24 UTC)
+Last updated: 2026-03-09 (04:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -97,10 +97,12 @@ Acceptance check:
 ### 1.5 CV Preview UX tightening (quick wins)
 Target file: `ops/cv-preview.html`
 
-Current reality (verified 2026-03-08):
+Current reality (verified 2026-03-09):
 - Draft loader exists (input + fetch + lightweight markdown rendering).
 - Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
-- Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish, creating a “broken by default” first impression.
+- Default input value is currently `outputs/cv/R-2026-0017/draft.md`.
+  - In-repo, this file exists.
+  - If `outputs/` is not deployed/served on a given publish target, this will appear broken by default.
 
 Build asks:
 - Set default to blank and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.

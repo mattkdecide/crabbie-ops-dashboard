@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (02:27 UTC)
+Last updated: 2026-03-09 (04:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -157,7 +157,9 @@ Non-goals (v1):
 - be blank with helper text.
 
 Test note (current build):
-- The default value is `outputs/cv/R-2026-0017/draft.md` which is unlikely to exist on a fresh publish. This should be updated.
+- The default value is `outputs/cv/R-2026-0017/draft.md`.
+  - In-repo, this file exists.
+  - Acceptance criterion is about the *published* site: if `outputs/` is not deployed, the default should be blank (or changed to a deliberately-shipped demo file).
 
 Rationale:
 - Avoids a “broken by default” first impression.

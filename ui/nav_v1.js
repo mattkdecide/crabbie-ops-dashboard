@@ -1,4 +1,7 @@
 (() => {
+  // Progressive enhancement hook (lets CSS keep nav visible when JS is disabled).
+  document.documentElement.classList.add('js');
+
   // Keep sticky offsets accurate even when the topbar height changes (wraps, font load, etc).
   const topbar = document.querySelector('.topbar');
   const setTopbarHeightVar = () => {

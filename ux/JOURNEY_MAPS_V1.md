@@ -43,7 +43,10 @@ UX requirements (implementation-ready):
 Current build note:
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
 - It supports query param `?file=outputs/cv/<role_id>/draft.md`.
-- Known UX papercut (still present in build as of 2026-03-09): the default input value points at `outputs/cv/R-2026-0017/draft.md` which is unlikely to exist on a fresh publish. This should be blank (or a known-good demo file) per AC-8 + handoff 1.5.
+- The default input value currently points at `outputs/cv/R-2026-0017/draft.md`.
+  - In-repo, this file exists (so local/dev preview is not broken).
+  - On some static publishes, `outputs/` may not be deployed/served, which recreates the “broken by default” first impression.
+  - Preferred UX: default blank + helper text, OR default to a deliberately-shipped demo file (and ensure it is included in the published site) per AC-8 + handoff 1.5.
 
 ---
 
