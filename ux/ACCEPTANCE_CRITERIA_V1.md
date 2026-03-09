@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (10:28 UTC)
+Last updated: 2026-03-09 (14:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -16,8 +16,9 @@ In scope build files:
 - `ops/cv-run.html`
 - `ops/api-usage.html`
 
-Planned build file:
+Planned build files:
 - `ops/activity.html`
+- `ops/team-ops.html`
 
 Supporting specs:
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
@@ -182,3 +183,33 @@ Rationale:
 
 Non-goals (v1):
 - Running code in the browser.
+
+---
+
+## AC-10: Team Ops board (planned) supports intervention-first operations
+**Given** I open `ops/team-ops.html`
+**Then** the page must:
+- include the same global nav pattern (AC-1)
+- show a clear page title (`Team Ops`)
+- load tasks from `ops/agent-tasks.csv`
+- load the CRM status mapping from `ops/crm/status-mapping-v1.json` (when available)
+
+**And** the page must render (v1 minimum):
+1) **Health tiles/gauges**
+   - in-progress count
+   - blocked count
+   - overdue count
+2) **Blockers module**
+   - list of blocked tasks with the blocker reason visible inline
+   - each item links to the nearest v1 surface (Agent Queue) until deep-links exist
+3) **Activity feed (compact)**
+   - prefer events JSONL when present, else derived activity (same rule as AC-5)
+
+**And** the page must support filter via query params (v1):
+- `?agent=<name>` filters tasks by agent
+- `?status=<status>` filters tasks by status
+- `?priority=<priority>` filters tasks by priority
+- `?role_id=<role_id>` filters tasks by role_id
+
+Non-goals (v1):
+- Perfect historical reporting. This is an intervention surface, not a BI dashboard.

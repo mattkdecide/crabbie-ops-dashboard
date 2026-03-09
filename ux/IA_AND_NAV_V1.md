@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-09 (10:28 UTC)
+Last updated: 2026-03-09 (14:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -18,7 +18,8 @@ Current build files in scope:
 - `ops/api-usage.html` (utility page, currently linked in global nav)
 
 Planned build files (not yet present):
-- `ops/activity.html`
+- `ops/activity.html` (global event feed)
+- `ops/team-ops.html` (team operations board; PRD-005)
 
 UX source specs (this folder):
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
@@ -59,7 +60,9 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
    - Current pages:
      - `ops/agent-queue.html` (task board)
      - `ops/agents.html` (agent roster/index)
-   - Source data: `ops/agent-tasks.csv` + `ops/agents/*`
+   - Planned pages:
+     - `ops/team-ops.html` (team operations board: gauges + activity + blockers, sourced from tasks + CRM mapping)
+   - Source data: `ops/agent-tasks.csv` + `ops/agents/*` (+ `ops/crm/status-mapping-v1.json` for PRD-005)
 
 3. **UX**
    - Purpose: navigation + journeys + component specs
@@ -94,6 +97,9 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 - Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)
 - Activity tab → `activity.html` (to be created)
 
+Note (planned secondary routes):
+- Team Ops board → `team-ops.html` (should remain within the Agents/ops-operating view even if it is not a first-class masthead tab yet)
+
 ### Active-tab logic (static)
 Current implementation direction:
 - Prefer `ops/ui/nav_v1.js` to set `aria-current="page"` and apply `.btn--primary` automatically.
@@ -101,7 +107,7 @@ Current implementation direction:
 
 Rule table (for the *masthead tab state*, independent of the v1 `.topbar` links):
 - `*/kanban.html` → active=Pipeline
-- `*/agent-queue.html` or `*/agents.html` → active=Agents
+- `*/agent-queue.html` or `*/agents.html` or `*/team-ops.html` → active=Agents
 - `*/ux/*` → active=UX
 - `*/design/*` OR `*/ui/*` → active=Design
 - `*/EXECUTION_PLAN_*` OR `*/project-gantt*` OR `*/UPDATE_CAPTURE*` OR `*/status.html` OR `*/api-usage.html` → active=Roadmap
@@ -136,6 +142,15 @@ Must show per task row:
 - owner agent
 - role_id (if applicable)
 - blocker reason (if status=Blocked)
+
+### `ops/team-ops.html` (Team Operations Board, planned)
+Job-to-be-done: see system health (capacity, blockers, changes) and drill into the next intervention.
+
+Should contain (v1):
+- gauges/tiles (tasks in progress, blocked count, overdue count)
+- a compact activity feed (prefer events, else derived)
+- a blockers module (list blocked tasks + reason)
+- query filters (agent, status, priority, role_id)
 
 ### `ops/cv-preview.html` (CV build target)
 Job-to-be-done: evaluate layout and export readiness.
@@ -182,3 +197,4 @@ Should contain:
 3. Does Activity page render client-side from `ops/events/*.jsonl`, or do we precompute a small index (e.g., `ops/events/index.json`)?
 4. Should `cv-preview.html` restrict allowed draft paths to `outputs/cv/**` only (security hardening for hosted environments)?
 5. Should API Usage live under Roadmap (current), or become a first-class “Metrics” workspace later?
+6. Should Team Ops be a first-class masthead tab, or remain a secondary surface under Agents?

@@ -103,4 +103,8 @@ Dependencies:
 
 ## 8) Blockers / open questions
 - `ops/job-pipeline.csv` column set is not enforced; need a single schema source (lightweight) to prevent drift.
-- Decide whether Kanban triage updates also auto-manage `next_action` (e.g., when Ignored, clear next_action).
+- Decide whether Kanban triage updates also auto-manage `next_action`.
+  - Proposed v1 rule (recommend):
+    - When set to **Ignored** → clear `next_action`.
+    - When set to **Hold** and `next_action` is blank → set `next_action=Revisit in 14 days`.
+    - When set to **Pinned** → leave `next_action` unchanged (do not overwrite intent).
