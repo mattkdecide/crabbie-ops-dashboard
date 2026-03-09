@@ -61,7 +61,11 @@ async function initAgentCapacity(){
     const boxes = [...document.querySelectorAll('[data-agent-owner]')];
     boxes.forEach(el=>{
       const owner = normOwner(el.getAttribute('data-agent-owner')||'');
-      const mine = rows.filter(r=> normOwner(r.owner||r.Owner||'')===owner);
+      const aliases = owner === 'tide' ? ['tide','crabbie'] : [owner];
+      const mine = rows.filter(r=>{
+        const who = normOwner(r.owner||r.Owner||r.agent||r.Agent||'');
+        return aliases.includes(who);
+      });
       renderGauge(el, utilisation(mine));
     });
     const stamp = document.getElementById('capStamp');
