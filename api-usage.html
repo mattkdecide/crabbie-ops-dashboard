@@ -6,15 +6,6 @@
   <title>API Usage Tracker · Crabbie Ops</title>
   <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
   <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
-  <style>
-    .wrap{padding:var(--s4);max-width:1100px;margin:0 auto}
-    .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--s2);margin:var(--s3) 0}
-    .kpi .item{margin:0}
-    @media (max-width: 640px){
-      .wrap{padding:var(--s3)}
-      .kpi{grid-template-columns:1fr}
-    }
-  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -37,13 +28,13 @@
     </nav>
   </header>
 
-  <main class="wrap" id="main" tabindex="-1" aria-label="API usage dashboard">
+  <main class="wrap wrap--wide" id="main" tabindex="-1" aria-label="API usage dashboard">
     <div class="sr-only" role="status" aria-live="polite" id="srStatus"></div>
 
     <div class="kpi" aria-label="Usage KPIs">
       <section class="item"><h2 class="item__title">Budget Target</h2><div class="item__meta">USD $2.00/day</div></section>
-      <section class="item"><h2 class="item__title">Last Window Tokens</h2><div class="item__meta" id="tokTotal">-</div></section>
-      <section class="item"><h2 class="item__title">Estimated Cost</h2><div class="item__meta" id="costTotal">-</div></section>
+      <section class="item"><h2 class="item__title">Last Window Tokens</h2><div class="item__meta num" id="tokTotal">-</div></section>
+      <section class="item"><h2 class="item__title">Estimated Cost</h2><div class="item__meta num" id="costTotal">-</div></section>
       <section class="item"><h2 class="item__title">Status</h2><div class="item__meta" id="budgetStatus">-</div></section>
     </div>
 
@@ -57,10 +48,10 @@
               <th scope="col">Date (UTC)</th>
               <th scope="col">Window</th>
               <th scope="col">Model</th>
-              <th scope="col">In</th>
-              <th scope="col">Out</th>
-              <th scope="col">Total</th>
-              <th scope="col">Est. Cost (USD)</th>
+              <th scope="col" class="num">In</th>
+              <th scope="col" class="num">Out</th>
+              <th scope="col" class="num">Total</th>
+              <th scope="col" class="num">Est. Cost (USD)</th>
               <th scope="col">Notes</th>
             </tr>
           </thead>
@@ -106,10 +97,10 @@
             <td>${r.date_utc||''}</td>
             <td>${r.window||''}</td>
             <td>${r.model||''}</td>
-            <td>${r.in_tokens||''}</td>
-            <td>${r.out_tokens||''}</td>
-            <td>${r.total_tokens||''}</td>
-            <td>${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
+            <td class="num">${r.in_tokens||''}</td>
+            <td class="num">${r.out_tokens||''}</td>
+            <td class="num">${r.total_tokens||''}</td>
+            <td class="num">${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
             <td>${r.notes||''}</td>`;
           tb.appendChild(tr);
         });
