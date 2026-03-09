@@ -116,10 +116,24 @@ Acceptance criteria:
 2. If params are absent or invalid, default is “all domains” and “7 days”.
 3. Filtering does not break the CSV-derived fallback mode.
 
+**Handoff item UX-003:** JSONL discovery + tolerant parsing (pick “latest” events file).
+
+Why: build should not require a hard-coded month to show activity.
+
+Contract (v1):
+- Look for `events/events-*.jsonl`.
+- Choose the lexicographically highest filename (works with `events-YYYY-MM.jsonl`).
+- Fetch it, then parse **first N non-empty lines** (`N=50` default).
+- Count invalid JSON lines and surface a small inline warning (`3 lines skipped`).
+
+Implementation note (static hosting reality): browsers cannot list directories. v1 options:
+- Maintain a small hard-coded candidate list in `activity.html` (acceptable for now), or
+- Add an `events/index.json` manifest later.
+
 Dependencies:
 - `ops/events/` directory and at least one JSONL file.
   - Seed created: `ops/events/events-2026-03.jsonl`.
-- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added.
+- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added (see `ops/ux/HANDOFF_NOTES_V1.md` 1.8).
 
 ## 9) Open questions / blockers
 - Where should event ingestion live (client-side fetch vs server-side precompute in `dashboard-worker.js`)?

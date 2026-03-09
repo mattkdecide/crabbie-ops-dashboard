@@ -102,6 +102,7 @@ Journey:
 Implementation notes (v1, build-ready):
 - Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
 - Prefer events when present. Seed file exists: `ops/events/events-2026-03.jsonl`.
+- Static hosting constraint: browsers cannot list `ops/events/`. Prefer an `ops/events/index.json` manifest that points to the latest JSONL (see `ops/ux/HANDOFF_NOTES_V1.md` 1.9).
 - Derived activity is inherently lossy until `ops/job-pipeline.csv` also carries an `updated_at` column.
   - Current fallback for `ops/job-pipeline.csv`: use `last_action` as best-available timestamp.
   - `ops/agent-tasks.csv`: `updated_at` already exists.

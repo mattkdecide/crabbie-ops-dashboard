@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (02:27 UTC)
+Last updated: 2026-03-09 (04:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -159,6 +159,19 @@ Deliverables (data + UI):
    - Minimum v1: manual edits update it.
    - Preferred: any automation that changes `status/next_action/owner/notes` must set it.
 3) Update Derived Activity rule (Section 1.4): prefer `updated_at`, fall back to `last_action`.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
+
+### 1.9 Build handoff (concrete): Events JSONL “latest file” manifest (removes hard-coded month)
+Why: browsers cannot list directories on static hosting, so the Activity page needs a deterministic way to find the current `events-YYYY-MM.jsonl` without code changes each month.
+
+Deliverables (static v1):
+1) Create `ops/events/index.json` with a simple shape (seed added by UX):
+   - `{ "latest": "events-2026-03.jsonl", "files": ["events-2026-03.jsonl"] }`
+2) In `activity.html`, fetch `events/index.json`, then fetch `events/<latest>`.
+3) If `index.json` missing, fall back to a hard-coded candidate list (acceptable v1).
+4) Parse first 50 non-empty lines, count invalid JSON lines, and show an inline warning when `bad > 0`.
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)

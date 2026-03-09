@@ -1,4 +1,19 @@
 (() => {
+  // Keep sticky offsets accurate even when the topbar height changes (wraps, font load, etc).
+  const topbar = document.querySelector('.topbar');
+  const setTopbarHeightVar = () => {
+    if (!topbar) return;
+    const h = Math.max(56, Math.round(topbar.getBoundingClientRect().height || 0));
+    document.documentElement.style.setProperty('--topbar-h', `${h}px`);
+  };
+  setTopbarHeightVar();
+  if (typeof ResizeObserver !== 'undefined' && topbar) {
+    const ro = new ResizeObserver(() => setTopbarHeightVar());
+    ro.observe(topbar);
+  } else {
+    window.addEventListener('resize', () => setTopbarHeightVar(), { passive: true });
+  }
+
   const btn = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-nav-links]');
   if (!nav) return;

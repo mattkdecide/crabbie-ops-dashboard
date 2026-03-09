@@ -18,7 +18,9 @@
   --text-2: #b7c6ef;
   --text-3: #9eb0de;
   --link: #9bc0ff;
+  --link-visited: color-mix(in srgb, var(--link) 70%, #caa8ff);
   --accent: #2a64ff;
+  --accent-fg: #eaf0ff; /* text/icon colour when placed on --accent */
 
   --success-bg: #123b27;
   --success-fg: #bff3d6;
@@ -90,6 +92,7 @@ html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-2);line-height:var(--lh-body)}
 
 a{color:var(--link);text-decoration:none;text-underline-offset:2px}
+a:visited{color:var(--link-visited)}
 a:hover{text-decoration:underline;text-decoration-thickness:2px}
 a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;text-decoration:underline;text-decoration-thickness:2px}
 
