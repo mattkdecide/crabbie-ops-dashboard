@@ -76,6 +76,10 @@
   /* iOS home indicator / safe-area: ensure last row of cards isn't obscured */
   padding-bottom: calc(var(--s4) + env(safe-area-inset-bottom));
 
+  /* Horizontal-kanban usability (mouse + touch + keyboard) */
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--s4);
+
   /* Prevent "scroll chaining" and reduce layout shift when scrollbars appear */
   overscroll-behavior-x: contain;
   scrollbar-gutter: stable;
@@ -90,11 +94,12 @@
 .board[tabindex="0"]:focus-visible{box-shadow:var(--focus-strong);border-radius:var(--focus-radius, var(--r2))}
 
 /* Status/landing pages: allow columns to wrap instead of forcing horizontal scroll. */
-.board--wrap{flex-wrap:wrap;overflow:visible;align-items:flex-start}
+.board--wrap{flex-wrap:wrap;overflow:visible;align-items:flex-start;scroll-snap-type:none;scroll-padding-inline:0}
 .board--wrap .column{flex:1 1 420px;min-width:320px;max-width:none}
 .column{
   min-width: 340px;
   max-width: 340px;
+  scroll-snap-align: start;
 }
 .column__shell{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2)}
 .column__header{
