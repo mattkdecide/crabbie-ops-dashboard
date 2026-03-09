@@ -21,6 +21,11 @@
 - Control Tower refreshed: reflected `T-0206` as **Blocked** pending nav reuse decision; added decision request on static masthead implementation approach.
 - Control Tower refreshed again: marked decisions resolved (taxonomy + nav copy/paste), captured `T-0204` as **Approved** and `T-0303` as **In Progress**, and updated priority stack accordingly.
 
+## 2026-03-09
+- Groomed requirements backlog to explicit Draft/Refined/Ready grooming states and standardised canonical requirement format: `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`.
+- Expanded PRD-006 (Activity Timeline) into implementation-ready acceptance criteria + edge cases, including JSONL discovery, CSV fallback derivation rules, and explicit decision requests.
+- Control Tower refresh: marked T-0303 Done; unblocked T-0206 (nav + artefact links) and moved to In Progress; added read-model drift hygiene decision ask; reiterated CV Preview default-path AC fix.
+
 ## Next Publishing Goal
 - Expose/update a live web status view that includes:
   1. latest increment log,
