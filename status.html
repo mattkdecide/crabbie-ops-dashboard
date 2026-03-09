@@ -29,6 +29,13 @@
   </header>
 
   <main id="main" class="board board--wrap" aria-label="Status boards" tabindex="-1">
+    <section class="column" aria-label="Exec dashboard">
+      <div class="column__shell">
+        <h2 class="column__header">Exec Dashboard</h2>
+        <div id="execDashboard" aria-live="polite"></div>
+        <p id="execStamp" class="item__small">Live refresh every 60s</p>
+      </div>
+    </section>
     <section class="column" aria-label="Execution artefacts">
       <div class="column__shell">
         <h2 class="column__header">Execution Artefacts</h2>
@@ -108,6 +115,8 @@
     </section>
   </main>
 
+  <script src="ui/exec_dashboard_v1.js"></script>
+  <script>window.initExecDashboard && window.initExecDashboard();</script>
   <script src="ui/nav_v1.js"></script>
 </body>
 </html>
