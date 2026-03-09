@@ -64,9 +64,15 @@ async function initAgentCapacity(){
       const mine = rows.filter(r=> normOwner(r.owner||r.Owner||'')===owner);
       renderGauge(el, utilisation(mine));
     });
+    const stamp = document.getElementById('capStamp');
+    if(stamp) stamp.textContent = 'Capacity last updated: ' + new Date().toLocaleTimeString();
   }catch(e){
     console.warn(e);
   }
 }
 
-window.initAgentCapacity = initAgentCapacity;
+window.initAgentCapacity = function(){
+  initAgentCapacity();
+  if(window.__capTimer) clearInterval(window.__capTimer);
+  window.__capTimer = setInterval(initAgentCapacity, 30000);
+};
