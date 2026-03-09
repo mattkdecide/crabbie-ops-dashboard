@@ -37,3 +37,9 @@
 - Additional reference direction captured: explicit memory controls/surfaces (memory flush/search/session-memory), visible security-scan trust indicators for downloadable modules, structured memory architecture views, and simple system-overview diagrams for onboarding/explainability.
 - Additional workflow references captured: meeting-to-actions pipeline with approval gating (human-in-loop before task creation), RAG knowledge-base pipeline (multi-source ingest -> embed -> SQLite+vectors -> plain-English query), and advisory-council pattern (parallel specialist analyses plus synthesiser and feedback loop).
 - Additional ops references captured: automated DB discovery/backups with encryption and retention, health monitoring heartbeat/checklist, config/doc drift monitoring, and update notification pattern in chat. Self-update actions remain explicit-approval only.
+
+## 2026-03-09
+- Groomed `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`: introduced explicit grooming state (Draft/Refined/Ready) + expanded requirement format to include edge cases + decision requests.
+- Expanded PRD-006 (Activity Timeline) into implementation-ready acceptance criteria and edge cases; captured decision requests (event type enum, retention, derived-when-events-present).
+- Added delivery task `T-0305` to `ops/agent-tasks.csv` for Rivet to implement `ops/activity.html` per PRD-006.
+- Refreshed Control Tower: marked T-0303 Done; unblocked T-0206 (now In Progress) after masthead/nav copy-paste decision; pulled in AC-8 fix (CV preview default path must not mislead).

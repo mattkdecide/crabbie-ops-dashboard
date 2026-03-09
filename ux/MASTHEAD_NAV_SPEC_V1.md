@@ -82,13 +82,14 @@ Focus/accessibility:
 ## 6) Build Handoff (implementation tasks)
 1. Implement masthead markup (copy-paste is acceptable for static v1).
 2. Inject the same masthead into (current build surfaces):
-   - `ops/status.html` (treat as “home” until `ops/index.html` exists)
+   - `ops/status.html` (operational launchpad/status board; `ops/index.html` is now “Home”)
    - `ops/kanban.html`
    - `ops/agent-queue.html`
    - `ops/agents.html`
    - `ops/cv-preview.html`
 3. Home link rule (avoid broken nav):
-   - Masthead logo/title link MUST go to `status.html` (not `index.html`) in v1.
+   - Masthead logo/title link SHOULD go to `index.html` when present (current build).
+   - If `index.html` is not available in an environment, fall back to `status.html`.
 4. Active-tab + mobile menu behaviour:
    - Prefer the existing script `ops/ui/nav_v1.js` to set `aria-current="page"` and apply `.btn--primary` based on URL.
    - Do not hard-code active styles per page if `nav_v1.js` is present.

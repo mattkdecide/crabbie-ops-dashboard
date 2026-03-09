@@ -130,6 +130,8 @@
         sr.textContent = `Loaded ${data.length} usage rows. Budget status: ${budgetText}.`;
       } catch(e){
         document.getElementById('rows').innerHTML = '<tr><td colspan="8">Could not load usage log.</td></tr>';
+        const sr = document.getElementById('srStatus');
+        if (sr) sr.textContent = 'Could not load API usage log.';
       }
     }
 

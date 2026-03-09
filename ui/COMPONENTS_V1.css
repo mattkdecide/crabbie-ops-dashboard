@@ -72,7 +72,12 @@
 
 .topbar__actions{margin-top:var(--s2);display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
 
-.board{display:flex;gap:var(--s3);overflow:auto;padding:var(--s4)}
+.board{display:flex;gap:var(--s3);overflow:auto;padding:var(--s4);
+  /* Prevent "scroll chaining" and reduce layout shift when scrollbars appear */
+  overscroll-behavior-x: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
 
 /* Status/landing pages: allow columns to wrap instead of forcing horizontal scroll. */
 .board--wrap{flex-wrap:wrap;overflow:visible;align-items:flex-start}
@@ -249,8 +254,19 @@
 /* Tables (API usage + future logs)
    Accessibility: ensure horizontal scroll on small screens instead of squishing.
 */
-.table-wrap{overflow:auto;max-width:100%;border-radius:var(--r2)}
-.table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border-2)}
+.table-wrap{
+  overflow:auto;
+  max-width:100%;
+  border-radius:var(--r2);
+  /* Wrapper owns the scroll and focus ring; table stays semantic */
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+.table-wrap:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+
+.table{width:100%;border-collapse:collapse;background:transparent;border:none}
 .table caption{caption-side:top;text-align:left;padding:var(--s3) var(--s3) 0 var(--s3);color:var(--text-2);font-size:var(--fs-1)}
 .table th,.table td{padding:10px;vertical-align:top;border-bottom:1px solid var(--border-2);font-size:var(--fs-1);text-align:left}
 .table thead th{position:sticky;top:0;background:color-mix(in srgb, var(--surface) 90%, var(--bg));z-index:1}

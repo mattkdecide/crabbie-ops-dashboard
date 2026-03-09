@@ -72,7 +72,7 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
 
 Current build note:
-- Home/logo link must resolve to `status.html` (do not link to `index.html` until it exists).
+- `ops/index.html` now exists and acts as “Home”. Home/logo link should resolve to `index.html` (fall back to `status.html` only if `index.html` is not published).
 
 ---
 

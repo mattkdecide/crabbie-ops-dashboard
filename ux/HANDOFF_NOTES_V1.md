@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-09 (06:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -125,14 +125,17 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
-### 1.7 Build handoff (concrete): Fix “home” link + delegate active-link semantics to `nav_v1.js`
-Why: IA treats `status.html` as home, and `nav_v1.js` already implements URL-based active link semantics.
+### 1.7 Build handoff (concrete): Home link rule + delegate active-link semantics to `nav_v1.js`
+Why: `nav_v1.js` already implements URL-based active link semantics, and a working “Home” target prevents nav dead-ends.
 
-Current bug (needs fix):
-- `status.html` and `api-usage.html` currently link the logo/home anchor to `index.html`, but `ops/index.html` does not exist.
+Current reality (verified 2026-03-09):
+- `ops/index.html` now exists and acts as “Home”.
+- Most pages already link the logo/home anchor to `index.html`.
 
 Deliverables (static v1):
-1) On each ops page header/masthead, set the logo/title href to `status.html` (do not link to `index.html` until it exists).
+1) Standardise the logo/title href across pages:
+   - If `index.html` exists (current build): set to `index.html`.
+   - If `index.html` is removed or not published in an environment: set to `status.html`.
 2) Ensure these pages load `ops/ui/nav_v1.js`:
    - `ops/status.html`
    - `ops/kanban.html`
@@ -140,11 +143,11 @@ Deliverables (static v1):
    - `ops/agents.html`
    - `ops/cv-preview.html`
    - `ops/api-usage.html`
-3) Remove per-page hard-coded “active” classes where present; rely on:
+3) Remove per-page hard-coded “active” styles/classes where present; rely on:
    - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
 
 Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1, AC-2)
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1)
 
 ---
 

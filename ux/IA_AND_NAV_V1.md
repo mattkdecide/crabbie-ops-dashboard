@@ -2,12 +2,13 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-08 (14:24 UTC)
+Last updated: 2026-03-09 (06:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
 
 Current build files in scope:
+- `ops/index.html`
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
@@ -30,10 +31,11 @@ Build note (current reality):
 - `ops/ui/nav_v1.js` is present and now:
   - toggles the mobile menu reliably (Escape/outside click/link click)
   - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
-- The “home” logo link currently points to `index.html` on at least `status.html` and `api-usage.html`, but `ops/index.html` does **not** exist yet (so the link is broken in the current build).
+- `ops/index.html` now exists and acts as a lightweight landing page (“Home”).
+- The “home” logo link currently points to `index.html` across pages (aligned to the current build).
 
 Pragmatic v1 recommendation:
-- Treat `status.html` as “home” until an `index.html` landing page is created.
+- Treat `index.html` as “Home”, and `status.html` as the operational launchpad/status board.
 
 ---
 
