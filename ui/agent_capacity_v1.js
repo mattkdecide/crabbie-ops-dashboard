@@ -61,22 +61,12 @@ async function initAgentCapacity(){
     const boxes = [...document.querySelectorAll('[data-agent-owner]')];
     boxes.forEach(el=>{
       const owner = normOwner(el.getAttribute('data-agent-owner')||'');
-      const aliases = owner === 'tide' ? ['tide','crabbie'] : [owner];
-      const mine = rows.filter(r=>{
-        const who = normOwner(r.owner||r.Owner||r.agent||r.Agent||'');
-        return aliases.includes(who);
-      });
+      const mine = rows.filter(r=> normOwner(r.owner||r.Owner||'')===owner);
       renderGauge(el, utilisation(mine));
     });
-    const stamp = document.getElementById('capStamp');
-    if(stamp) stamp.textContent = 'Capacity last updated: ' + new Date().toLocaleTimeString();
   }catch(e){
     console.warn(e);
   }
 }
 
-window.initAgentCapacity = function(){
-  initAgentCapacity();
-  if(window.__capTimer) clearInterval(window.__capTimer);
-  window.__capTimer = setInterval(initAgentCapacity, 30000);
-};
+window.initAgentCapacity = initAgentCapacity;

@@ -65,14 +65,33 @@
   </main>
 
   <script>
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    // Minimal markdown renderer for CV drafts.
+    // Security: escape raw text first, then add our small allowed tag set.
     function mdToHtml(md){
-      let html = md
+      const safe = escapeHtml(md ?? '');
+
+      let html = safe
         .replace(/^###\s+(.*)$/gm,'<h3>$1</h3>')
         .replace(/^##\s+(.*)$/gm,'<h2>$1</h2>')
         .replace(/^#\s+(.*)$/gm,'<h1>$1</h1>')
         .replace(/^\-\s+(.*)$/gm,'<li>$1</li>');
+
       html = html.replace(/(<li>.*<\/li>\n?)+/g, m => '<ul>'+m+'</ul>');
-      html = html.split(/\n\n+/).map(b => /<(h\d|ul|li)/.test(b) ? b : '<p>'+b.replace(/\n/g,'<br>')+'</p>').join('\n');
+
+      html = html
+        .split(/\n\n+/)
+        .map(b => /<(h\d|ul|li)/.test(b) ? b : '<p>'+b.replace(/\n/g,'<br>')+'</p>')
+        .join('\n');
+
       return html;
     }
 
@@ -92,7 +111,8 @@
         if (target) target.innerHTML = mdToHtml(md);
         if (live) live.textContent = 'Draft loaded.';
       }catch(e){
-        if (target) target.innerHTML = '<p><strong>Could not load draft.</strong> Check the file path and ensure it exists in the published site.</p><p class="cv-note">'+String(e)+'</p>';
+        const msg = (e && e.message) ? e.message : String(e);
+        if (target) target.innerHTML = '<p><strong>Could not load draft.</strong> Check the file path and ensure it exists in the published site.</p><p class="cv-note">'+escapeHtml(msg)+'</p>';
         if (live) live.textContent = 'Could not load draft.';
       } finally {
         if (target) target.setAttribute('aria-busy','false');

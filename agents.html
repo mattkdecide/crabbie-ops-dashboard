@@ -51,17 +51,16 @@
   </header>
 
   <main class="profiles" id="main" aria-label="Agent profiles" tabindex="-1"></main>
-  <p id="capStamp" class="item__small" style="padding:0 var(--s4) var(--s3) var(--s4)">Capacity: loading…</p>
 
   <script>
     const AGENTS = [
-      {key:'tide', avatar:'ui/assets/crabbie-logo.jpg?v=20260309b', emoji:'🎈🦀', name:'Crabbie', fn:'PM Control Tower'},
-      {key:'vantage', avatar:'ui/assets/agents/analytics-blue.png?v=20260309b', emoji:'🎈🔭', name:'Vantage', fn:'UX Strategist / Role Analyst'},
-      {key:'polish', avatar:'ui/assets/agents/design.png?v=20260309b', emoji:'🎈🎨', name:'Polish', fn:'UI Designer / Visual Quality'},
-      {key:'forge', avatar:'ui/assets/agents/build.png?v=20260309c', emoji:'🎈⚒️', name:'Forge', fn:'CV Strategist'},
-      {key:'ledger', avatar:'ui/assets/agents/legal-red.png?v=20260309c', emoji:'🎈📊', name:'Ledger', fn:'CRM Manager'},
-      {key:'radar', avatar:'ui/assets/agents/radar-megaphone.png?v=20260309c', emoji:'🎈📡', name:'Radar', fn:'Opportunity Scout'},
-      {key:'atlas', avatar:'ui/assets/agents/ops-blue.png?v=20260309b', emoji:'🎈🧭', name:'Atlas', fn:'Research & Contact Intel'}
+      {key:'tide', avatar:'ui/assets/crabbie-logo.jpg', emoji:'🎈🦀', name:'Crabbie', fn:'PM Control Tower'},
+      {key:'vantage', avatar:'ui/assets/agents/analytics-blue.png', emoji:'🎈🔭', name:'Vantage', fn:'UX Strategist / Role Analyst'},
+      {key:'polish', avatar:'ui/assets/agents/design.png', emoji:'🎈🎨', name:'Polish', fn:'UI Designer / Visual Quality'},
+      {key:'forge', avatar:'ui/assets/agents/build-hardhat.png', emoji:'🎈⚒️', name:'Forge', fn:'CV Strategist'},
+      {key:'ledger', avatar:'ui/assets/agents/legal-red.png', emoji:'🎈📊', name:'Ledger', fn:'CRM Manager'},
+      {key:'radar', avatar:'ui/assets/agents/radar-megaphone.png', emoji:'🎈📡', name:'Radar', fn:'Opportunity Scout'},
+      {key:'atlas', avatar:'ui/assets/agents/ops-blue.png', emoji:'🎈🧭', name:'Atlas', fn:'Research & Contact Intel'}
     ];
 
     async function loadProfile(agent){
