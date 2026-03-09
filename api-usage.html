@@ -57,10 +57,10 @@
               <th scope="col">Date (UTC)</th>
               <th scope="col">Window</th>
               <th scope="col">Model</th>
-              <th scope="col" class="num">In</th>
-              <th scope="col" class="num">Out</th>
-              <th scope="col" class="num">Total</th>
-              <th scope="col" class="num">Est. Cost (USD)</th>
+              <th scope="col">In</th>
+              <th scope="col">Out</th>
+              <th scope="col">Total</th>
+              <th scope="col">Est. Cost (USD)</th>
               <th scope="col">Notes</th>
             </tr>
           </thead>
@@ -93,8 +93,6 @@
 
     async function load(){
       const sr = document.getElementById('srStatus');
-      const region = document.querySelector('.table-wrap[role="region"]');
-      if (region) region.setAttribute('aria-busy', 'true');
       try{
         const res = await fetch('usage/api-usage-log.csv?t='+Date.now(),{cache:'no-store'});
         const txt = await res.text();
@@ -105,13 +103,13 @@
         data.slice().reverse().forEach(r=>{
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <th scope="row">${r.date_utc||''}</th>
+            <td>${r.date_utc||''}</td>
             <td>${r.window||''}</td>
             <td>${r.model||''}</td>
-            <td class="num">${r.in_tokens||''}</td>
-            <td class="num">${r.out_tokens||''}</td>
-            <td class="num">${r.total_tokens||''}</td>
-            <td class="num">${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
+            <td>${r.in_tokens||''}</td>
+            <td>${r.out_tokens||''}</td>
+            <td>${r.total_tokens||''}</td>
+            <td>${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
             <td>${r.notes||''}</td>`;
           tb.appendChild(tr);
         });
@@ -134,8 +132,6 @@
         document.getElementById('rows').innerHTML = '<tr><td colspan="8">Could not load usage log.</td></tr>';
         const sr = document.getElementById('srStatus');
         if (sr) sr.textContent = 'Could not load API usage log.';
-      } finally {
-        if (region) region.setAttribute('aria-busy', 'false');
       }
     }
 

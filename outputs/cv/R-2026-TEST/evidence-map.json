@@ -1,0 +1,29 @@
+{
+  "role_key": "R-2026-TEST",
+  "mappings": [
+    {
+      "requirement": "Must have: transformation leadership",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    },
+    {
+      "requirement": "Must have: stakeholder management",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    },
+    {
+      "requirement": "Must have: data strategy",
+      "evidence": [
+        "transferable leadership + transformation evidence"
+      ],
+      "strength": "medium",
+      "gap": null
+    }
+  ]
+}

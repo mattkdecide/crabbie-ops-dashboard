@@ -69,7 +69,7 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 ## 5) Ops UI Navigation Journey (orientation)
 **Primary artefacts:**
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
-- Pages: `ops/index.html`, `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/cv-run.html`, `ops/api-usage.html`
+- Pages: `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/api-usage.html`
 - Behaviour glue: `ops/ui/nav_v1.js` (active-link semantics + mobile menu)
 
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
@@ -103,36 +103,12 @@ Implementation notes (v1, build-ready):
   - Seed file exists now: `ops/events/events-2026-03.jsonl`.
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
   - When falling back, show the inline note (exact): `Event feed unavailable, showing derived activity.`
-- Deep-link convention (v1): Activity items should link to `activity.html?entity=<domain>:<id>`.
-  - Examples: `activity.html?entity=job:R-2026-0010`, `activity.html?entity=task:T-0305`.
-  - If the Activity page is not yet shipped, items should fall back to the nearest relevant surface (`kanban.html`, `agent-queue.html`).
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
   - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
   - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).
   - Date-only values (`YYYY-MM-DD`) should be treated as UTC midnight for ordering.
 - Derived rules must be explicitly documented (and shared as a pure function) to avoid drift.
   - Source of truth: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (Handoff item UX-002).
-
----
-
-## 7) Team Operations Board Journey (intervention-first, planned)
-**Primary artefacts:**
-- `ops/agent-tasks.csv` (tasks, blockers, due dates)
-- `ops/crm/status-mapping-v1.json` (canonical status mapping for consistent badges)
-- `ops/events/...jsonl` (preferred activity feed; derived fallback acceptable)
-
-Target surface:
-- `ops/team-ops.html` (planned; PRD-005)
-
-User story:
-- As Matt, I want one page that tells me whether the system is healthy (capacity + blockers + changes) and what intervention to do next.
-
-Journey:
-1. Open `team-ops.html`.
-2. Read the health tiles (in-progress, blocked, overdue).
-3. Scan blockers, click through to the underlying task in Agent Queue.
-4. Scan “What changed” feed (prefer events; fall back to derived).
-5. Apply filters (agent/status/priority/role_id) and take action.
 
 ---
 
@@ -145,13 +121,9 @@ Journey:
 - Form/input pattern for role triage actions (Pinned/Ignored/Hold/Assessing) with keyboard-first interactions.
 
 ## Build files explicitly tied to this journey set
-- `ops/index.html` (Home)
 - `ops/status.html` (overview/launchpad, should link to UX artefacts + host compact Activity module)
 - `ops/kanban.html` (pipeline decisions, must surface next action per role)
 - `ops/agent-queue.html` (task workload + blockers)
 - `ops/agents.html` (agent roster/index, secondary entry to Agents workspace)
 - `ops/cv-preview.html` (CV layout/QA/run status; supports `?file=` draft loading)
-- `ops/cv-run.html` (command generator + preview deep-link)
-- `ops/api-usage.html` (run-rate/cost trend)
 - (planned) `ops/activity.html` (global event feed; falls back to derived activity until full events)
-- (planned) `ops/team-ops.html` (intervention-first health + blockers + activity)

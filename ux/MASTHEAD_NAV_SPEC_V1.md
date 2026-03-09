@@ -9,7 +9,7 @@ Create a persistent masthead that gives immediate orientation and control across
 
 Success criteria:
 - User can identify location and next action in <1 second.
-- Navigation is consistent across Dashboard, Kanban, Agent Queue, CV Preview, and future pages (Activity, Team Ops).
+- Navigation is consistent across Dashboard, Kanban, Agent Queue, CV Preview, and future pages.
 - Supports keyboard-first usage and mobile responsiveness.
 
 ## 2) Information Architecture
@@ -82,24 +82,18 @@ Focus/accessibility:
 ## 6) Build Handoff (implementation tasks)
 1. Implement masthead markup (copy-paste is acceptable for static v1).
 2. Inject the same masthead into (current build surfaces):
-   - `ops/index.html` (Home)
-   - `ops/status.html` (operational launchpad/status board)
+   - `ops/status.html` (operational launchpad/status board; `ops/index.html` is now “Home”)
    - `ops/kanban.html`
    - `ops/agent-queue.html`
    - `ops/agents.html`
    - `ops/cv-preview.html`
-   - `ops/api-usage.html`
-   - `ops/cv-run.html`
-3. Inject into planned surfaces when created (no special-case nav later):
-   - `ops/activity.html`
-   - `ops/team-ops.html`
-4. Home link rule (avoid broken nav):
+3. Home link rule (avoid broken nav):
    - Masthead logo/title link SHOULD go to `index.html` when present (current build).
    - If `index.html` is not available in an environment, fall back to `status.html`.
-5. Active-tab + mobile menu behaviour:
+4. Active-tab + mobile menu behaviour:
    - Prefer the existing script `ops/ui/nav_v1.js` to set `aria-current="page"` and apply `.btn--primary` based on URL.
    - Do not hard-code active styles per page if `nav_v1.js` is present.
-6. Optional enhancements (v1+):
+5. Optional enhancements (v1+):
    - Keyboard shortcut listener.
    - Badge data adapter (initially from CSV counts, later DB/API).
 

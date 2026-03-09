@@ -1,0 +1,15 @@
+{
+  "pass": true,
+  "hard_fail_reasons": [],
+  "soft_warnings": [
+    "keyword_coverage_pct<75 (64)"
+  ],
+  "metrics": {
+    "must_have_coverage_pct": 100,
+    "keyword_coverage_pct": 64,
+    "nice_to_have_coverage_pct": 100,
+    "page_estimate": 1.0,
+    "placeholder_count": 0,
+    "quantified_bullets": 3
+  }
+}

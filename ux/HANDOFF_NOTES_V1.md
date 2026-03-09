@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (14:28 UTC)
+Last updated: 2026-03-09 (10:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -12,14 +12,12 @@ This is a practical handoff note intended to reduce ambiguity for build work.
 Source spec: `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
 
 Target pages:
-- `ops/index.html`
 - `ops/status.html`
 - `ops/kanban.html`
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
-- `ops/api-usage.html`
-- `ops/cv-run.html`
+- `ops/api-usage.html` (currently in the primary nav; keep consistent)
 
 Implementation approach (static HTML v1):
 - Replace current `.topbar` blocks with a masthead component.
@@ -181,35 +179,6 @@ Deliverables (v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
-
-### 1.9 Build handoff (concrete): Team Ops board (PRD-005) as the intervention surface
-Why: `agent-queue.html` is the task ledger, but Team Ops is the “what should I intervene on right now” dashboard.
-
-Target file (planned):
-- `ops/team-ops.html`
-
-Primary inputs:
-- `ops/agent-tasks.csv` (source of truth for work)
-- `ops/crm/status-mapping-v1.json` (badge/label normalisation)
-- `ops/events/events-YYYY-MM.jsonl` (preferred for activity; derived fallback ok)
-
-Deliverables (static v1):
-1) Create `team-ops.html` with masthead and title `Team Ops`.
-2) Render 3 health tiles:
-   - In progress (count)
-   - Blocked (count)
-   - Overdue (count; due_date < today AND status not Done)
-3) Render a Blockers list:
-   - show blocked tasks with the blocker reason inline
-   - each item links to `agent-queue.html` (v1), later deep-link by task_id
-4) Render a compact Activity feed module:
-   - same data-source order as Activity (events first, then derived)
-   - show the note `Event feed unavailable, showing derived activity.` when in fallback
-5) Support query-param filters:
-   - `agent`, `status`, `priority`, `role_id`
-
-Acceptance reference:
-- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-10)
 
 ---
 

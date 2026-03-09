@@ -127,42 +127,6 @@ code{
 .badge--warning{background:var(--warning-bg);color:var(--warning-fg)}
 .badge--danger{background:var(--danger-bg);color:var(--danger-fg)}
 
-@media (prefers-color-scheme: light){
-  :root{
-    color-scheme: light;
-
-    /* Light mode: keep hierarchy + accent, reduce glare, preserve contrast */
-    --bg: #f6f8ff;
-    --surface: #ffffff;
-    --surface-2: #f0f4ff;
-    --border: #d7dff5;
-    --border-2: #c7d2f3;
-
-    --text: #0f172a;
-    --text-2: #334155;
-    --text-3: #475569;
-
-    --link: #1d4ed8;
-    --accent: #1d4ed8;
-
-    --success-bg: #e7f8ef;
-    --success-fg: #0f5132;
-    --warning-bg: #fff7e0;
-    --warning-fg: #7a4b00;
-    --danger-bg: #ffe6ea;
-    --danger-fg: #7a1020;
-    --info-bg: #e6f4ff;
-    --info-fg: #0b3a5a;
-
-    --shadow-1: 0 10px 24px rgba(15,23,42,.10);
-    --shadow-2: 0 16px 40px rgba(15,23,42,.14);
-
-    /* Focus in light mode needs a slightly darker ring */
-    --focus: 0 0 0 2px rgba(29,78,216,.35);
-    --focus-strong: 0 0 0 3px rgba(29,78,216,.48);
-  }
-}
-
 @media (prefers-contrast: more){
   :root{
     /* Slightly brighter separations + stronger focus to reduce ambiguity */

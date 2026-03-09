@@ -32,7 +32,6 @@ Events file selection (v1, static build constraint):
 - CV run page header section (show run start/completion + QA acknowledgement)
 - Agent task detail view
 - Activity page (global feed, filterable)
-- Team Ops board (compact activity module + “what changed” context)
 
 ## 4) Component anatomy
 ### A) Header row
@@ -102,23 +101,6 @@ type TimelineItem = {
 - Timestamp hover detail also available via focus.
 
 ## 8) Build handoff (concrete)
-**Handoff item UX-000:** Add deep-link support for timeline items (entity targeting)
-
-Goal: make every timeline item navigable to a stable destination, even before full job/task detail views exist.
-
-Deliverables:
-- Activity page supports query param `?entity=<domain>:<id>` and auto-applies an entity filter + scrolls to first matching item.
-- Timeline adapter emits `links` with `href` values aligned to:
-  - `activity.html?entity=job:<role_id>`
-  - `activity.html?entity=task:<task_id>`
-
-Acceptance criteria:
-1. Opening `activity.html?entity=task:T-0305` filters to that task’s items and shows a small inline chip: `Filtered: task T-0305`.
-2. If no matches exist, page shows: `No activity found for this entity.` and clears the filter with one click.
-
-Dependencies:
-- `ops/activity.html` exists (see Rivet work item T-0305).
-
 **Handoff item UX-001:** Implement `renderTimeline(items)` component and `timelineAdapter`.
 
 Acceptance criteria:
