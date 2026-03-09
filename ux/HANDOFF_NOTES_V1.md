@@ -59,7 +59,7 @@ Acceptance reference:
 ### 1.4 Build handoff (concrete): Derived Activity module + Activity page stub
 Source specs:
 - `ops/ux/JOURNEY_MAPS_V1.md` (Journey 6)
-- `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
+- `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (see Handoff item UX-002 for CSV fallback rules)
 - `ops/ux/IA_AND_NAV_V1.md` (Activity tab target)
 
 Deliverables (static v1):

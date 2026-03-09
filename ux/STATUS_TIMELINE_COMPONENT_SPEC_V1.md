@@ -99,13 +99,45 @@ type TimelineItem = {
 
 Acceptance criteria:
 1. Given a small hard-coded array of `TimelineItem`, renders correctly in `ops/status.html` (or a dedicated `ops/activity.html`).
-2. Adapter can parse a sample JSONL file (first N lines) into `TimelineItem[]`.
+2. Adapter can parse a sample JSONL file (first N non-empty lines) into `TimelineItem[]`.
 3. Items support optional links and severity badges.
 
 Dependencies:
 - `ops/events/` directory and at least one JSONL file.
   - Seed created: `ops/events/events-2026-03.jsonl`.
 - Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added.
+
+**Handoff item UX-002:** Implement derived-activity generator (CSV fallback) as a pure function.
+
+Goal: keep fallback logic deterministic and testable, so derived rules do not drift between pages.
+
+Input:
+- parsed rows from `ops/agent-tasks.csv`
+- parsed rows from `ops/job-pipeline.csv`
+
+Output:
+- `TimelineItem[]` sorted desc by `occurredAt`
+
+Rules (v1):
+- Tasks (`ops/agent-tasks.csv`):
+  - occurredAt: `updated_at` (assume `YYYY-MM-DD` is UTC midnight if no time is present)
+  - domain: `task`
+  - id: `task:${task_id}`
+  - summary: `${status}: ${title}` (prefix with `${role_id} · ` when role_id exists)
+  - severity: `danger` when status=`Blocked`; `info` otherwise
+  - link: `{label:'Agent Queue', href:'agent-queue.html'}`
+- Jobs (`ops/job-pipeline.csv`):
+  - occurredAt: prefer `updated_at` when present; else use `last_action` if it is parseable as a date; else omit row
+  - domain: `job`
+  - id: `job:${role_id}`
+  - summary: `${status}: ${title}` plus ` • Next: ${next_action}` when next_action exists
+  - severity: `warning` when next_action contains `Assess`/`Prep`/`Chase` (case-insensitive); `info` otherwise
+  - link: `{label:'Pipeline', href:'kanban.html'}`
+
+Acceptance criteria:
+1. With a small fixture CSV (2 tasks, 2 jobs), generator returns stable output ordering.
+2. Missing/blank timestamps do not crash; row is skipped with a console warn.
+3. When `ops/events/` fetch fails, UI renders derived items and shows the inline note from Section 6.
 
 ## 9) Open questions / blockers
 - Where should event ingestion live (client-side fetch vs server-side precompute in `dashboard-worker.js`)?

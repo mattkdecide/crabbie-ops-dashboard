@@ -96,11 +96,14 @@ Journey:
 
 Implementation notes (v1, build-ready):
 - Timeline item schema in UI should be normalised to: `{time, entity_type, entity_id, verb, summary, severity, href}`.
-- Prefer events when present. Seed file now exists: `ops/events/events-2026-03.jsonl`.
+- Prefer events when present.
+  - Seed file exists now: `ops/events/events-2026-03.jsonl`.
+  - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
   - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
   - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).
-- Derived rules must be explicitly documented in `ops/ux/HANDOFF_NOTES_V1.md` to avoid drift.
+- Derived rules must be explicitly documented (and shared as a pure function) to avoid drift.
+  - Source of truth: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (Handoff item UX-002).
 
 ---
 

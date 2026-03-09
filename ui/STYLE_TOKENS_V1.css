@@ -136,6 +136,23 @@ code{
   }
 }
 
+@media (forced-colors: active){
+  /* Windows High Contrast mode: box-shadow focus rings are often suppressed.
+     Provide an outline-based fallback so keyboard focus remains visible.
+  */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible{
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    box-shadow: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce){
   *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
 }
