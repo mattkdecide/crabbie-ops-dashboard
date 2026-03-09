@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (16:28 UTC)
+Last updated: 2026-03-09 (18:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -16,8 +16,9 @@ In scope build files:
 - `ops/cv-run.html`
 - `ops/api-usage.html`
 
-Planned build file:
+Planned build files:
 - `ops/activity.html`
+- `ops/team-ops.html`
 
 Supporting specs:
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
@@ -129,6 +130,13 @@ Status: not implemented in current build (spec retained for when masthead lands)
 
 **And** if status is `Blocked`, the row must render a visible blocker reason (not hidden in a hover).
 
+### AC-4b (a11y/UX affordance): Horizontal scroll region is discoverable
+**Given** I am using keyboard navigation on `ops/agent-queue.html`
+**When** I Tab into the board
+**Then** the board itself is focusable and labelled (e.g., `role="region"` + `aria-label="Agent queue board (scroll horizontally)"` + `tabindex="0"`)
+
+**And** when focused, a visible focus ring appears on the board container (so users discover horizontal scrolling).
+
 ---
 
 ## AC-5: Timeline component renders in at least one place
@@ -197,3 +205,24 @@ Rationale:
 
 Non-goals (v1):
 - Running code in the browser.
+
+---
+
+## AC-11: Team Ops board provides a control-tower summary (read-only v1)
+**Given** I open `ops/team-ops.html`
+**Then** the page renders a scannable summary of current workload from `ops/agent-tasks.csv` including:
+- `In progress` count (tasks where `status=In Progress`)
+- `Blocked` count (tasks where `status=Blocked`)
+- `Due soon` count (tasks with `due_date` within the next 7 days)
+
+**And** the page renders:
+- a `Blocked tasks` list (top 10) that includes a visible blocker reason (from `notes`, not tooltip-only)
+- a `Due soon` list (top 10)
+
+**And** the page includes clear links back to:
+- `ops/agent-queue.html`
+- `ops/kanban.html`
+
+Notes:
+- Parsing CSV client-side is acceptable for v1.
+- No write-back is required in v1.

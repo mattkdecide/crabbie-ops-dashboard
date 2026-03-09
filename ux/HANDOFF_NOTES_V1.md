@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (16:28 UTC)
+Last updated: 2026-03-09 (18:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -32,6 +32,7 @@ Design dependencies:
 
 Keep (do not regress):
 - `ops/kanban.html` board container is intentionally keyboard-focusable (`tabindex="0"`) with a focus ring so horizontal scrolling is discoverable.
+- `ops/agent-queue.html` board container is intentionally keyboard-focusable (`tabindex="0"`) with a focus ring so horizontal scrolling is discoverable.
 
 Known blocker:
 - Task `T-0206` notes a partial/template strategy is not yet agreed.
@@ -201,6 +202,30 @@ Deliverables (static UI v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-3)
+
+### 1.10 Build handoff (concrete): Team Ops Board page skeleton (read-only v1)
+Source spec:
+- `ops/ux/JOURNEY_MAPS_V1.md` (Journey 7)
+
+Why: gives Matt a single control-tower view of workload + blockers, without needing the full Kanban + Agent Queue context-switch.
+
+Deliverables (static v1):
+1) Create `ops/team-ops.html`
+   - Include the standard header/nav (`ui/nav_v1.js`), consistent with AC-1.
+   - Page title: `Team Ops`.
+2) Render 3 KPI tiles from `ops/agent-tasks.csv`:
+   - `In progress` (count of `status=In Progress`)
+   - `Blocked` (count of `status=Blocked`)
+   - `Due soon` (count due in next 7 days)
+3) Render two lists (top 10 each):
+   - `Blocked tasks` (show `task_id`, `title`, `agent`, and the first ~120 chars of `notes`)
+   - `Due soon` (show `due_date`, `task_id`, `title`, `agent`)
+4) Add two outgoing links:
+   - `View tasks →` `agent-queue.html`
+   - `View pipeline →` `kanban.html`
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-11)
 
 ---
 

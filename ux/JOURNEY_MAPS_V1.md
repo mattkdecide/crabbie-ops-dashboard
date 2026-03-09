@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-09 (16:28 UTC)
+Last updated: 2026-03-09 (18:28 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -82,6 +82,7 @@ Goal: user always knows (a) where they are, (b) what changed, (c) the next actio
 
 Current build note:
 - `ops/index.html` now exists and acts as “Home”. Home/logo link should resolve to `index.html` (fall back to `status.html` only if `index.html` is not published).
+- `ops/agent-queue.html` board is now a labelled, keyboard-focusable horizontal scroll region so the scroll affordance is discoverable.
 
 ---
 
@@ -115,6 +116,39 @@ Implementation notes (v1, build-ready):
   - Date-only values (`YYYY-MM-DD`) should be treated as UTC midnight for ordering.
 - Derived rules must be explicitly documented (and shared as a pure function) to avoid drift.
   - Source of truth: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (Handoff item UX-002).
+
+---
+
+## 7) Team Operations Board Journey (workload + blockers)
+**Primary artefacts:**
+- `ops/agent-tasks.csv` (task truth)
+- `ops/crm/status-mapping-v1.json` (status normalisation for badges/filters, if needed)
+
+Planned build surface:
+- `ops/team-ops.html` (new page; currently tracked in `ops/agent-tasks.csv` T-0306)
+
+User story:
+- As Matt, I want one “control tower” view of workload and blockers, so I can intervene without opening 3 separate pages.
+
+Journey (v1):
+1. Open `ops/team-ops.html`.
+2. Immediately see:
+   - **Work in progress** count (tasks where `status=In Progress`)
+   - **Blocked** count + top blocker reasons
+   - **Due soon** list (next 7 days)
+3. Filter by agent owner and/or status to narrow the view.
+4. Click-through affordances:
+   - “View tasks” → `ops/agent-queue.html`
+   - “View pipeline” → `ops/kanban.html`
+
+Implementation notes (static v1, build-ready):
+- This page is read-only in-browser; no persistence required.
+- Data source: parse `ops/agent-tasks.csv` client-side (same CSV helper pattern used elsewhere).
+- Blockers are inferred when `status=Blocked` and `notes` contains a reason (must be rendered verbatim, not tooltip-only).
+- Keep the module set small:
+  - KPI strip (3 tiles)
+  - “Blocked tasks” list (top 10)
+  - “Due soon” list (top 10)
 
 ---
 

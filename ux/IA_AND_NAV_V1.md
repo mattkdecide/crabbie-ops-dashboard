@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-09 (16:28 UTC)
+Last updated: 2026-03-09 (18:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -35,6 +35,7 @@ Build note (current reality):
   - syncs `aria-hidden` on the collapsible nav region (mobile pattern; harmless on desktop)
   - manages focus on open/close (open → first link inside nav; close → return focus to toggle if focus was inside)
 - `ops/kanban.html` now treats the board as a labelled, keyboard-focusable horizontal scroll region (`role="region"`, `aria-label`, `tabindex="0"`) so the scroll affordance is discoverable
+- `ops/agent-queue.html` now treats the board as a labelled, keyboard-focusable horizontal scroll region (`role="region"`, `aria-label`, `tabindex="0"`) so the scroll affordance is discoverable
 - `ops/index.html` now exists and acts as a lightweight landing page (“Home”).
 - The “home” logo link currently points to `index.html` across pages (aligned to the current build).
 - Design tokens now include explicit interaction surfaces and visited-link styling:
