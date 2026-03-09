@@ -62,6 +62,7 @@
   /* Focus */
   --focus: 0 0 0 2px rgba(42,100,255,.55);
   --focus-strong: 0 0 0 3px rgba(42,100,255,.75);
+  --focus-radius: 12px; /* default rounding for focus rings on containers */
 
   /* CV / document surfaces (paper inside dark UI) */
   --paper-bg: #ffffff;

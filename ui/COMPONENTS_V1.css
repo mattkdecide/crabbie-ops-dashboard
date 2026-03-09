@@ -82,6 +82,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* Scroll-region affordance
+   When a board is keyboard-focusable (tabindex="0"), give it a visible focus ring
+   so users discover that it scrolls horizontally.
+*/
+.board[tabindex="0"]{outline:none}
+.board[tabindex="0"]:focus-visible{box-shadow:var(--focus-strong);border-radius:var(--focus-radius, var(--r2))}
+
 /* Status/landing pages: allow columns to wrap instead of forcing horizontal scroll. */
 .board--wrap{flex-wrap:wrap;overflow:visible;align-items:flex-start}
 .board--wrap .column{flex:1 1 420px;min-width:320px;max-width:none}
