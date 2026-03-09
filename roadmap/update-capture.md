@@ -46,3 +46,6 @@
 - Groomed PRD-005 (Team Operations Board): expanded into implementation-ready acceptance criteria/edge cases; moved Grooming state Refined → Ready.
 - Added delivery task `T-0306` to `ops/agent-tasks.csv` for Rivet to implement `ops/team-ops.html` per PRD-005.
 - Control Tower refresh (09:36 UTC): captured T-0305 **Backlog → In Progress**, surfaced new delivery work T-0306, and made Team Ops acceptance criteria explicit in Control Tower.
+- Groomed PRD-003 (CV Run Flow): expanded into implementation-ready acceptance criteria (artefact set, manifest, QA gate, failure modes) and edge cases; moved Grooming state Refined → Ready.
+- Updated delivery task T-0205 notes in `ops/agent-tasks.csv` to align with PRD-003 requirements (manifest + QA gate + PDF overwrite protection).
+- Control Tower refresh (15:37 UTC): no new backlog movements since 09:36 capture; re-anchored top priorities to T-0305 (Activity), T-0206 (Nav/links), T-0205 (CV manifest + QA gate).

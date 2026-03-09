@@ -1,30 +1,32 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-09 09:36 UTC
+**Last updated:** 2026-03-09 15:37 UTC
 
 ## 1) Backlog status changes (since last capture)
+
+_No additional status changes recorded since 2026-03-09 09:36 UTC._
 
 ### Moved to Done
 - (None captured in this window.)
 
 ### Status changed (important)
-- **T-0305** Implement Activity Timeline page (Rivet) → **Backlog → In Progress**
-  - Now executing against PRD-006 (events JSONL first, derived fallback).
+- (None captured in this window.)
 
 ### New / newly-visible delivery work
-- **T-0306** Implement Team Operations Board page (Rivet) → **Backlog**
-  - Implements PRD-005 (agent workload gauges + movement feed + blockers panel).
+- (None captured in this window.)
 
 ---
 
 ## 2) Top 3 priorities (next 24–48h)
 
-1. **T-0204 – Canonical CRM status mapping spec (Ledger) [Approved]**
-   - Goal: lock taxonomy + mapping across CSV/DB/UI so statuses stop drifting.
-2. **T-0206 – Live ops site navigation + artefact links (Rivet)**
-   - Goal: implement AC-1 + AC-6 consistently across pages (Home resolves to `index.html`, fallback `status.html`).
-3. **T-0305 – Activity Timeline page (Rivet) [In Progress]**
-   - Goal: ship `ops/activity.html` per PRD-006 with error states + performance limits.
+1. **T-0305 – Activity Timeline page (Rivet) [In Progress]**
+   - Goal: ship `ops/activity.html` per PRD-006 (events JSONL first, derived fallback, error states, perf cap).
+2. **T-0206 – Live ops site navigation + artefact links (Rivet) [In Progress]**
+   - Goal: implement AC-1 + AC-6 consistently across pages (Home resolves to `index.html`, fallback `status.html`) and ensure artefact links are discoverable.
+3. **T-0205 – CV pipeline artefact manifest + QA gate (Forge) [In Progress]**
+   - Goal: align outputs to PRD-003 (role-scoped outputs, manifest, `qa.json` pass/fail, hard block PDF unless QA passes, never overwrite prior PDF on QA fail).
+
+_Next up (queued): **T-0306 – Team Operations Board** (Rivet) once Activity Timeline stabilises._
 
 ---
 
@@ -53,52 +55,10 @@
 
 ## 4) Acceptance criteria updates (make work testable)
 
-### T-0204 (Canonical CRM status mapping spec) — implementation-ready
-- Defines canonical enums for Job/Application/Task and a mapping table to:
-  - `job-pipeline.csv` statuses
-  - `agent-tasks.csv` statuses
-  - DB schema (existing + planned)
-  - UI labels/badges
-- Includes transition rules (allowed next states) and “terminal” states.
-- Provides a migration note: what existing rows should map to, plus how to handle unknowns safely.
+_No acceptance criteria changes in this capture window._
 
-### T-0206 (Live ops site navigation + artefact links)
-- Meets AC-1/AC-6 (and incorporates AC-8) from `ops/ux/ACCEPTANCE_CRITERIA_V1.md`.
-- Masthead/nav consistency is enforced via the agreed v1 method:
-  - identical masthead block copy/pasted across pages
-  - `nav_v1.js` applies active tab (`aria-current`) automatically
-- Home-link rule:
-  - Home SHOULD link to `index.html` when present, otherwise fall back to `status.html`.
-- `ops/status.html` exposes visible links to:
-  - Agents docs (`ops/agents/*`)
-  - Design roadmap (`ops/design/*`)
-  - UX artefacts (`ops/ux/*`)
-  - CV pipeline README + latest outputs
-- CV Preview default path must not mislead (AC-8): blank or example path that exists.
-
-### T-0205 (CV pipeline artefact manifest output)
-- Produces a single manifest file per role run, keyed by **role_id** (and timestamp/run_id).
-- Manifest enumerates artefacts with **paths + content type + human label** (e.g., `cv.md`, `cv.pdf`, `cover_letter.md`, `qa.json`).
-- Includes a `qa.json` with at minimum:
-  - relevance checklist (requirements coverage %, critical gaps list)
-  - formatting checklist (2-page constraint indicator, section order validation)
-  - risks/warnings (missing JD fields, low-confidence matches)
-- Output paths are deterministic under a single directory, e.g. `ops/cv-pipeline/out/<role_id>/<run_id>/...`.
-
-### T-0305 (Activity Timeline page)
-- Implements PRD-006 from `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`.
-- If `ops/events/events-YYYY-MM.jsonl` exists, timeline renders from it (newest-first, grouped by UTC day).
-- If missing/unreadable, timeline renders from derived sources and shows:
-  - `Event feed unavailable, showing derived activity.`
-- Large feed guard: if JSONL exceeds ~2 MB, show latest N only (default 250) and show “Showing latest 250 events”.
-
-### T-0306 (Team Operations Board page)
-- Implements PRD-005 from `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`.
-- `ops/team-ops.html` exists and renders within the standard masthead/navigation shell.
-- Loads tasks from `ops/agent-tasks.csv` using shared CSV loader and maps statuses using `ops/crm/status-mapping-v1.json`.
-- Renders:
-  - workload gauge cards per agent (counts by canonical bucket)
-  - recent movement feed (derived from `updated_at`, latest 25, extend to 100)
-  - blockers panel (bucket == Blocked) with overdue visual flag
-- Filters by agent + status bucket; persists via query string and restores on load.
-- Resilience: if CSV fetch fails, show visible error banner + empty-state shell (no crash).
+Reference set remains:
+- PRD-003 (CV Run Flow) — `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`
+- PRD-005 (Team Operations Board) — `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`
+- PRD-006 (Activity Timeline) — `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`
+- Nav + artefact-linking expectations — `ops/ux/ACCEPTANCE_CRITERIA_V1.md` + `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
