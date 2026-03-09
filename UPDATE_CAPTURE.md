@@ -24,6 +24,7 @@
 ## 2026-03-09
 - Groomed requirements backlog to explicit Draft/Refined/Ready grooming states and standardised canonical requirement format: `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`.
 - Expanded PRD-006 (Activity Timeline) into implementation-ready acceptance criteria + edge cases, including JSONL discovery, CSV fallback derivation rules, and explicit decision requests.
+- Expanded PRD-002 (Live Kanban) into implementation-ready acceptance criteria + edge cases (parse contract, sorting, deep-link highlight, safe unknown handling), and added explicit decision requests for job-pipeline v1 contract.
 - Control Tower refresh: marked T-0303 Done; unblocked T-0206 (nav + artefact links) and moved to In Progress; added read-model drift hygiene decision ask; reiterated CV Preview default-path AC fix.
 
 ## Next Publishing Goal
