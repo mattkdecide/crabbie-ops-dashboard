@@ -5,7 +5,9 @@
 - Pipeline (`kanban.html`)
 - Agent Queue (`agent-queue.html`)
 - Agents (`agents.html`)
+- API Usage (`api-usage.html`)
 - CV Preview (`cv-preview.html`)
+- CV Run (`cv-run.html`)
 - Activity (`activity.html`, planned)
 
 ## Documentation branches

@@ -38,6 +38,7 @@ UX requirements (implementation-ready):
 - One-click access to all artefacts for a role: draft, PDF, manifest, QA, and source links.
 
 Current build note:
+- `ops/cv-run.html` generates a one-shot local terminal command and deep-links into Preview.
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
 - It supports query param `?file=outputs/cv/<role_id>/draft.md`.
 
@@ -99,9 +100,11 @@ Implementation notes (v1, build-ready):
 - Prefer events when present.
   - Seed file exists now: `ops/events/events-2026-03.jsonl`.
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
+  - When falling back, show the inline note (exact): `Event feed unavailable, showing derived activity.`
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
   - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
   - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).
+  - Date-only values (`YYYY-MM-DD`) should be treated as UTC midnight for ordering.
 - Derived rules must be explicitly documented (and shared as a pure function) to avoid drift.
   - Source of truth: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (Handoff item UX-002).
 

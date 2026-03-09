@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (06:28 UTC)
+Last updated: 2026-03-09 (08:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -148,6 +148,17 @@ Deliverables (static v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1)
+
+### 1.8 Build handoff (concrete): Add `updated_at` to `job-pipeline.csv` writes (unblocks better Activity)
+Why: CSV-derived activity is currently lossy because `ops/job-pipeline.csv` has no stable `updated_at`.
+
+Deliverables (v1):
+1) Add a new column `updated_at` to `ops/job-pipeline.csv` (RFC3339 preferred; date-only acceptable).
+2) Update any scripts/agents that write pipeline rows to also write `updated_at` whenever `status`, `next_action`, `owner`, or `notes` changes.
+3) Update derived-activity generator to prefer `updated_at` over `last_action` when present (already specified in `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`).
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
 ---
 

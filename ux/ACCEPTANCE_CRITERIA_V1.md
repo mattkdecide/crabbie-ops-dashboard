@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (06:28 UTC)
+Last updated: 2026-03-09 (08:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -13,6 +13,7 @@ In scope build files:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
+- `ops/cv-run.html`
 - `ops/api-usage.html`
 
 Planned build file:
@@ -34,7 +35,8 @@ Supporting specs:
 - a working “Home” link that resolves to an existing page
   - **v1 rule:** Home SHOULD link to `index.html` when present (current build), otherwise fall back to `status.html`
 - a visible page title (`h1`)
-- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, CV Preview, API Usage
+- a primary navigation area with links to: Status, Pipeline, Agent Queue, Agents, API Usage, CV Preview
+  - If `cv-run.html` is published, include `CV Run` as a utility link in this same nav set
 - visible focus states for all interactive elements
 
 **And** the page loads `ui/nav_v1.js` so that:
@@ -158,3 +160,18 @@ Test note (current build):
 
 Rationale:
 - Avoids a “broken by default” first impression.
+
+---
+
+## AC-9: CV Run generates a correct local command + deep-links to preview
+**Given** I open `ops/cv-run.html`
+**When** I enter a role key (e.g., `R-2026-0017`) and change inputs
+**Then** the page updates a visible command snippet that:
+- uses `python3 ops/cv-pipeline/run_cv_deterministic.py`
+- writes outputs to `outputs/cv/<role_key>/`
+
+**And** the page provides a link that deep-links to Preview using:
+- `cv-preview.html?file=outputs/cv/<role_key>/draft.md`
+
+Non-goals (v1):
+- Running code in the browser.

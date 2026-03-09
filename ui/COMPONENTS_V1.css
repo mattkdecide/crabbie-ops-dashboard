@@ -130,6 +130,7 @@
 .item--link .item__link{
   display:block;
   padding: var(--s3);
+  min-height: var(--tap-min);
   color: inherit;
   text-decoration: none;
   border-radius: var(--r1);

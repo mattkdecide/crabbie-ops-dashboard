@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-09 (06:28 UTC)
+Last updated: 2026-03-09 (08:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -14,7 +14,8 @@ Current build files in scope:
 - `ops/agent-queue.html`
 - `ops/agents.html`
 - `ops/cv-preview.html`
-- `ops/api-usage.html` (utility page, but currently linked in global nav)
+- `ops/cv-run.html` (utility page, currently linked in global nav)
+- `ops/api-usage.html` (utility page, currently linked in global nav)
 
 Planned build files (not yet present):
 - `ops/activity.html`
@@ -147,6 +148,15 @@ Should show:
 - active role context (role_id) (future)
 - most recent build artefacts + manifest (when available)
 - QA checklist status (when available)
+
+### `ops/cv-run.html` (Utility: local run command generator)
+Job-to-be-done: generate the correct one-shot terminal command for a role and then jump to Preview.
+
+Should contain:
+- same global nav pattern as other ops pages
+- role key input (role_id), title, input path
+- a copyable command snippet that runs the deterministic pipeline
+- a preview deep-link like `cv-preview.html?file=outputs/cv/<role_id>/draft.md`
 
 ### `ops/api-usage.html` (Utility: spend visibility)
 Job-to-be-done: see run-rate and cost trend quickly.

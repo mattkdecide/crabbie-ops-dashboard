@@ -21,6 +21,12 @@ This solves:
 
 Rule: if events exist for an entity, render timeline from events; otherwise, render a minimal “derived timeline” from CSV `updated_at` + `notes`.
 
+Events file selection (v1, static build constraint):
+- Do not attempt directory listing in-browser.
+- Fetch a known file for the current month first (e.g., `events/events-2026-03.jsonl`).
+- If that fetch fails, fall back to derived activity.
+- (Later) add a small precomputed index (e.g., `ops/events/index.json`) to make this dynamic.
+
 ## 3) Where it appears (initial placements)
 - Job detail drawer/modal (from Pipeline/Kanban)
 - CV run page header section (show run start/completion + QA acknowledgement)
