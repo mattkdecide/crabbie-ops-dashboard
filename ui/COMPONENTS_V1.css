@@ -282,3 +282,22 @@
 .table th,.table td{padding:10px;vertical-align:top;border-bottom:1px solid var(--border-2);font-size:var(--fs-1);text-align:left}
 .table thead th{position:sticky;top:0;background:color-mix(in srgb, var(--surface) 90%, var(--bg));z-index:1}
 .table tr:hover td{background:color-mix(in srgb, var(--accent) 8%, var(--surface))}
+
+/* Notices (inline feedback)
+   Use for non-blocking errors/info (e.g., clipboard permissions, missing files).
+   Pattern: <div class="notice notice--danger" role="alert">…</div>
+*/
+.notice{
+  padding: 10px 12px;
+  border-radius: var(--r1);
+  border: 1px solid var(--border-2);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: var(--fs-1);
+  line-height: 1.45;
+}
+.notice a{color:inherit;text-decoration:underline;text-decoration-thickness:2px}
+.notice--info{background:color-mix(in srgb, var(--info-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--info-fg) 25%, var(--border-2));color:var(--info-fg)}
+.notice--success{background:color-mix(in srgb, var(--success-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--success-fg) 25%, var(--border-2));color:var(--success-fg)}
+.notice--warning{background:color-mix(in srgb, var(--warning-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--warning-fg) 25%, var(--border-2));color:var(--warning-fg)}
+.notice--danger{background:color-mix(in srgb, var(--danger-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 25%, var(--border-2));color:var(--danger-fg)}

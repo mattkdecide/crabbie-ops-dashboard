@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (08:24 UTC)
+Last updated: 2026-03-09 (10:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -27,6 +27,9 @@ Implementation approach (static HTML v1):
 Design dependencies:
 - Use existing tokens: `ops/ui/STYLE_TOKENS_V1.css`
 - Use primitives: `ops/ui/COMPONENTS_V1.css`
+
+Keep (do not regress):
+- `ops/kanban.html` board container is intentionally keyboard-focusable (`tabindex="0"`) with a focus ring so horizontal scrolling is discoverable.
 
 Known blocker:
 - Task `T-0206` notes a partial/template strategy is not yet agreed.
@@ -101,9 +104,26 @@ Current reality (verified 2026-03-08):
 - Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
 - Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish, creating a “broken by default” first impression.
 
-Build asks:
+Build asks (v1):
 - Set default to blank and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.
 - If hosted publicly, restrict load paths to `outputs/cv/**` only (same-origin) to reduce accidental file exposure.
+
+**Handoff item UX-003 (concrete): Harden the draft loader + fix the default path**
+Goal: eliminate “broken by default” and prevent path traversal / accidental fetch of non-output files.
+
+Implementation notes (static JS v1):
+- When resolving the `file` query param or input value:
+  1) Reject absolute URLs and protocols (`http:`, `https:`, `file:`, `data:`).
+  2) Normalise and reject any path containing `..` segments.
+  3) Allowlist prefix: must start with `outputs/cv/`.
+- Default input state: blank.
+  - Helper text (exact): `Paste a path under outputs/cv/… (e.g., outputs/cv/R-2026-TEST-EY/draft.md)`
+- Error copy (exact, prefix only): `Could not load draft:` then include the attempted path.
+
+Acceptance:
+1) Opening `cv-preview.html` with no query param does not show an error state.
+2) Opening `cv-preview.html?file=outputs/cv/R-2026-TEST-EY/draft.md` loads when the file exists.
+3) Opening with `?file=../ops/agent-tasks.csv` shows a readable error and does not fetch the file.
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-7, AC-8)

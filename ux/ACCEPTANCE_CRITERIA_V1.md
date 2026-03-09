@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (08:28 UTC)
+Last updated: 2026-03-09 (10:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -94,6 +94,13 @@ Status: not implemented in current build (spec retained for when masthead lands)
 - link to source listing
 
 **And** if a CV filename/artefact exists, it must be displayed and clickable (or at minimum shown as text until storage is wired).
+
+### AC-3b (a11y/UX affordance): Horizontal scroll region is discoverable
+**Given** I am using keyboard navigation on `ops/kanban.html`
+**When** I Tab into the board
+**Then** the board itself is focusable and labelled (e.g., `role="region"` + `aria-label="Kanban board (scroll horizontally)"`)
+
+**And** when focused, a visible focus ring appears on the board container (so users discover horizontal scrolling).
 
 ---
 

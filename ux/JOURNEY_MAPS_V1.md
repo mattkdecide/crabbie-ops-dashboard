@@ -28,9 +28,11 @@ UX decisions (v1):
 **Primary artefacts:**
 - Inputs: `inputs/cv/` (base PDFs), role brief (TBD), job URL
 - Outputs: `outputs/cv/<role_id>/` (drafts + manifest)
+- Utility entry: `ops/cv-run.html` (local command + deep-link into Preview)
+- Review surface: `ops/cv-preview.html` (loads draft via input or `?file=`)
 
 Journey:
-Input -> Analysis summary -> Evidence map -> Draft -> QA gate -> PDF -> Delivery
+Intake role_id -> Run (cv-run) -> Analysis summary -> Evidence map -> Draft -> QA gate -> PDF -> Delivery
 
 UX requirements (implementation-ready):
 - User-visible **analysis summary** at top of the CV run page (1 screen, scannable).
