@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (10:28 UTC)
+Last updated: 2026-03-09 (16:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -26,6 +26,8 @@ Implementation approach (static HTML v1):
 
 Design dependencies:
 - Use existing tokens: `ops/ui/STYLE_TOKENS_V1.css`
+  - Interaction feedback: `--surface-hover`, `--surface-press`
+  - Visited links: `--link-visited`
 - Use primitives: `ops/ui/COMPONENTS_V1.css`
 
 Keep (do not regress):
@@ -165,6 +167,9 @@ Deliverables (static v1):
    - `ops/api-usage.html`
 3) Remove per-page hard-coded “active” styles/classes where present; rely on:
    - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`
+4) Do not regress a11y behaviour now handled by `nav_v1.js`:
+   - collapsible nav region MUST sync `aria-hidden`
+   - focus MUST move into the menu on open, and return to the toggle on close when appropriate
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-1)
@@ -179,6 +184,23 @@ Deliverables (v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
+
+### 1.9 Build handoff (concrete): Kanban “Next action” inline edit (UI-only v1)
+Source spec: `ops/ux/JOB_TRIAGE_CONTROLS_SPEC_V1.md` (Handoff item UX-006)
+
+Why: AC-3 requires `Next:` to be visible, but without an edit affordance it will drift (CSV edits are too high-friction).
+
+Deliverables (static UI v1):
+1) On each Kanban card, render a small `Edit` affordance adjacent to `Next:`.
+2) Editing uses a single-line input; keyboard rules:
+   - `e` focuses input when card is focused
+   - `Enter` commits (in-memory)
+   - `Esc` cancels
+3) Provide a `Copy update` button that copies a patch snippet suitable for manual pipeline updates:
+   - `role_id=<id>, next_action="…"`
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-3)
 
 ---
 

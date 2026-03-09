@@ -3,7 +3,7 @@
 Owner: UX (Vantage)
 Consumers: Build (Rivet), Data/CRM (Ledger)
 Status: Draft (implementation-ready v1)
-Last updated: 2026-03-09
+Last updated: 2026-03-09 (16:24 UTC)
 
 ## 1) Objective
 Make job triage decisions fast, explicit, and auditable directly from the Pipeline board (`ops/kanban.html`), without burying decisions in free-text notes.
@@ -37,6 +37,10 @@ A compact segmented control (or button row) on each card:
 - **Ignored** (drop)
 
 Placement (v1): under the status badge and above “Next:” line.
+
+Companion affordance (v1, minimal):
+- `Next:` line remains visible and is treated as first-class (AC-3).
+- If `next_action` is blank, render `Next: —` (em dash is OK in UI copy; specs use hyphenation elsewhere) so the absence is explicit.
 
 Copy rules:
 - Use these exact labels: `Assessing`, `Pinned`, `Hold`, `Ignored`.
@@ -96,15 +100,39 @@ Dependencies:
 **Handoff item UX-005:** Add `updated_at` column to `ops/job-pipeline.csv` writes (enables Activity + audit)
 
 Deliverables:
-- Add `updated_at` field to CSV schema and ensure any writer updates it whenever `status/next_action/notes` changes.
+- Add `updated_at` field to CSV schema and ensure any writer updates it whenever `status/next_action/owner/notes` changes.
 
 Dependencies:
 - Any pipeline writers/agents that touch `ops/job-pipeline.csv`.
 
+**Handoff item UX-006:** Inline Next Action editor (Kanban card, UI-only v1)
+
+Goal: make `next_action` maintainable from the board, so “Next:” stays true without dropping into CSV edits.
+
+Deliverables (static UI v1):
+1) On each card, render `Next:` as either:
+   - plain text with an `Edit` button, or
+   - an always-visible single-line input (read-only until focused).
+2) Provide keyboard shortcut when focus is within a card:
+   - `e` → focus the Next Action input.
+   - `Esc` → cancel edits and restore prior value.
+3) UI stores edits in-memory only (no persistence in-browser for v1), but must surface an explicit affordance:
+   - `Copy update` button copies a patch snippet: `role_id=<id>, next_action="…"`.
+
+Acceptance:
+- Meets AC-3 (Next is visible) and reduces drift risk.
+- Works keyboard-only.
+
+Dependencies:
+- None (persistence can be wired later by Rivet/Ledger).
+
 ## 8) Blockers / open questions
 - `ops/job-pipeline.csv` column set is not enforced; need a single schema source (lightweight) to prevent drift.
 - Decide whether Kanban triage updates also auto-manage `next_action`.
-  - Proposed v1 rule (recommend):
+  - Recommended v1 default (safe automation, low regret):
     - When set to **Ignored** → clear `next_action`.
     - When set to **Hold** and `next_action` is blank → set `next_action=Revisit in 14 days`.
     - When set to **Pinned** → leave `next_action` unchanged (do not overwrite intent).
+
+New (v1.1 candidate):
+- Add an inline `Next action` editor (single-line input or select) so users don’t need to edit CSVs to keep `next_action` current. See handoff UX-006.

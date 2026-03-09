@@ -31,6 +31,7 @@ Tabs (ordered):
 Rules:
 - Current page tab has active style + underline.
 - Tabs are persistent on desktop; collapse to menu on mobile.
+- Tabs MUST be operable without a mouse (Tab/Shift+Tab + Enter/Space).
 
 ### Right zone
 - Global search trigger (icon + `/` hint)
@@ -60,6 +61,14 @@ Mobile:
 - Tabs move into slide-over menu
 - Keep one persistent primary CTA (`+ New`)
 
+Accessibility requirements (mobile menu):
+- Menu toggle uses `aria-expanded` and references the menu with `aria-controls`.
+- The collapsible menu region syncs `aria-hidden` with expanded state.
+- Focus management:
+  - On open, move focus to the first focusable item inside the menu.
+  - On close, if focus was inside the menu, return focus to the toggle.
+- Escape closes the menu; clicking outside closes the menu; clicking a link closes the menu.
+
 Keyboard shortcuts:
 - `/` focus search
 - `g p` pipeline
@@ -69,9 +78,14 @@ Keyboard shortcuts:
 - `n` create new task/job
 
 Focus/accessibility:
-- Use `--focus-strong`
-- No focus suppression
-- Tab order left→centre→right
+- Use `--focus-strong`.
+- No focus suppression.
+- Ensure focus styles apply to anchors, buttons, and any elements with `[role="button"]`.
+- Tab order left→centre→right.
+
+Interaction feedback:
+- Hover/press feedback uses `--surface-hover` and `--surface-press` (avoid ad-hoc `color-mix()` in components).
+- Links use `--link` and a subtle derived `--link-visited` (avoid browser-default purple).
 
 ## 5) Visual Design Constraints (handoff to Design)
 - Reuse existing tokens from `ops/ui/STYLE_TOKENS_V1.css`

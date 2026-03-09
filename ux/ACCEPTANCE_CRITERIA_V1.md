@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (10:28 UTC)
+Last updated: 2026-03-09 (16:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -40,7 +40,11 @@ Supporting specs:
 - visible focus states for all interactive elements
 
 **And** the page loads `ui/nav_v1.js` so that:
-- the mobile menu can be toggled and dismissed (Escape, outside click)
+- the mobile menu can be toggled and dismissed (Escape, outside click, link click)
+- the collapsible nav region syncs `aria-hidden` with the expanded state (mobile pattern)
+- focus is managed:
+  - opening the menu moves focus to the first focusable item within the menu
+  - closing the menu returns focus to the toggle *if focus was inside the menu*
 - the active link is expressed via `aria-current="page"` (not colour-only)
 
 ### AC-1b (target): Persistent masthead (spec)
@@ -57,6 +61,17 @@ Supporting specs:
 
 Notes for static v1:
 - If search and `+ New` are not implemented yet, they must still render as disabled/stub controls with tooltips.
+
+---
+
+## AC-1c: Global interaction feedback uses shared tokens (hover/press/visited)
+**Given** I interact with links and list items across ops pages
+**When** I hover/press clickable rows or nav items
+**Then** hover state uses `--surface-hover` and pressed/active state uses `--surface-press` (consistent across components)
+
+**And** visited links render using `--link-visited` (subtle differentiation, not browser-default purple)
+
+**And** keyboard focus styles apply to `button`, `a`, and any element with `[role="button"]` via `:focus-visible`.
 
 ---
 

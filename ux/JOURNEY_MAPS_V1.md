@@ -1,5 +1,7 @@
 # UX Journey Maps v1
 
+Last updated: 2026-03-09 (16:28 UTC)
+
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
 - `ops/job-pipeline.csv` (jobs + next actions)
@@ -9,10 +11,14 @@
 Steps:
 1. Digest surfaces candidate roles (email/chat scrape -> shortlist).
 2. Matt triages each role: **Pinned / Ignored / Hold / Assessing**.
-3. System writes triage decision to `ops/job-pipeline.csv` (`status`, `last_action`, `next_action`, `owner`, `notes`).
+3. System writes triage decision to `ops/job-pipeline.csv` (`status`, `updated_at`, `last_action`, `next_action`, `owner`, `notes`).
 4. System creates/updates the highest-leverage task in `ops/agent-tasks.csv` (role brief, alignment score, CV draft, QA/PDF, follow-up).
 5. When CV work is requested: CV pipeline run requested and `outputs/cv/<role_id>/` artefacts produced.
 6. Deliverable bundle is linked from the job row and shown in UI (draft MD, final PDF, rationale, QA checklist).
+
+Implementation note (v1):
+- Treat `next_action` as structured intent, not free-text notes.
+- Writers MUST set `updated_at` whenever `status/next_action/owner/notes` changes (unblocks Activity fallback per `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`).
 
 Pain points (current):
 - **Status mapping drift** between `ops/job-pipeline.csv` labels (e.g., `Pinned`, `Applied`) and canonical enums in `ops/architecture/EVENT_MODEL_V1.md`.
@@ -70,7 +76,7 @@ Inputs: inbox alerts + job digest + pipeline status + blockers -> Output: single
 **Primary artefacts:**
 - `ops/ux/MASTHEAD_NAV_SPEC_V1.md`
 - Pages: `ops/status.html`, `ops/kanban.html`, `ops/agent-queue.html`, `ops/agents.html`, `ops/cv-preview.html`, `ops/api-usage.html`
-- Behaviour glue: `ops/ui/nav_v1.js` (active-link semantics + mobile menu)
+- Behaviour glue: `ops/ui/nav_v1.js` (active-link semantics + mobile menu + focus/aria-hidden management)
 
 Goal: user always knows (a) where they are, (b) what changed, (c) the next action.
 
