@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (16:30 UTC)
+Last updated: 2026-03-10 (18:30 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -163,6 +163,17 @@ Acceptance reference:
 
 ### 1.6 Build handoff (concrete): Kanban triage controls (UI-only v1)
 Source spec: `ops/ux/JOB_TRIAGE_CONTROLS_SPEC_V1.md`
+
+**Handoff item UX-010 (concrete): Triage control tap targets + keybinding precedence**
+Why: keep the triage buttons usable on mobile, and prevent keyboard shortcut conflicts once `ops/ui/scroll_a11y_v1.js` is wired broadly.
+
+Deliverables (static UI v1):
+- Ensure each triage button meets the compact minimum tap target (`--tap-min-compact` in `ops/ui/STYLE_TOKENS_V1.css`).
+- Do not trigger triage shortcuts (1–4, `e`) when focus is inside an input/textarea (e.g., future Next Action editor).
+
+Acceptance:
+- On mobile widths, triage buttons are reliably tappable without accidental misfires.
+- With a text input focused inside a card, typing numbers does not change triage state.
 
 Deliverables (static UI v1):
 1) On each `ops/kanban.html` card, render a triage control group with the exact labels: `Pinned`, `Assessing`, `Hold`, `Ignored`.
@@ -330,6 +341,8 @@ Acceptance reference:
 Target file: `ops/index.html`
 
 Why: Home is the first click after publish. If Activity/Team Ops ship but are not visible on Home, discoverability suffers and the “control tower” loop breaks.
+
+Current reality (2026-03-10): `ops/activity.html` exists and is linked from Status (“What changed”), but Home does not yet include an Activity tile under Operate.
 
 Deliverables (static v1):
 1) Under **Operate**, add two full-card links using the existing `.item--link` pattern:

@@ -3,7 +3,7 @@
 Owner: UX (Vantage)
 Consumers: Build (Rivet), Data/CRM (Ledger)
 Status: Draft (implementation-ready v1)
-Last updated: 2026-03-09 (16:24 UTC)
+Last updated: 2026-03-10 (18:24 UTC)
 
 ## 1) Objective
 Make job triage decisions fast, explicit, and auditable directly from the Pipeline board (`ops/kanban.html`), without burying decisions in free-text notes.
@@ -37,6 +37,8 @@ A compact segmented control (or button row) on each card:
 - **Ignored** (drop)
 
 Placement (v1): under the status badge and above “Next:” line.
+
+Touch target (v1): respect the compact tap target token (`--tap-min-compact` in `ops/ui/STYLE_TOKENS_V1.css`) so the control remains usable on mobile without consuming the whole card.
 
 Companion affordance (v1, minimal):
 - `Next:` line remains visible and is treated as first-class (AC-3).
@@ -128,6 +130,7 @@ Dependencies:
 
 ## 8) Blockers / open questions
 - `ops/job-pipeline.csv` column set is not enforced; need a single schema source (lightweight) to prevent drift.
+- Keybinding precedence: ensure global scroll helper (`ops/ui/scroll_a11y_v1.js`) does not conflict with per-card shortcuts (1–4, `e`). Rule: if focus is inside an input/textarea, do not trigger triage shortcuts.
 - Decide whether Kanban triage updates also auto-manage `next_action`.
   - Recommended v1 default (safe automation, low regret):
     - When set to **Ignored** → clear `next_action`.

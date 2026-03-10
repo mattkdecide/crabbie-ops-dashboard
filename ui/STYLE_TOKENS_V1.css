@@ -7,6 +7,7 @@
 
   /* Interaction */
   --tap-min: 44px; /* WCAG-ish touch target baseline */
+  --tap-min-compact: 40px; /* For dense secondary actions (still reasonable on desktop) */
 
   /* Colour */
   --bg: #0b1020;

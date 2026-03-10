@@ -418,3 +418,43 @@ a.btn[aria-disabled="true"]{
 .notice--success{background:color-mix(in srgb, var(--success-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--success-fg) 25%, var(--border-2));color:var(--success-fg)}
 .notice--warning{background:color-mix(in srgb, var(--warning-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--warning-fg) 25%, var(--border-2));color:var(--warning-fg)}
 .notice--danger{background:color-mix(in srgb, var(--danger-bg) 75%, var(--surface-2));border-color:color-mix(in srgb, var(--danger-fg) 25%, var(--border-2));color:var(--danger-fg)}
+
+/* Timeline (Activity)
+   Semantics: <ol class="timeline"><li><div class="item">…</div></li></ol>
+   Goals: readable chronology, clear separation, and good keyboard/zoom behaviour.
+*/
+.timeline{
+  list-style:none;
+  padding:0;
+  margin: var(--s3) 0;
+  display:grid;
+  gap: var(--s3);
+}
+.timeline > li{margin:0}
+
+/* Extra breathing room for long notes without changing base card styling. */
+.item__sub{
+  margin: 0 0 var(--s2) 0;
+  font-size: var(--fs-1);
+  color: var(--text-2);
+  max-width: var(--measure);
+  overflow-wrap:anywhere;
+}
+
+.item__actions{
+  margin: var(--s2) 0 0 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+}
+
+/* Activity entries tend to be dense; keep action buttons compact on desktop. */
+.item__actions .btn{
+  padding: 7px 10px;
+  min-height: var(--tap-min-compact, 40px);
+}
+
+@media (max-width: 640px){
+  .timeline{gap: var(--s2)}
+  .item__actions .btn{flex:1 1 160px;}
+}

@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (16:24 UTC)
+Last updated: 2026-03-10 (18:24 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -120,6 +120,7 @@ Implementation notes (v1, build-ready):
   - Seed file exists now: `ops/events/events-2026-03.jsonl`.
   - Canonical envelope fields are `{event_type, occurred_at, data}` (not legacy `{type, payload}`); see `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
 - **Build status:** `ops/activity.html` is now the “View all” destination, and Status includes the compact “What changed” module linking to it (T-0305 shipped).
+- **Build status (UI):** timeline styling now lives in `ops/ui/COMPONENTS_V1.css` (see T-0302 note 2026-03-10 18:20 UTC). Reuse these classes for any future timeline embeds.
 - **Data dependency:** derived activity quality remains weak until `ops/job-pipeline.csv` gains `updated_at` (tracked: T-0316).
 - **Schema drift watch:** PRD-006 currently describes an alternate JSONL shape `{ts, type, title, refs, actor}`. For v1 build, implement a tolerant parser and map both shapes into the timeline UI (see `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` → UX-004).
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.

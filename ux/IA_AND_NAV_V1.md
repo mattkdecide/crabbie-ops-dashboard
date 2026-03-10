@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-10 (16:30 UTC)
+Last updated: 2026-03-10 (18:30 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -47,6 +47,7 @@ Build note (current reality):
   - `--link-visited` (derived)
 - Known UX gap (should be fixed next): `ops/cv-preview.html` still defaults the draft path to a likely non-existent file (`outputs/cv/R-2026-0017/draft.md`). The default state should be blank + helper text (see AC-8 / Handoff UX-003).
 - Known security/robustness gap (should be fixed with the same patch): CV Preview draft loader is not yet allowlisted to `outputs/cv/**` and does not yet reject protocols / `..` segments before `fetch()` (see AC-8b / Handoff UX-003).
+- Known discoverability gap (nice-to-have): `ops/index.html` (Home) does not yet expose an **Activity** tile under Operate. Once `activity.html` is stable, add a full-card link (Handoff 1.11) so “What changed” is 1 click from Home.
 - Launchpad note (resolved): `ops/status.html` now includes a “What changed” module that links to `activity.html` as the first-class “View all” destination (T-0305 shipped).
 
 Pragmatic v1 recommendation:
@@ -93,8 +94,8 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 
 6. **Activity**
    - Purpose: global event feed, filterable
-   - Current status: not implemented; see `STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
-   - Proposed page: `ops/activity.html` (static)
+   - Current page: `ops/activity.html`
+   - Source data (v1): `ops/events/events-YYYY-MM.jsonl` (preferred) with a derived CSV fallback per `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`
 
 ---
 
@@ -105,7 +106,7 @@ Aligned to `MASTHEAD_NAV_SPEC_V1.md`.
 - UX tab → `ux/JOURNEY_MAPS_V1.md` (temporary) or `ux/index.md` (preferred)
 - Design tab → `design/DESIGN_ROADMAP_V1.md`
 - Roadmap tab → `status.html` (acts as Overview/Launchpad in current build)
-- Activity tab → `activity.html` (to be created)
+- Activity tab → `activity.html`
 
 ### Active-tab logic (static)
 Current implementation direction:
