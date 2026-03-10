@@ -138,7 +138,11 @@
         const onTarget = cost <= 2;
         const budgetText = onTarget ? 'On target' : 'Above target';
         budgetEl.className = 'item__meta';
-        budgetEl.innerHTML = `<span class="badge ${onTarget ? 'badge--success' : 'badge--warning'}">${budgetText}</span>`;
+        budgetEl.textContent = '';
+        const badge = document.createElement('span');
+        badge.className = `badge ${onTarget ? 'badge--success' : 'badge--warning'}`;
+        badge.textContent = budgetText;
+        budgetEl.appendChild(badge);
 
         if (sr) sr.textContent = `Loaded ${data.length} usage rows. Budget status: ${budgetText}.`;
       } catch(e){

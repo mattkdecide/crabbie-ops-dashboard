@@ -236,6 +236,12 @@
 .badge--prio-med{background:var(--warning-bg);color:var(--warning-fg)}
 .badge--prio-low{background:var(--info-bg);color:var(--info-fg)}
 
+/* Generic semantic badges (used by live boards) */
+.badge--success{background:var(--success-bg, rgba(46, 160, 67, .18));color:var(--success-fg, #2ea043);border-color:color-mix(in srgb, var(--success-fg, #2ea043) 25%, transparent)}
+.badge--danger{background:var(--danger-bg);color:var(--danger-fg);border-color:color-mix(in srgb, var(--danger-fg) 25%, transparent)}
+.badge--warning{background:var(--warning-bg);color:var(--warning-fg);border-color:color-mix(in srgb, var(--warning-fg) 25%, transparent)}
+.badge--info{background:var(--info-bg);color:var(--info-fg);border-color:color-mix(in srgb, var(--info-fg) 25%, transparent)}
+
 /* Links inside cards */
 .item a{color:var(--link)}
 .item a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px}
