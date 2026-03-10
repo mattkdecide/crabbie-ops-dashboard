@@ -9,7 +9,7 @@
 - CV Preview (`cv-preview.html`)
 - CV Run (`cv-run.html`)
 - Team Ops (`team-ops.html`, planned)
-- Activity (`activity.html`, planned)
+- Activity (`activity.html`)
 
 ## Documentation branches
 - UX specs (`ux/*.md`)

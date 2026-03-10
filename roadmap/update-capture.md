@@ -100,3 +100,20 @@ Next steps / recommended actions:
 3. Vantage + Build Engineer: confirm PRD-006 decisions (type enum, retention window, derived suppression) or accept defaults.
 4. Tide (BA owner): continue daily grooming and move any PRDs whose decisions are confirmed to Ready; keep `ops/agent-tasks.csv` statuses aligned.
 5. Ledger + Build Engineer: implement `ops/crm/job-record-required-fields-v1.json` + shared validator (`ops/ui/job_validation_v1.js`) to enforce publish gating rules in PRD-001.
+
+## 2026-03-10 (BA cron run @ 15:38 UTC)
+- Groomed backlog:
+  - Added PRD-008 (Job Pipeline `updated_at` Normalisation + Backfill) and set Grooming state to **Ready** (implementation-ready AC + edge cases captured).
+- Expanded PRD-008 into implementation-ready acceptance criteria, edge cases, dependencies, and decision requests (proxy precedence + timestamp format).
+- Updated dependencies:
+  - PRD-006 now explicitly depends on `ops/job-pipeline.csv` having parseable `updated_at` (links to PRD-008 and delivery task T-0316).
+- Updated `ops/agent-tasks.csv`:
+  - T-0312 updated with this run stamp.
+- Files updated:
+  - `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (added PRD-008; PRD-006 dependency note)
+  - `ops/agent-tasks.csv` (T-0312 run stamp)
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-10 (PM Control Tower cron run @ 15:48 UTC)
+- Refreshed `ops/CONTROL_TOWER.md`: captured delivery movement **T-0305 Blocked → In Progress** (activity.html now exists; remaining work is status.html “What changed” module) and **T-0318 In Progress → Done**.
+- Updated priorities: finish T-0305 last-mile integration, implement T-0317 (CV Preview hardening), then land T-0316/PRD-008 (`job-pipeline.csv` updated_at normalisation/backfill).

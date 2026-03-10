@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (14:30 UTC)
+Last updated: 2026-03-10 (16:30 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -86,7 +86,7 @@ Current reality (verified 2026-03-08):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-6)
 
-### 1.4 Build handoff (concrete): Derived Activity module + Activity page stub
+### 1.4 Build handoff (concrete): Derived Activity module + Activity page stub (SHIPPED; keep as regression checklist)
 Source specs:
 - `ops/ux/JOURNEY_MAPS_V1.md` (Journey 6)
 - `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (see Handoff item UX-002 for CSV fallback rules)
@@ -161,7 +161,21 @@ Acceptance:
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-7, AC-8)
 
-### 1.6 Build handoff (concrete): Seed events feed + parse-first-N proof
+### 1.6 Build handoff (concrete): Kanban triage controls (UI-only v1)
+Source spec: `ops/ux/JOB_TRIAGE_CONTROLS_SPEC_V1.md`
+
+Deliverables (static UI v1):
+1) On each `ops/kanban.html` card, render a triage control group with the exact labels: `Pinned`, `Assessing`, `Hold`, `Ignored`.
+2) A11y: wrap controls in `role="group" aria-label="Triage"` and express the active option via `aria-pressed="true"` (plus a visible style change, not colour-only).
+3) Keyboard shortcuts (when focus is within a card):
+   - `1` → Pinned, `2` → Assessing, `3` → Hold, `4` → Ignored
+4) Add `data-role-id="<role_id>"` on the card root and `data-triage="Pinned|Assessing|Hold|Ignored"` on the selected control to simplify future wiring.
+5) UI-only v1 is acceptable (no persistence), but include a `Copy update` affordance that copies a minimal patch snippet (example): `role_id=R-2026-TEST-EY, status=Pinned`.
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-10)
+
+### 1.7 Build handoff (concrete): Seed events feed + parse-first-N proof
 
 **Handoff item UX-007 (concrete): JSONL parse diagnostics + truncation notice**
 Why: when events JSONL contains a bad line (or is very large), we need a visible, operator-friendly signal instead of silent failure.

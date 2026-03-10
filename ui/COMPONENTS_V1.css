@@ -224,6 +224,8 @@
 
 .item__title{font-weight:700;font-size:var(--fs-2);margin:0 0 var(--s2) 0;line-height:var(--lh-tight)}
 .item__meta{font-size:var(--fs-1);color:var(--text-2);line-height:1.35;overflow-wrap:anywhere}
+/* When metadata includes an inline badge (e.g. “View all”), give it breathing room. */
+.item__meta .badge{margin-left:6px}
 .item__small{font-size:var(--fs-1);color:var(--text-3);margin-top:var(--s2);overflow-wrap:anywhere}
 
 /* Badges */
