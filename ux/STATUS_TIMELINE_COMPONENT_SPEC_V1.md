@@ -98,7 +98,25 @@ Reference: `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-
   - `warning` for attention states (drafting/interviewing or soon-due follow-ups).
   - otherwise `info`.
 
-Legacy compatibility note (if needed): if an envelope arrives as `{type, payload}`, translate it to `{event_type, data}` before mapping.
+Legacy compatibility note (if needed): some older producers may emit `{type, payload}`.
+
+Normalisation rule (MUST be implemented before mapping):
+```js
+function normaliseEnvelope(e) {
+  // Canonical v1
+  if (e && e.event_type && e.occurred_at && e.data) return e
+
+  // Legacy shim (remove once all producers are aligned)
+  if (e && e.type && e.payload) {
+    return { ...e, event_type: e.type, occurred_at: e.occurred_at ?? e.occurredAt, data: e.payload }
+  }
+
+  return null
+}
+```
+- Adapter MUST consume canonical `{event_type, occurred_at, data}` when present.
+- Legacy shim is optional, but if included it must be clearly marked as temporary.
+- If `normaliseEnvelope()` returns null, skip the line with `console.warn` (do not crash the page).
 
 ### CSV fallback rules (until full eventing)
 - Job row change: synthesise `summary` from `status` and `last_action`.

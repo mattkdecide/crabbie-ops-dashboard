@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-09 (20:28 UTC)
+Last updated: 2026-03-10 (04:28 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -49,6 +49,7 @@ Current build note:
 - `ops/cv-run.html` generates a one-shot local terminal command and deep-links into Preview.
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
 - It supports query param `?file=outputs/cv/<role_id>/draft.md`.
+- Known UX gap: Preview currently defaults to a likely non-existent draft path (`outputs/cv/R-2026-0017/draft.md`). Default should be blank + helper text (AC-8 / UX-003).
 
 ---
 
@@ -96,8 +97,10 @@ User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.
 
 Journey:
-1. Open `ops/status.html`.
-2. See “What changed” module.
+1. Open `ops/index.html` (Home) or `ops/status.html` (Launchpad).
+2. Use **Activity** entry point:
+   - Home tile (recommended once `ops/activity.html` exists), or
+   - Status “What changed” module → `activity.html`.
 3. If `ops/events/` exists, render first N events.
 4. If `ops/events/` is missing, render **derived activity**:
    - job status changes inferred from `job-pipeline.csv` `status` + `last_action` + `updated_at` (if present)

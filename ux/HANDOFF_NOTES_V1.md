@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-09 (20:28 UTC)
+Last updated: 2026-03-10 (04:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -121,10 +121,10 @@ Acceptance check:
 ### 1.5 CV Preview UX tightening (quick wins)
 Target file: `ops/cv-preview.html`
 
-Current reality (verified 2026-03-08):
+Current reality (verified 2026-03-10):
 - Draft loader exists (input + fetch + lightweight markdown rendering).
 - Query param supported: `?file=outputs/cv/<role_id>/draft.md`.
-- Default input value is currently `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish, creating a “broken by default” first impression.
+- **Still unfixed:** default input value is `outputs/cv/R-2026-0017/draft.md`, which is likely non-existent on a fresh publish ("broken by default").
 
 Build asks (v1):
 - Set default to blank and rely on helper text (preferred), or point to a known-good demo file that exists in the repo.
@@ -246,6 +246,21 @@ Deliverables (static v1):
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-11)
+
+### 1.11 Build handoff (concrete): Home tiles for Activity + Team Ops (index.html)
+Target file: `ops/index.html`
+
+Why: Home is the first click after publish. If Activity/Team Ops ship but are not visible on Home, discoverability suffers and the “control tower” loop breaks.
+
+Deliverables (static v1):
+1) Under **Operate**, add two full-card links using the existing `.item--link` pattern:
+   - `Activity` → `activity.html`
+   - `Team Ops` → `team-ops.html`
+2) If either page does not exist yet, still render the tile but add a small label: `Coming soon` (no dead links), OR hide it behind a single boolean in JS (preferred).
+3) When both pages exist, update the primary nav list in the header to include `Activity` (and optionally `Team Ops` if it is promoted to a first-class destination rather than under Agents).
+
+Acceptance:
+- Home has clear, keyboard-focusable paths to Activity and Team Ops as soon as those pages are published.
 
 ---
 

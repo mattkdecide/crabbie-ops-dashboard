@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-09 (20:28 UTC)
+Last updated: 2026-03-10 (04:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -42,6 +42,7 @@ Build note (current reality):
 - Design tokens now include explicit interaction surfaces and visited-link styling:
   - `--surface-hover`, `--surface-press` (derived)
   - `--link-visited` (derived)
+- Known UX gap (should be fixed next): `ops/cv-preview.html` still defaults the draft path to a likely non-existent file (`outputs/cv/R-2026-0017/draft.md`). The default state should be blank + helper text (see AC-8 / Handoff UX-003).
 
 Pragmatic v1 recommendation:
 - Treat `index.html` as “Home”, and `status.html` as the operational launchpad/status board.

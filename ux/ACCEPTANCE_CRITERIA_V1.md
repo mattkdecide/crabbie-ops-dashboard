@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-09 (20:28 UTC)
+Last updated: 2026-03-10 (04:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -178,18 +178,18 @@ Non-goals (v1):
 
 ---
 
-## AC-8: CV Preview default path does not mislead
+## AC-8: CV Preview default state is not “broken by default”
 **Given** I open `ops/cv-preview.html` with no query param
-**When** the default path is shown
-**Then** it must either:
-- point to an example file that exists in the repo/site, or
-- be blank with helper text.
+**Then** the Draft file path input MUST be blank (no non-existent default path)
 
-Test note (current build):
-- The default value is `outputs/cv/R-2026-0017/draft.md` which is unlikely to exist on a fresh publish. This should be updated.
+**And** helper text MUST guide the expected pattern:
+- `Paste a path under outputs/cv/… (e.g., outputs/cv/R-2026-TEST-EY/draft.md)`
+
+Build note (current gap, as of 2026-03-10):
+- `ops/cv-preview.html` still defaults to `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish.
 
 Rationale:
-- Avoids a “broken by default” first impression.
+- Avoids a “broken by default” first impression and reduces support/debug churn.
 
 ---
 
