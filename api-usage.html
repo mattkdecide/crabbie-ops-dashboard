@@ -91,17 +91,23 @@
 
         const tb = document.getElementById('rows');
         tb.innerHTML = '';
+        const cell = (tr, value, cls) => {
+          const td = document.createElement('td');
+          if (cls) td.className = cls;
+          td.textContent = value == null ? '' : String(value);
+          tr.appendChild(td);
+        };
+
         data.slice().reverse().forEach(r=>{
           const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${r.date_utc||''}</td>
-            <td>${r.window||''}</td>
-            <td>${r.model||''}</td>
-            <td class="num">${r.in_tokens||''}</td>
-            <td class="num">${r.out_tokens||''}</td>
-            <td class="num">${r.total_tokens||''}</td>
-            <td class="num">${r.estimated_cost_usd ? '$'+r.estimated_cost_usd : ''}</td>
-            <td>${r.notes||''}</td>`;
+          cell(tr, r.date_utc || '');
+          cell(tr, r.window || '');
+          cell(tr, r.model || '');
+          cell(tr, r.in_tokens || '', 'num');
+          cell(tr, r.out_tokens || '', 'num');
+          cell(tr, r.total_tokens || '', 'num');
+          cell(tr, r.estimated_cost_usd ? '$' + r.estimated_cost_usd : '', 'num');
+          cell(tr, r.notes || '');
           tb.appendChild(tr);
         });
 
