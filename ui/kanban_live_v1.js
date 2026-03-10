@@ -190,10 +190,22 @@ function groupByStatus(jobs, mapping) {
   return buckets;
 }
 
+function hideEmptyColumnsFromQuery() {
+  const params = new URLSearchParams(location.search);
+  const v = (params.get('hide_empty') || params.get('hide_empty_columns') || '').trim();
+  if (!v) return false;
+  return v === '1' || v.toLowerCase() === 'true' || v.toLowerCase() === 'yes';
+}
+
 function renderBoard(targetEl, buckets, mapping) {
   const statuses = new Set([...buckets.keys()]);
   const columnOrder = getColumnOrder(mapping);
-  const ordered = [...columnOrder.filter((s) => statuses.has(s))];
+  const hideEmpty = hideEmptyColumnsFromQuery();
+
+  // Default: render the full canonical pipeline so the board is stable even when a column has 0 roles.
+  // Opt-in: ?hide_empty=1 to only show columns that currently contain roles.
+  const ordered = hideEmpty ? [...columnOrder.filter((s) => statuses.has(s))] : [...columnOrder];
+
   // Append any unknown statuses at the end.
   for (const s of [...statuses].sort()) {
     if (!ordered.includes(s)) ordered.push(s);
@@ -216,7 +228,9 @@ function refreshSecondsFromQuery() {
 function setMeta(metaEl, jobsCount, refreshSeconds = 0) {
   const now = new Date();
   const refreshNote = refreshSeconds > 0 ? ` · Auto-refresh: ${refreshSeconds}s` : '';
-  metaEl.textContent = `Loaded ${jobsCount} roles · ${now.toLocaleString()}${refreshNote}`;
+  const hideEmpty = hideEmptyColumnsFromQuery();
+  const columnsNote = hideEmpty ? ' · Columns: non-empty only' : ' · Columns: full pipeline';
+  metaEl.textContent = `Loaded ${jobsCount} roles · ${now.toLocaleString()}${refreshNote}${columnsNote}`;
 }
 
 function highlightRoleFromQuery() {

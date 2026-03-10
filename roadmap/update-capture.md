@@ -117,3 +117,24 @@ Next steps / recommended actions:
 ## 2026-03-10 (PM Control Tower cron run @ 15:48 UTC)
 - Refreshed `ops/CONTROL_TOWER.md`: captured delivery movement **T-0305 Blocked → In Progress** (activity.html now exists; remaining work is status.html “What changed” module) and **T-0318 In Progress → Done**.
 - Updated priorities: finish T-0305 last-mile integration, implement T-0317 (CV Preview hardening), then land T-0316/PRD-008 (`job-pipeline.csv` updated_at normalisation/backfill).
+
+## 2026-03-10 (BA cron run @ 18:39 UTC)
+- Groomed backlog:
+  - PRD-006 delivery status **In Progress → Done** (T-0305 shipped).
+- Expanded PRD-008 (Job Pipeline `updated_at` Normalisation + Backfill):
+  - Added implementation-ready acceptance criteria for backfill tooling (dry-run/apply), write safety (backup + preserve column/row order), and a required operator report artefact under `ops/reports/`.
+  - Added decision request PRD-008-DR3 (whether to overwrite invalid existing `updated_at` via a dedicated flag vs fill-blanks-only default).
+- Updated `ops/agent-tasks.csv`: T-0312 run stamp appended.
+- Files updated:
+  - `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (PRD-006 delivery status; PRD-008 AC/deps/decisions expanded)
+  - `ops/agent-tasks.csv` (T-0312 run stamp)
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-10 (PM Control Tower cron run @ 18:48 UTC)
+- Refreshed `ops/CONTROL_TOWER.md`:
+  - Captured delivery movement **T-0305 In Progress → Done** (Activity shipped + Status “What changed” module present).
+  - Captured **T-0317 Backlog → Approved** (CV Preview hardening is implementation-ready).
+  - Reprioritised next 24–48h to: **T-0317 (CV Preview hardening)**, then **T-0316/PRD-008 (`updated_at` normalisation/backfill)**, then **T-0306 (Team Ops closeout)**.
+- Files updated:
+  - `ops/CONTROL_TOWER.md`
+  - `ops/UPDATE_CAPTURE.md` (this entry)

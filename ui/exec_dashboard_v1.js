@@ -20,37 +20,88 @@ function parseCsv(text){
 }
 
 function hoursAgo(iso){
-  const t = Date.parse(iso||''); if(!t) return null;
+  const t = Date.parse(iso||'');
+  if(!t) return null;
   return (Date.now()-t)/36e5;
+}
+
+function clear(node){
+  while(node && node.firstChild) node.removeChild(node.firstChild);
+}
+
+function mk(tag, attrs){
+  const el = document.createElement(tag);
+  if(attrs){
+    for(const [k,v] of Object.entries(attrs)){
+      if(v===undefined || v===null) continue;
+      if(k==='class') el.className = String(v);
+      else el.setAttribute(k, String(v));
+    }
+  }
+  return el;
+}
+
+function card(title, metaText){
+  const wrap = mk('div', {class:'item'});
+  const h = mk('h3', {class:'item__title'});
+  h.textContent = title;
+  const meta = mk('div', {class:'item__meta'});
+  meta.textContent = metaText;
+  wrap.appendChild(h);
+  wrap.appendChild(meta);
+  return wrap;
+}
+
+function linkCard(title, href){
+  const wrap = mk('div', {class:'item item--link'});
+  const a = mk('a', {class:'item__link', href});
+  const h = mk('h3', {class:'item__title'});
+  h.textContent = title;
+  a.appendChild(h);
+  wrap.appendChild(a);
+  return wrap;
 }
 
 async function initExecDashboard(){
   const el = document.getElementById('execDashboard');
   if(!el) return;
+
+  el.setAttribute('aria-busy', 'true');
+
   try{
     const csv = await loadText('agent-tasks.csv');
     const rows = parseCsv(csv);
+
     const by = s => rows.filter(r => (r.status||'').toLowerCase()===s).length;
-    const done = by('done'), prog = by('in progress') + by('in_progress'), blocked = by('blocked'), backlog = by('backlog'), approved = by('approved');
+    const done = by('done');
+    const prog = by('in progress') + by('in_progress');
+    const blocked = by('blocked');
+    const backlog = by('backlog');
+    const approved = by('approved');
+
     const recent24 = rows.filter(r => {
-      const u = r.updated_at || r.updatedAt || ''; if(!u) return false;
-      const h = hoursAgo(u); return h!==null && h<=24;
+      const u = r.updated_at || r.updatedAt || '';
+      if(!u) return false;
+      const h = hoursAgo(u);
+      return h!==null && h<=24;
     }).length;
 
     const score = Math.max(0, Math.min(100, Math.round((done*1.2 + prog*0.8 + recent24*0.5 - blocked*1.1) / Math.max(1, rows.length) * 100)));
 
-    el.innerHTML = `
-      <div class='item'><h3 class='item__title'>Productivity Score</h3><div class='item__meta'>${score}/100</div></div>
-      <div class='item'><h3 class='item__title'>Flow Snapshot</h3><div class='item__meta'>In Progress ${prog} · Done ${done} · Blocked ${blocked} · Approved ${approved} · Backlog ${backlog}</div></div>
-      <div class='item'><h3 class='item__title'>Last 24h Movement</h3><div class='item__meta'>${recent24} tasks updated</div></div>
-      <div class='item item--link'><a class='item__link' href='agent-queue.html'><h3 class='item__title'>Open Team Queue</h3></a></div>
-      <div class='item item--link'><a class='item__link' href='agents.html'><h3 class='item__title'>Open Agents + Live Capacity</h3></a></div>
-    `;
+    clear(el);
+    el.appendChild(card('Productivity Score', `${score}/100`));
+    el.appendChild(card('Flow Snapshot', `In Progress ${prog} · Done ${done} · Blocked ${blocked} · Approved ${approved} · Backlog ${backlog}`));
+    el.appendChild(card('Last 24h Movement', `${recent24} tasks updated`));
+    el.appendChild(linkCard('Open Team Queue', 'agent-queue.html'));
+    el.appendChild(linkCard('Open Agents + Live Capacity', 'agents.html'));
 
     const stamp = document.getElementById('execStamp');
     if(stamp) stamp.textContent = 'Live refresh every 60s · Last refresh: ' + new Date().toLocaleTimeString();
   }catch(err){
-    el.innerHTML = `<div class='item'><h3 class='item__title'>Exec dashboard unavailable</h3><div class='item__meta'>Could not load agent-tasks.csv</div></div>`;
+    clear(el);
+    el.appendChild(card('Exec dashboard unavailable', 'Could not load agent-tasks.csv'));
+  }finally{
+    el.removeAttribute('aria-busy');
   }
 }
 
