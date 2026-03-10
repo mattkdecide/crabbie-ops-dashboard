@@ -150,7 +150,10 @@
 
 /* Status/landing pages: allow columns to wrap instead of forcing horizontal scroll. */
 .board--wrap{flex-wrap:wrap;overflow:visible;align-items:flex-start;scroll-snap-type:none;scroll-padding-inline:0}
-.board--wrap .column{flex:1 1 420px;min-width:320px;max-width:none}
+/* Avoid accidental horizontal overflow on very small viewports (e.g. 320px).
+   min() keeps the intended card width while respecting available space.
+*/
+.board--wrap .column{flex:1 1 420px;min-width:min(320px, 100%);max-width:none}
 .column{
   min-width: 340px;
   max-width: 340px;

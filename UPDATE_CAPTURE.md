@@ -79,8 +79,24 @@
 - Refreshed `ops/CONTROL_TOWER.md` (backlog status movement, top priorities, blockers/decisions, AC updates).
 - Aligned PRD-006 delivery status **Backlog → In Progress** in `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` to match active build work (T-0305).
 
+## 2026-03-10 (PM Control Tower cron run @ 12:48 UTC)
+- Refreshed `ops/CONTROL_TOWER.md`: captured T-0305 **In Progress → Blocked** per `ops/agent-tasks.csv`, surfaced PRD-007/T-0317 as priority unblock work, and updated blockers/decision requests/AC notes.
+
+## 2026-03-10 (BA cron run @ 12:38 UTC)
+- Groomed backlog:
+  - Added PRD-007 (CV Preview Loader Hardening + Blank Default) and moved it to **Ready** (implementation-ready AC + edge cases captured).
+- Expanded PRD-007 into implementation-ready acceptance criteria, edge cases, dependencies, and decision requests (allowlist + traversal/protocol rejection, query-param safety, size limits).
+- Updated `ops/agent-tasks.csv`:
+  - T-0312 updated with this run stamp.
+  - Added T-0317 (build) to implement PRD-007.
+- Files updated:
+  - `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (PRD-007 added)
+  - `ops/agent-tasks.csv` (T-0312 updated; T-0317 added)
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
 Next steps / recommended actions:
-1. Ledger: confirm PRD-001 required fields list (PRD-001-DR1) or accept defaults to unblock Ready movement.
-2. Vantage + Build Engineer: confirm PRD-006 decisions (type enum, retention window, derived suppression) or accept defaults.
-3. Tide (BA owner): run daily cron and move any PRDs whose decisions are confirmed to Ready, and update `ops/agent-tasks.csv` statuses accordingly.
-4. Implement `ops/crm/job-record-required-fields-v1.json` and `ops/ui/job_validation_v1.js` (recommend owner: Ledger + Build Engineer) to make validation explicit and enforce publish gating.
+1. Build Engineer: implement T-0317 (PRD-007) by removing the default `outputs/cv/...` value in `ops/cv-preview.html` and enforcing allowlist + traversal/protocol guards before fetch.
+2. Ledger: confirm PRD-001 required fields list (PRD-001-DR1) or accept defaults to unblock Ready movement.
+3. Vantage + Build Engineer: confirm PRD-006 decisions (type enum, retention window, derived suppression) or accept defaults.
+4. Tide (BA owner): continue daily grooming and move any PRDs whose decisions are confirmed to Ready; keep `ops/agent-tasks.csv` statuses aligned.
+5. Ledger + Build Engineer: implement `ops/crm/job-record-required-fields-v1.json` + shared validator (`ops/ui/job_validation_v1.js`) to enforce publish gating rules in PRD-001.
