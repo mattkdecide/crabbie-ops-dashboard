@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (06:24 UTC)
+Last updated: 2026-03-10 (08:28 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -84,6 +84,7 @@ Goal: user always knows (a) where they are, (b) what changed, (c) the next actio
 Current build note:
 - `ops/index.html` now exists and acts as “Home”. Home/logo link should resolve to `index.html` (fall back to `status.html` only if `index.html` is not published).
 - `ops/kanban.html` and `ops/agent-queue.html` boards are now labelled, keyboard-focusable horizontal scroll regions (discoverability), and when the board container itself is focused they support keyboard horizontal scrolling (←/→, PgUp/PgDn, Home/End).
+- On mobile, the expanded global nav now renders as a distinct panel (padding + surface + border + radius), which materially improves scanability. Keep this pattern consistent across ops pages.
 
 ---
 
@@ -92,6 +93,7 @@ Current build note:
 - Future canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
 - Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
 - Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full, to create)
+- Build status: `ops/activity.html` does not exist yet (tracked in `ops/agent-tasks.csv` → T-0305).
 
 User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.

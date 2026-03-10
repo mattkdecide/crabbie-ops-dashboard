@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (06:28 UTC)
+Last updated: 2026-03-10 (08:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -37,6 +37,7 @@ Keep (do not regress):
 - `ops/agent-queue.html` board container is intentionally keyboard-focusable (`tabindex="0"`) with a focus ring so horizontal scrolling is discoverable.
   - When the board container itself is focused, it supports keyboard horizontal scrolling (←/→, PgUp/PgDn, Home/End).
   - Scrollbars are intentionally visible/styled (tokens: `--scrollbar-thumb`, `--scrollbar-thumb-hover` in `STYLE_TOKENS_V1.css`; board styling in `COMPONENTS_V1.css`).
+- Mobile nav expanded state should remain a distinct, readable panel (padding + surface + border + radius) so the global link set scans cleanly on small screens (implemented in `ops/ui/COMPONENTS_V1.css`).
 
 Known blocker:
 - Task `T-0206` notes a partial/template strategy is not yet agreed.
@@ -205,6 +206,21 @@ Deliverables (v1):
 1) Add a new column `updated_at` to `ops/job-pipeline.csv` (RFC3339 preferred; date-only acceptable).
 2) Update any scripts/agents that write pipeline rows to also write `updated_at` whenever `status`, `next_action`, `owner`, or `notes` changes.
 3) Update derived-activity generator to prefer `updated_at` over `last_action` when present (already specified in `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md`).
+
+Acceptance reference:
+- `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
+
+### 1.12 Build handoff (concrete): `job-pipeline.csv` schema bump + backfill (safe, backwards-compatible)
+Why: Until pipeline writers are updated, Activity/Timeline fallback is still weak. A one-time schema bump + best-effort backfill makes derived activity immediately more useful.
+
+Deliverables (v1):
+1) Add `updated_at` column to `ops/job-pipeline.csv` (if not already present).
+2) Backfill `updated_at` for existing rows:
+   - If `last_action` begins with a parseable date (`YYYY-MM-DD`), set `updated_at` to that date.
+   - Else leave blank (do not invent timestamps).
+3) Ensure CSV readers (Kanban/derived activity) are tolerant:
+   - ignore unknown extra columns
+   - treat blank `updated_at` as “no timestamp” and skip those rows for derived activity (per `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` UX-002).
 
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)

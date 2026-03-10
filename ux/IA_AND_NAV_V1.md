@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-10 (06:28 UTC)
+Last updated: 2026-03-10 (08:28 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -35,6 +35,7 @@ Build note (current reality):
   - applies active-link semantics via `aria-current="page"` and `.btn--primary` based on the current filename
   - syncs `aria-hidden` on the collapsible nav region (mobile pattern; harmless on desktop)
   - manages focus on open/close (open → first link inside nav; close → return focus to toggle if focus was inside)
+- Mobile nav expanded state now renders as a distinct, readable panel (padding + surface + border + radius) so the nav links scan cleanly on small screens (implemented in `ops/ui/COMPONENTS_V1.css`).
 - `ops/kanban.html` now treats the board as a labelled, keyboard-focusable horizontal scroll region (`role="region"`, `aria-label`, `tabindex="0"`) so the scroll affordance is discoverable
   - Board also supports keyboard horizontal scrolling when the board container itself is focused (←/→, PgUp/PgDn, Home/End).
 - `ops/agent-queue.html` now treats the board as a labelled, keyboard-focusable horizontal scroll region (`role="region"`, `aria-label`, `tabindex="0"`) so the scroll affordance is discoverable

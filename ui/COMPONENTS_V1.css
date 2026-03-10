@@ -285,7 +285,15 @@
   .topbar__sub{font-size:11px}
   .nav-toggle{display:inline-flex;appearance:none;border:1px solid var(--border-2);background:var(--surface-2);color:var(--text);border-radius:10px;padding:8px 10px;min-height:var(--tap-min)}
   .topbar__actions{display:none;grid-template-columns:1fr 1fr;gap:8px}
-  .topbar__actions.is-open{display:grid}
+  /* Mobile: when the menu opens, present it as a distinct panel for scanability.
+     (Avoid “floating links on same background” which reduces perceived affordance.) */
+  .topbar__actions.is-open{
+    display:grid;
+    padding: var(--s2);
+    background: color-mix(in srgb, var(--surface-2) 88%, var(--bg));
+    border: 1px solid var(--border-2);
+    border-radius: var(--r2);
+  }
   .btn{width:100%}
   .board{gap:var(--s2);padding:var(--s3);padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom))}
   .column{min-width: 92vw;max-width: 92vw}

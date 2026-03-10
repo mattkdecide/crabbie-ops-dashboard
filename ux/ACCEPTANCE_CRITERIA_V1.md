@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-10 (06:28 UTC)
+Last updated: 2026-03-10 (08:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -47,6 +47,8 @@ Supporting specs:
   - opening the menu moves focus to the first focusable item within the menu
   - closing the menu returns focus to the toggle *if focus was inside the menu*
 - the active link is expressed via `aria-current="page"` (not colour-only)
+
+**And** on small screens, when the nav is expanded it SHOULD render as a distinct panel (surface + border + radius + readable spacing) so the link set is scannable (avoid a wall of inline links).
 
 ### AC-1b (target): Persistent masthead (spec)
 **Given** I open any of the ops pages (Status, Kanban, Agent Queue, Agents, CV Preview, API Usage)
