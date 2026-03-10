@@ -3,6 +3,7 @@
 Owner: UX Agent (Vantage)
 Consumers: Build (Rivet), Data/CRM (Ledger)
 Status: Draft (implementation-ready v1)
+Last updated: 2026-03-10 (14:24 UTC)
 
 ## 1) Objective
 Provide a single, consistent timeline component to show “what changed” for a job/application/task, with an audit trail that can be rendered across Ops pages.
@@ -153,7 +154,10 @@ function normaliseEnvelope(e) {
 ## 6) Empty, loading, and error states
 - Empty: `No activity yet. Changes will appear here as jobs and tasks update.`
 - Loading: skeleton list (3 items).
-- Error (events file missing): show fallback CSV-derived timeline with an inline note: `Event feed unavailable, showing derived activity.`
+- Source indicator (operator clarity): render a small meta line above the list.
+  - Events path: `Source: events (events/events-YYYY-MM.jsonl)`
+  - Fallback path: `Event feed unavailable, showing derived activity.`
+- Error (events file missing): show fallback CSV-derived timeline and set the meta line to the fallback copy above (no console-only failures).
 
 ## 7) Accessibility + keyboard
 - Timeline is a list (`role=list`) with items (`role=listitem`).

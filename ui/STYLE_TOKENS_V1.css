@@ -24,6 +24,7 @@
   /* Interaction surfaces (derived) */
   --surface-hover: color-mix(in srgb, var(--accent) 8%, var(--surface-2));
   --surface-press: color-mix(in srgb, var(--accent) 14%, var(--surface-2));
+  --surface-focus: color-mix(in srgb, var(--accent) 10%, var(--surface-2)); /* focus-within / focus-visible background tint */
 
   /* Scrollbars (keep subtle but visible for horizontal boards/tables) */
   --scrollbar-thumb: color-mix(in srgb, var(--border-2) 85%, var(--accent));
@@ -105,6 +106,7 @@
     --link-visited: var(--link);
     --surface-hover: var(--surface-2);
     --surface-press: var(--surface-2);
+    --surface-focus: var(--surface-2);
     --scrollbar-thumb: var(--border-2);
     --scrollbar-thumb-hover: var(--border);
   }

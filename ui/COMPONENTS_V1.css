@@ -183,6 +183,8 @@
 .item:focus-within{
   border-color: color-mix(in srgb, var(--accent) 40%, var(--border-2));
   box-shadow: var(--focus);
+  /* Background tint helps when box-shadow focus rings are subtle (and improves scanability). */
+  background: var(--surface-focus, var(--surface-2));
 }
 
 /* Deep-link highlight (e.g. from CV Run → Kanban) */
@@ -217,6 +219,7 @@
 .item--link .item__link:focus-visible{
   outline:none;
   box-shadow: var(--focus-strong);
+  background: var(--surface-focus, var(--surface-hover));
 }
 
 .item__title{font-weight:700;font-size:var(--fs-2);margin:0 0 var(--s2) 0;line-height:var(--lh-tight)}

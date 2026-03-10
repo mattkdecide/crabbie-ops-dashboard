@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (12:28 UTC)
+Last updated: 2026-03-10 (14:30 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -46,10 +46,15 @@ UX requirements (implementation-ready):
 - One-click access to all artefacts for a role: draft, PDF, manifest, QA, and source links.
 
 Current build note:
-- `ops/cv-run.html` generates a one-shot local terminal command and deep-links into Preview.
+- `ops/cv-run.html` generates a one-shot local terminal command and deep-links into Preview (`cv-preview.html?file=outputs/cv/<role_id>/draft.md`).
+- `ops/cv-run.html` also supports query hydration: `cv-run.html?role_key=<role_id>` (so other pages can hand off role context).
 - `ops/cv-preview.html` can load a generated draft markdown file directly.
 - It supports query param `?file=outputs/cv/<role_id>/draft.md`.
+- If the draft path implies a role folder, Preview should provide convenience jump-links:
+  - `Run CV ↗` → `cv-run.html?role_key=<role_id>`
+  - `Pipeline ↗` → `kanban.html?role_id=<role_id>`
 - Known UX gap: Preview currently defaults to a likely non-existent draft path (`outputs/cv/R-2026-0017/draft.md`). Default should be blank + helper text (AC-8 / UX-003).
+- Known robustness gap (pair with the same fix): draft loader should reject protocols + `..` segments and allowlist `outputs/cv/**` before `fetch()` (AC-8b / UX-003).
 
 ---
 
@@ -93,8 +98,8 @@ Current build note:
 - Future canonical: `ops/events/events-YYYY-MM.jsonl` (per `ops/architecture/EVENT_MODEL_V1.md`)
 - Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
 - Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full, to create)
-- Build status: `ops/activity.html` does not exist yet (tracked in `ops/agent-tasks.csv` → T-0305).
-- Build status: `ops/status.html` does not yet include the compact “What changed” module (same task: T-0305). Until it lands, Status only links out to artefacts and forces manual scanning.
+- Build status: `ops/activity.html` now exists (events-first with derived fallback); still tracked under `ops/agent-tasks.csv` → T-0305 until it is promoted/linked from Status.
+- Build status: `ops/status.html` does not yet include the compact “What changed” module (same task: T-0305). Until it lands, Status forces manual scanning.
 
 User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.

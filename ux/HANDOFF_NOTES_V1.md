@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (12:28 UTC)
+Last updated: 2026-03-10 (14:30 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -93,9 +93,9 @@ Source specs:
 - `ops/ux/IA_AND_NAV_V1.md` (Activity tab target)
 
 Deliverables (static v1):
-1) Create `ops/activity.html`
-   - Must include masthead (AC-1) and a page title `Activity`.
-   - Must render a `<ol class="timeline">` list.
+1) Ship `ops/activity.html`
+   - **Build note:** `ops/activity.html` now exists in-repo.
+   - Confirm it includes topbar/nav (AC-1a), page title `Activity`, and renders a timeline list.
    - Data source order:
      1. if `ops/events/events-YYYY-MM.jsonl` exists → render first 50 lines
      2. else → render derived activity from CSVs (below)
@@ -170,6 +170,19 @@ Deliverables (static v1):
 - If JSON parsing fails for some lines, skip them and show: `X lines skipped (invalid JSON).`
 - Cap parsing to the first 50 non-empty lines; if the file has more, show: `Showing first 50 events.`
 
+**Handoff item UX-009 (concrete): Timeline source indicator (operator clarity)**
+Why: When operators compare environments, they need to know whether the page is showing Events vs Derived fallback, and which feed file was used.
+
+Deliverables (static v1):
+- Render a small meta line above the timeline:
+  - Events path: `Source: events (events/events-YYYY-MM.jsonl)`
+  - Fallback path: `Event feed unavailable, showing derived activity.`
+- If the events fetch fails, do not console-only fail: the user-visible meta line MUST switch to the fallback copy above.
+
+Acceptance:
+1) With `ops/events/events-YYYY-MM.jsonl` present, meta line shows the events source path.
+2) If the events fetch 404s, meta line shows the fallback copy (exact).
+
 Reference: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (UX-004, updated acceptance)
 Why: unblocks AC-5 quickly (real events path, not just derived fallback).
 
@@ -204,6 +217,7 @@ Deliverables (static v1):
    - `ops/agent-queue.html`
    - `ops/agents.html`
    - `ops/cv-preview.html`
+   - `ops/cv-run.html`
    - `ops/api-usage.html`
 3) Remove per-page hard-coded “active” styles/classes where present; rely on:
    - `aria-current="page"` and `.btn--primary` applied by `nav_v1.js`

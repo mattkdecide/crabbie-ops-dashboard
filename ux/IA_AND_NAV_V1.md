@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-10 (12:28 UTC)
+Last updated: 2026-03-10 (14:30 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -16,9 +16,9 @@ Current build files in scope:
 - `ops/cv-preview.html`
 - `ops/cv-run.html` (utility page, currently linked in global nav)
 - `ops/api-usage.html` (utility page, currently linked in global nav)
+- `ops/activity.html`
 
 Planned build files (not yet present):
-- `ops/activity.html`
 - `ops/team-ops.html` (control-tower summary; tracked in tasks as T-0306)
 
 UX source specs (this folder):
@@ -48,6 +48,7 @@ Build note (current reality):
 - Known UX gap (should be fixed next): `ops/cv-preview.html` still defaults the draft path to a likely non-existent file (`outputs/cv/R-2026-0017/draft.md`). The default state should be blank + helper text (see AC-8 / Handoff UX-003).
 - Known security/robustness gap (should be fixed with the same patch): CV Preview draft loader is not yet allowlisted to `outputs/cv/**` and does not yet reject protocols / `..` segments before `fetch()` (see AC-8b / Handoff UX-003).
 - Known launchpad gap: `ops/status.html` does not yet include the “What changed” / Activity timeline module (tracked: T-0305; see AC-5 + Handoff §1.4–1.6).
+- Activity page build note: `ops/activity.html` now exists (events-first with derived fallback), but it is not yet linked from `ops/status.html` as a first-class “View all →” destination (same task: T-0305).
 
 Pragmatic v1 recommendation:
 - Treat `index.html` as “Home”, and `status.html` as the operational launchpad/status board.
@@ -165,6 +166,9 @@ Current behaviour (implemented):
 - User can load a draft markdown file via an input field.
 - Optional query param supported:
   - `cv-preview.html?file=outputs/cv/<role_id>/draft.md`
+- Convenience links can be role-aware when the draft path matches `outputs/cv/<role_id>/…`:
+  - `Run CV ↗` → `cv-run.html?role_key=<role_id>`
+  - `Pipeline ↗` → `kanban.html?role_id=<role_id>`
 
 Should show:
 - active role context (role_id) (future)
@@ -179,6 +183,9 @@ Should contain:
 - role key input (role_id), title, input path
 - a copyable command snippet that runs the deterministic pipeline
 - a preview deep-link like `cv-preview.html?file=outputs/cv/<role_id>/draft.md`
+- a Pipeline deep-link like `kanban.html?role_id=<role_id>`
+- optional query-param hydration so other pages can hand-off role context:
+  - `cv-run.html?role_key=<role_id>`
 
 ### `ops/api-usage.html` (Utility: spend visibility)
 Job-to-be-done: see run-rate and cost trend quickly.

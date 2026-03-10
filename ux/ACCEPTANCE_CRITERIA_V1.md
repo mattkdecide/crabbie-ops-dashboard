@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-10 (12:28 UTC)
+Last updated: 2026-03-10 (14:30 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -15,9 +15,9 @@ In scope build files:
 - `ops/cv-preview.html`
 - `ops/cv-run.html`
 - `ops/api-usage.html`
+- `ops/activity.html`
 
 Planned build files:
-- `ops/activity.html`
 - `ops/team-ops.html`
 
 Supporting specs:
@@ -47,6 +47,10 @@ Supporting specs:
   - opening the menu moves focus to the first focusable item within the menu
   - closing the menu returns focus to the toggle *if focus was inside the menu*
 - the active link is expressed via `aria-current="page"` (not colour-only)
+
+**And** pages SHOULD NOT hard-code `aria-current="page"` in the HTML.
+- Rationale: avoid drift and ensure a single source of truth for active-link semantics.
+- Build note (current gap, as of 2026-03-10): `ops/cv-preview.html` and `ops/cv-run.html` still hard-code `aria-current` on their nav link; remove once `nav_v1.js` is the active-state source.
 
 **And** on small screens, when the nav is expanded it SHOULD render as a distinct panel (surface + border + radius + readable spacing) so the link set is scannable (avoid a wall of inline links).
 
@@ -198,6 +202,10 @@ Non-goal:
 
 **And** if the file cannot be fetched, the UI shows a readable error message that includes the attempted path.
 
+**And** if the draft path implies a role folder (`outputs/cv/<role_id>/…`), the page SHOULD offer convenience links:
+- `Run CV ↗` → `cv-run.html?role_key=<role_id>`
+- `Pipeline ↗` → `kanban.html?role_id=<role_id>`
+
 Non-goals (v1):
 - Perfect markdown support.
 
@@ -246,6 +254,12 @@ Build tie-in:
 
 **And** the page provides a link that deep-links to Preview using:
 - `cv-preview.html?file=outputs/cv/<role_key>/draft.md`
+
+**And** the page provides a link back to Pipeline with role context:
+- `kanban.html?role_id=<role_key>`
+
+**And** the page MAY accept a query param to pre-fill the Role key field:
+- `cv-run.html?role_key=<role_key>`
 
 Non-goals (v1):
 - Running code in the browser.
