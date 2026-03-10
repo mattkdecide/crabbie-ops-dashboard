@@ -109,7 +109,22 @@
   overscroll-behavior-x: contain;
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
+
+  /* Make horizontal scrolling discoverable (especially on desktop trackpads). */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
+
+/* WebKit scrollbar styling (Chrome/Safari/Edge) */
+.board::-webkit-scrollbar{height:12px}
+.board::-webkit-scrollbar-track{background:transparent}
+.board::-webkit-scrollbar-thumb{
+  background: var(--scrollbar-thumb);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+.board::-webkit-scrollbar-thumb:hover{background: var(--scrollbar-thumb-hover)}
 
 /* Scroll-region affordance
    When a board is keyboard-focusable (tabindex="0"), give it a visible focus ring

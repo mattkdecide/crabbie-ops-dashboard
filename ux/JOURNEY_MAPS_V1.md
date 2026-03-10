@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (04:28 UTC)
+Last updated: 2026-03-10 (06:24 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -83,7 +83,7 @@ Goal: user always knows (a) where they are, (b) what changed, (c) the next actio
 
 Current build note:
 - `ops/index.html` now exists and acts as “Home”. Home/logo link should resolve to `index.html` (fall back to `status.html` only if `index.html` is not published).
-- `ops/agent-queue.html` board is now a labelled, keyboard-focusable horizontal scroll region so the scroll affordance is discoverable.
+- `ops/kanban.html` and `ops/agent-queue.html` boards are now labelled, keyboard-focusable horizontal scroll regions (discoverability), and when the board container itself is focused they support keyboard horizontal scrolling (←/→, PgUp/PgDn, Home/End).
 
 ---
 
@@ -112,6 +112,7 @@ Implementation notes (v1, build-ready):
 - Prefer events when present.
   - Seed file exists now: `ops/events/events-2026-03.jsonl`.
   - Canonical envelope fields are `{event_type, occurred_at, data}` (not legacy `{type, payload}`); see `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
+- **Schema drift watch:** PRD-006 currently describes an alternate JSONL shape `{ts, type, title, refs, actor}`. For v1 build, implement a tolerant parser and map both shapes into the timeline UI (see `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` → UX-004).
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
   - When falling back, show the inline note (exact): `Event feed unavailable, showing derived activity.`
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.

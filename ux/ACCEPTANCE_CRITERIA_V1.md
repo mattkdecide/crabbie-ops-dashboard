@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-10 (04:28 UTC)
+Last updated: 2026-03-10 (06:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -111,12 +111,21 @@ Status: not implemented in current build (spec retained for when masthead lands)
 
 **And** if a CV filename/artefact exists, it must be displayed and clickable (or at minimum shown as text until storage is wired).
 
-### AC-3b (a11y/UX affordance): Horizontal scroll region is discoverable
+### AC-3b (a11y/UX affordance): Horizontal scroll region is discoverable (and keyboard-scrollable)
 **Given** I am using keyboard navigation on `ops/kanban.html`
-**When** I Tab into the board
-**Then** the board itself is focusable and labelled (e.g., `role="region"` + `aria-label="Kanban board (scroll horizontally)"`)
+**When** I Tab onto the board container (not just into a card link)
+**Then** the board itself is focusable and labelled (e.g., `role="region"` + `aria-label="Kanban board (scroll horizontally)"` + `tabindex="0"`)
 
-**And** when focused, a visible focus ring appears on the board container (so users discover horizontal scrolling).
+**And** when focused, a visible focus ring appears on the board container (so users discover horizontal scrolling)
+
+**And** when the board container itself has focus:
+- `←` / `→` scroll the board left/right by ~one column
+- `PgUp` / `PgDn` scroll the board left/right by ~one viewport
+- `Home` jumps to the first column
+- `End` jumps to the last column
+
+Non-goal:
+- These key bindings do not fire when focus is inside a card (e.g., on a link/button), to avoid hijacking normal interaction.
 
 ---
 
@@ -130,12 +139,21 @@ Status: not implemented in current build (spec retained for when masthead lands)
 
 **And** if status is `Blocked`, the row must render a visible blocker reason (not hidden in a hover).
 
-### AC-4b (a11y/UX affordance): Horizontal scroll region is discoverable
+### AC-4b (a11y/UX affordance): Horizontal scroll region is discoverable (and keyboard-scrollable)
 **Given** I am using keyboard navigation on `ops/agent-queue.html`
-**When** I Tab into the board
+**When** I Tab onto the board container (not just into a row link)
 **Then** the board itself is focusable and labelled (e.g., `role="region"` + `aria-label="Agent queue board (scroll horizontally)"` + `tabindex="0"`)
 
-**And** when focused, a visible focus ring appears on the board container (so users discover horizontal scrolling).
+**And** when focused, a visible focus ring appears on the board container (so users discover horizontal scrolling)
+
+**And** when the board container itself has focus:
+- `←` / `→` scroll the board left/right by ~one column
+- `PgUp` / `PgDn` scroll the board left/right by ~one viewport
+- `Home` jumps to the first column
+- `End` jumps to the last column
+
+Non-goal:
+- These key bindings do not fire when focus is inside a task row control/link, to avoid hijacking normal interaction.
 
 ---
 

@@ -82,6 +82,32 @@ Canonical event envelope fields (v1):
 
 Reference: `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
 
+### PRD-006 alignment note (Activity page JSONL shape)
+There is a **known schema drift** between:
+- this spec + the current seed file `ops/events/events-2026-03.jsonl` (canonical envelope: `{event_type, occurred_at, data}`), and
+- `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` PRD-006 (expects `{ts, type, title, refs, actor}`).
+
+v1 recommendation (to unblock build):
+1. Treat the canonical envelope as the source of truth for `ops/events/*.jsonl`.
+2. In `ops/activity.html`, implement a tolerant normaliser that can accept either shape and map into `TimelineItem`.
+3. Follow-up: update PRD-006 to reference the canonical envelope (or explicitly label `{ts,type,title,...}` as a legacy/alt producer format).
+
+Build handoff (concrete): **UX-004**
+- Implement `parseEventsJsonl(text) → TimelineItem[]` with support for:
+  - Canonical envelope `{event_type, occurred_at, data, subject?, producer?}` (preferred)
+  - Legacy PRD-006 lines `{ts, type, title, refs?, actor?}` (optional compatibility)
+- Mapping (legacy PRD line → TimelineItem):
+  - `occurredAt = ts`
+  - `domain = (type contains 'task' ? 'task' : type contains 'job' ? 'job' : 'pipeline')` (default `pipeline`)
+  - `summary = title`
+  - `links = refs?.map(r => ({label:'ref', href:r}))` BUT if `r` is a workspace-relative path, render as copyable code in UI (do not assume click-to-open in static hosting).
+  - `actor = actor || 'system'`
+
+Acceptance criteria (UX-004):
+1. Given a JSONL file containing a mix of canonical + legacy-shaped lines, page renders without crashing.
+2. Invalid JSON lines are skipped and a `"X lines skipped"` notice is shown.
+3. Canonical envelope lines are mapped using the rules in Section 5.
+
 ### Mapping rules (events → TimelineItem)
 - `occurredAt` = `event.occurred_at`.
 - `domain`:

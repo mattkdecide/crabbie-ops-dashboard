@@ -25,6 +25,10 @@
   --surface-hover: color-mix(in srgb, var(--accent) 8%, var(--surface-2));
   --surface-press: color-mix(in srgb, var(--accent) 14%, var(--surface-2));
 
+  /* Scrollbars (keep subtle but visible for horizontal boards/tables) */
+  --scrollbar-thumb: color-mix(in srgb, var(--border-2) 85%, var(--accent));
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--border-2) 60%, var(--accent));
+
   --success-bg: #123b27;
   --success-fg: #bff3d6;
   --warning-bg: #3c3516;

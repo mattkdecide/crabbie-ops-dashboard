@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (04:28 UTC)
+Last updated: 2026-03-10 (06:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -32,7 +32,11 @@ Design dependencies:
 
 Keep (do not regress):
 - `ops/kanban.html` board container is intentionally keyboard-focusable (`tabindex="0"`) with a focus ring so horizontal scrolling is discoverable.
+  - When the board container itself is focused, it supports keyboard horizontal scrolling (←/→, PgUp/PgDn, Home/End).
+  - Scrollbars are intentionally visible/styled (tokens: `--scrollbar-thumb`, `--scrollbar-thumb-hover` in `STYLE_TOKENS_V1.css`; board styling in `COMPONENTS_V1.css`).
 - `ops/agent-queue.html` board container is intentionally keyboard-focusable (`tabindex="0"`) with a focus ring so horizontal scrolling is discoverable.
+  - When the board container itself is focused, it supports keyboard horizontal scrolling (←/→, PgUp/PgDn, Home/End).
+  - Scrollbars are intentionally visible/styled (tokens: `--scrollbar-thumb`, `--scrollbar-thumb-hover` in `STYLE_TOKENS_V1.css`; board styling in `COMPONENTS_V1.css`).
 
 Known blocker:
 - Task `T-0206` notes a partial/template strategy is not yet agreed.
