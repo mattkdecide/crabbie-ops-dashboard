@@ -1,6 +1,9 @@
 // kanban_live_v1.js
 // Live Kanban rendering from job-pipeline.csv.
 // Uses canonical CRM status mapping when available.
+//
+// Optional auto-refresh:
+// - Add ?refresh_s=60 (or ?autorefresh_s=60) to refresh in-place every N seconds.
 
 import { parseCsv } from './csv_v1.js';
 
@@ -81,7 +84,7 @@ function escapeHtml(s) {
 function safeLink(url) {
   const u = (url ?? '').trim();
   if (!u) return '';
-  return `<a href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer" aria-label="Open listing (opens in a new tab)">Open listing ↗</a>`;
+  return `<a href="${escapeHtml(u)}" target="_blank" rel="noopener">Open listing ↗</a>`;
 }
 
 function cvPreviewLink(roleId) {
@@ -92,34 +95,41 @@ function cvPreviewLink(roleId) {
   return `<a href="cv-preview.html?file=${q}">CV preview ↗</a>`;
 }
 
+function cvRunLink(roleId, title) {
+  const id = (roleId ?? '').trim();
+  if (!id) return '';
+
+  const params = new URLSearchParams();
+  params.set('role_key', id);
+  if ((title ?? '').trim()) params.set('title', (title ?? '').trim());
+
+  return `<a href="cv-run.html?${escapeHtml(params.toString())}">Run CV ↗</a>`;
+}
+
 function renderCard(role) {
-  const titleText = escapeHtml(role.title || 'Untitled role');
+  const title = escapeHtml(role.title || 'Untitled role');
   const company = escapeHtml(role.company || '');
   const location = escapeHtml(role.location || '');
   const meta = [company, location].filter(Boolean).join(' · ');
 
   const roleId = (role.role_id ?? '').trim();
-  const hasListing = !!(role.url ?? '').trim();
-  const hasCvPreview = !!roleId;
-  const hasAnyLink = hasListing || hasCvPreview;
+  const roleAttr = roleId ? ` data-role-id="${escapeHtml(roleId)}" id="role-${escapeHtml(roleId)}"` : '';
 
   const lines = [];
-  lines.push(`<article class="item" role="listitem"${hasAnyLink ? '' : ` tabindex="0" aria-label="${titleText}"`}>`);
-
-  if (hasListing) {
-    const href = escapeHtml((role.url ?? '').trim());
-    lines.push(`  <h3 class="item__title"><a href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${titleText} (open listing in a new tab)">${titleText}</a></h3>`);
-  } else {
-    lines.push(`  <h3 class="item__title">${titleText}</h3>`);
-  }
-
+  lines.push(`<div class="item"${roleAttr}>`);
+  lines.push(`  <h3 class="item__title">${title}</h3>`);
   if (meta) lines.push(`  <div class="item__meta">${meta}</div>`);
 
   const quickLinks = [];
   const link = safeLink(role.url);
   if (link) quickLinks.push(link);
+
+  const run = cvRunLink(role.role_id, role.title);
+  if (run) quickLinks.push(run);
+
   const cvPrev = cvPreviewLink(role.role_id);
   if (cvPrev) quickLinks.push(cvPrev);
+
   if (quickLinks.length) lines.push(`  <div class="item__small">${quickLinks.join(' · ')}</div>`);
 
   const badges = [];
@@ -131,13 +141,12 @@ function renderCard(role) {
   if (role.cv_file) lines.push(`  <div class="item__small">CV: ${escapeHtml(role.cv_file)}</div>`);
   if (role.next_action) lines.push(`  <div class="item__small">Next: ${escapeHtml(role.next_action)}</div>`);
 
-  lines.push(`</article>`);
+  lines.push(`</div>`);
   return lines.join('\n');
 }
 
 function renderColumn(statusLabel, roles) {
-  const label = escapeHtml(statusLabel);
-  const header = `${label} (${roles.length})`;
+  const header = `${escapeHtml(statusLabel)} (${roles.length})`;
   const cards = roles
     .slice()
     .sort((a, b) => (a.role_id || '').localeCompare(b.role_id || ''))
@@ -145,12 +154,12 @@ function renderColumn(statusLabel, roles) {
     .join('\n');
 
   return `
-  <section class="column" role="region" aria-label="Status ${label}">
-    <div class="column__shell" role="list" aria-label="${label} roles">
+  <div class="column">
+    <div class="column__shell">
       <h2 class="column__header">${header}</h2>
       ${cards || ''}
     </div>
-  </section>`;
+  </div>`;
 }
 
 async function loadMapping() {
@@ -164,6 +173,11 @@ async function loadJobs() {
   if (!res.ok) throw new Error(`Failed to load job-pipeline.csv (${res.status})`);
   const text = await res.text();
   return parseCsv(text);
+}
+
+async function loadAll() {
+  const [mapping, jobs] = await Promise.all([loadMapping(), loadJobs()]);
+  return { mapping, jobs };
 }
 
 function groupByStatus(jobs, mapping) {
@@ -190,26 +204,104 @@ function renderBoard(targetEl, buckets, mapping) {
     .join('\n');
 }
 
-function setMeta(metaEl, jobsCount) {
-  const now = new Date();
-  metaEl.textContent = `Loaded ${jobsCount} roles · ${now.toLocaleString()}`;
+function refreshSecondsFromQuery() {
+  const params = new URLSearchParams(location.search);
+  const raw = params.get('refresh_s') || params.get('autorefresh_s') || '';
+  const n = Number.parseInt(String(raw), 10);
+  if (!Number.isFinite(n) || n <= 0) return 0;
+  // Guardrails so someone can’t accidentally DoS themselves.
+  return Math.max(10, Math.min(600, n));
 }
 
+function setMeta(metaEl, jobsCount, refreshSeconds = 0) {
+  const now = new Date();
+  const refreshNote = refreshSeconds > 0 ? ` · Auto-refresh: ${refreshSeconds}s` : '';
+  metaEl.textContent = `Loaded ${jobsCount} roles · ${now.toLocaleString()}${refreshNote}`;
+}
+
+function highlightRoleFromQuery() {
+  const params = new URLSearchParams(location.search);
+  const roleId = (params.get('role_id') || params.get('role_key') || '').trim();
+  if (!roleId) return;
+
+  const card = document.querySelector(`[data-role-id="${CSS.escape(roleId)}"]`);
+  if (!card) return;
+
+  card.classList.add('item--highlight');
+
+  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  card.scrollIntoView({
+    block: 'center',
+    inline: 'nearest',
+    behavior: prefersReducedMotion ? 'auto' : 'smooth'
+  });
+
+  // If the card contains a link, make keyboard navigation nicer.
+  const firstLink = card.querySelector('a');
+  if (firstLink) firstLink.focus({ preventScroll: true });
+}
+
+// Keyboard horizontal scrolling is implemented generically in ui/scroll_a11y_v1.js
+// so boards and tables share consistent behaviour.
+
 async function boot() {
+  const main = document.getElementById('main');
   const board = document.querySelector('[data-kanban-board]');
   const meta = document.querySelector('[data-kanban-meta]');
   if (!board) return;
 
-  board.innerHTML = `<div class="column"><div class="column__shell"><h2 class="column__header">Loading…</h2><div class="item"><div class="item__small">Fetching job-pipeline.csv</div></div></div></div>`;
 
-  try {
-    const [mapping, jobs] = await Promise.all([loadMapping(), loadJobs()]);
-    const buckets = groupByStatus(jobs, mapping);
-    renderBoard(board, buckets, mapping);
-    if (meta) setMeta(meta, jobs.length);
-  } catch (err) {
-    console.error(err);
-    board.innerHTML = `<div class="column"><div class="column__shell"><h2 class="column__header">Error</h2><div class="item"><div class="item__small">${escapeHtml(err?.message || String(err))}</div></div></div></div>`;
+  const refreshSeconds = refreshSecondsFromQuery();
+  let inFlight = false;
+
+  async function renderOnce({ announce = false } = {}) {
+    if (inFlight) return;
+    inFlight = true;
+
+    if (main) main.setAttribute('aria-busy', 'true');
+    board.setAttribute('aria-busy', 'true');
+
+    if (!announce) {
+      board.innerHTML = `<div class="column"><div class="column__shell"><h2 class="column__header">Loading…</h2><div class="item"><div class="item__small">Fetching job-pipeline.csv</div></div></div></div>`;
+      if (meta) meta.textContent = 'Loading pipeline…';
+    } else {
+      // Silent refresh: keep the UI stable, but announce refresh intent.
+      if (meta) meta.textContent = 'Refreshing pipeline…';
+    }
+
+    try {
+      const { mapping, jobs } = await loadAll();
+      const buckets = groupByStatus(jobs, mapping);
+      renderBoard(board, buckets, mapping);
+      if (meta) setMeta(meta, jobs.length, refreshSeconds);
+      highlightRoleFromQuery();
+    } catch (err) {
+      console.error(err);
+      const msg = escapeHtml(err?.message || String(err));
+      board.innerHTML = `
+        <div class="column">
+          <div class="column__shell">
+            <h2 class="column__header">Error</h2>
+            <div class="item">
+              <div class="notice notice--danger" role="alert">${msg}</div>
+            </div>
+          </div>
+        </div>`;
+      if (meta) meta.textContent = `Pipeline error: ${err?.message || String(err)}`;
+    } finally {
+      inFlight = false;
+      board.setAttribute('aria-busy', 'false');
+      if (main) main.setAttribute('aria-busy', 'false');
+    }
+  }
+
+  await renderOnce();
+
+  if (refreshSeconds > 0) {
+    window.setInterval(() => {
+      // Refresh silently (no “Loading…” flash). Meta timestamp updates.
+      void renderOnce({ announce: true });
+    }, refreshSeconds * 1000);
   }
 }
 

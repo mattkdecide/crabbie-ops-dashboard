@@ -61,11 +61,11 @@ function cvPreviewLink(roleIdRaw) {
   if (!id) return '';
   const file = `outputs/cv/${encodeURIComponent(id)}/draft.md`;
   const q = encodeURIComponent(file);
-  return `<a href="cv-preview.html?file=${q}" aria-label="Open CV preview">CV preview ↗</a>`;
+  return `<a href="cv-preview.html?file=${q}">CV preview ↗</a>`;
 }
 
 function renderCard(t, statusMeta) {
-  const titleText = escapeHtml(t.title || 'Untitled task');
+  const title = escapeHtml(t.title || 'Untitled task');
   const taskId = escapeHtml(t.task_id || '');
   const roleIdRaw = (t.role_id ?? '').trim();
   const roleId = escapeHtml(roleIdRaw || '');
@@ -91,22 +91,25 @@ function renderCard(t, statusMeta) {
   const cvPrev = cvPreviewLink(roleIdRaw);
   if (cvPrev) links.push(cvPrev);
 
-  const hasAnyLink = links.length > 0;
-
   const lines = [];
-  lines.push(`<article class="item" role="listitem"${hasAnyLink ? '' : ` tabindex="0" aria-label="${taskId ? `${taskId}. ` : ''}${titleText}"`}>`);
-  lines.push(`  <h3 class="item__title">${taskId ? `${taskId} · ` : ''}${titleText}</h3>`);
+
+  const taskIdRaw = (t.task_id ?? '').trim();
+  const taskAttr = taskIdRaw
+    ? ` data-task-id="${escapeHtml(taskIdRaw)}" id="task-${escapeHtml(taskIdRaw)}"`
+    : '';
+
+  lines.push(`<div class="item"${taskAttr}>`);
+  lines.push(`  <h3 class="item__title">${taskId ? `${taskId} · ` : ''}${title}</h3>`);
   if (metaParts.length) lines.push(`  <div class="item__meta">${metaParts.join(' · ')}</div>`);
   if (links.length) lines.push(`  <div class="item__small">${links.join(' · ')}</div>`);
   if (badges.length) lines.push(`  <div class="badges">${badges.join('')}</div>`);
   if (notes) lines.push(`  <div class="item__small">Notes: ${escapeHtml(notes)}</div>`);
-  lines.push(`</article>`);
+  lines.push('</div>');
   return lines.join('\n');
 }
 
 function renderColumn(statusKey, statusLabel, tasks) {
-  const label = escapeHtml(statusLabel || statusKey);
-  const header = `${label} (${tasks.length})`;
+  const header = `${escapeHtml(statusLabel || statusKey)} (${tasks.length})`;
   const cards = tasks
     .slice()
     .sort((a, b) => (a.task_id || '').localeCompare(b.task_id || ''))
@@ -114,12 +117,12 @@ function renderColumn(statusKey, statusLabel, tasks) {
     .join('\n');
 
   return `
-  <section class="column" role="region" aria-label="Status ${label}">
-    <div class="column__shell" role="list" aria-label="${label} tasks">
+  <div class="column">
+    <div class="column__shell">
       <h2 class="column__header">${header}</h2>
       ${cards || ''}
     </div>
-  </section>`;
+  </div>`;
 }
 
 async function loadMapping() {
@@ -178,26 +181,148 @@ function renderBoard(targetEl, buckets, mapping) {
     .join('\n');
 }
 
-function setMeta(metaEl, tasksCount) {
+function refreshSecondsFromQuery() {
+  const params = new URLSearchParams(location.search);
+  const raw = params.get('refresh_s') || params.get('autorefresh_s') || '';
+  const n = Number.parseInt(String(raw), 10);
+  if (!Number.isFinite(n) || n <= 0) return 0;
+  // Guardrails so someone can’t accidentally DoS themselves.
+  return Math.max(10, Math.min(600, n));
+}
+
+function setMeta(metaEl, tasksCount, refreshSeconds = 0) {
   const now = new Date();
-  metaEl.textContent = `Loaded ${tasksCount} tasks · ${now.toLocaleString()}`;
+  const refreshNote = refreshSeconds > 0 ? ` · Auto-refresh: ${refreshSeconds}s` : '';
+  metaEl.textContent = `Loaded ${tasksCount} tasks · ${now.toLocaleString()}${refreshNote}`;
+}
+
+function highlightTaskFromQuery() {
+  const params = new URLSearchParams(location.search);
+  const taskId = (params.get('task_id') || params.get('task') || '').trim();
+  if (!taskId) return;
+
+  const card = document.querySelector(`[data-task-id="${CSS.escape(taskId)}"]`);
+  if (!card) return;
+
+  card.classList.add('item--highlight');
+
+  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  card.scrollIntoView({
+    block: 'center',
+    inline: 'nearest',
+    behavior: prefersReducedMotion ? 'auto' : 'smooth'
+  });
+
+  const firstLink = card.querySelector('a');
+  if (firstLink) firstLink.focus({ preventScroll: true });
+}
+
+function enableBoardKeyboardScroll(boardEl) {
+  if (!boardEl) return;
+
+  boardEl.addEventListener('keydown', (e) => {
+    if (e.defaultPrevented) return;
+    if (e.target !== boardEl) return;
+
+    const key = e.key;
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    const behavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+    const firstCol = boardEl.querySelector?.('.column');
+    const step = firstCol ? Math.round(firstCol.getBoundingClientRect().width + 24) : Math.round(boardEl.clientWidth * 0.85);
+    const page = Math.max(240, Math.round(boardEl.clientWidth * 0.95));
+
+    if (key === 'ArrowRight') {
+      e.preventDefault();
+      boardEl.scrollBy({ left: step, top: 0, behavior });
+      return;
+    }
+    if (key === 'ArrowLeft') {
+      e.preventDefault();
+      boardEl.scrollBy({ left: -step, top: 0, behavior });
+      return;
+    }
+    if (key === 'PageDown') {
+      e.preventDefault();
+      boardEl.scrollBy({ left: page, top: 0, behavior });
+      return;
+    }
+    if (key === 'PageUp') {
+      e.preventDefault();
+      boardEl.scrollBy({ left: -page, top: 0, behavior });
+      return;
+    }
+    if (key === 'Home') {
+      e.preventDefault();
+      boardEl.scrollTo({ left: 0, top: 0, behavior });
+      return;
+    }
+    if (key === 'End') {
+      e.preventDefault();
+      boardEl.scrollTo({ left: boardEl.scrollWidth, top: 0, behavior });
+    }
+  });
 }
 
 async function boot() {
+  const main = document.getElementById('main');
   const board = document.querySelector('[data-agent-queue-board]');
   const meta = document.querySelector('[data-agent-queue-meta]');
   if (!board) return;
 
-  board.innerHTML = `<div class="column"><div class="column__shell"><h2 class="column__header">Loading…</h2><div class="item"><div class="item__small">Fetching agent-tasks.csv</div></div></div></div>`;
+  enableBoardKeyboardScroll(board);
 
-  try {
-    const [mapping, tasks] = await Promise.all([loadMapping(), loadTasks()]);
-    const buckets = groupByStatus(tasks, mapping);
-    renderBoard(board, buckets, mapping);
-    if (meta) setMeta(meta, tasks.length);
-  } catch (err) {
-    console.error(err);
-    board.innerHTML = `<div class="column"><div class="column__shell"><h2 class="column__header">Error</h2><div class="item"><div class="item__small">${escapeHtml(err?.message || String(err))}</div></div></div></div>`;
+  const refreshSeconds = refreshSecondsFromQuery();
+  let inFlight = false;
+
+  async function renderOnce({ announce = false } = {}) {
+    if (inFlight) return;
+    inFlight = true;
+
+    if (main) main.setAttribute('aria-busy', 'true');
+    board.setAttribute('aria-busy', 'true');
+
+    if (!announce) {
+      board.innerHTML = `<div class="column"><div class="column__shell"><h2 class="column__header">Loading…</h2><div class="item"><div class="item__small">Fetching agent-tasks.csv</div></div></div></div>`;
+      if (meta) meta.textContent = 'Loading agent queue…';
+    } else {
+      // Silent refresh: keep the UI stable, but announce refresh intent.
+      if (meta) meta.textContent = 'Refreshing agent queue…';
+    }
+
+    try {
+      const [mapping, tasks] = await Promise.all([loadMapping(), loadTasks()]);
+      const buckets = groupByStatus(tasks, mapping);
+      renderBoard(board, buckets, mapping);
+      if (meta) setMeta(meta, tasks.length, refreshSeconds);
+      highlightTaskFromQuery();
+    } catch (err) {
+      console.error(err);
+      const msg = escapeHtml(err?.message || String(err));
+      board.innerHTML = `
+        <div class="column">
+          <div class="column__shell">
+            <h2 class="column__header">Error</h2>
+            <div class="item">
+              <div class="notice notice--danger" role="alert">${msg}</div>
+            </div>
+          </div>
+        </div>`;
+      if (meta) meta.textContent = `Agent queue error: ${err?.message || String(err)}`;
+    } finally {
+      inFlight = false;
+      board.setAttribute('aria-busy', 'false');
+      if (main) main.setAttribute('aria-busy', 'false');
+    }
+  }
+
+  await renderOnce();
+
+  if (refreshSeconds > 0) {
+    window.setInterval(() => {
+      // Refresh silently (no “Loading…” flash). Meta timestamp updates.
+      void renderOnce({ announce: true });
+    }, refreshSeconds * 1000);
   }
 }
 
