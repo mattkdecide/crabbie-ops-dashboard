@@ -28,7 +28,7 @@
     </nav>
   </header>
 
-  <main class="wrap wrap--wide" id="main" tabindex="-1" aria-label="API usage dashboard">
+  <main class="wrap wrap--wide" id="main" tabindex="-1" aria-label="API usage dashboard" aria-busy="false">
     <div class="sr-only" role="status" aria-live="polite" id="srStatus"></div>
 
     <div class="kpi" aria-label="Usage KPIs">
@@ -40,7 +40,8 @@
 
     <section class="item" aria-label="Usage log table">
       <h2 class="item__title">Usage Log</h2>
-      <div class="table-wrap" role="region" aria-label="Usage log, scroll horizontally on small screens" tabindex="0">
+      <div id="usageNotice" class="notice notice--danger" role="alert" style="display:none;margin-bottom:var(--s2)"></div>
+      <div class="table-wrap" role="region" aria-label="Usage log, scroll horizontally on small screens" tabindex="0" aria-busy="false">
         <table class="table">
           <caption>Source: <a href="usage/api-usage-log.csv">usage/api-usage-log.csv</a> · Spec: <a href="usage/API_USAGE_TRACKER_V1.md">API_USAGE_TRACKER_V1.md</a></caption>
           <thead>
@@ -83,9 +84,21 @@
     }
 
     async function load(){
+      const main = document.getElementById('main');
       const sr = document.getElementById('srStatus');
+      const notice = document.getElementById('usageNotice');
+      const region = document.querySelector('.table-wrap');
+
       try{
+        if (notice) {
+          notice.style.display = 'none';
+          notice.textContent = '';
+        }
+        if (main) main.setAttribute('aria-busy','true');
+        if (region) region.setAttribute('aria-busy','true');
+
         const res = await fetch('usage/api-usage-log.csv?t='+Date.now(),{cache:'no-store'});
+        if (!res.ok) throw new Error(`HTTP ${res.status} fetching api-usage-log.csv`);
         const txt = await res.text();
         const data = parseCSV(txt);
 
@@ -124,11 +137,18 @@
         budgetEl.className = 'item__meta';
         budgetEl.innerHTML = `<span class="badge ${onTarget ? 'badge--success' : 'badge--warning'}">${budgetText}</span>`;
 
-        sr.textContent = `Loaded ${data.length} usage rows. Budget status: ${budgetText}.`;
+        if (sr) sr.textContent = `Loaded ${data.length} usage rows. Budget status: ${budgetText}.`;
       } catch(e){
-        document.getElementById('rows').innerHTML = '<tr><td colspan="8">Could not load usage log.</td></tr>';
-        const sr = document.getElementById('srStatus');
+        const tb = document.getElementById('rows');
+        tb.innerHTML = '<tr><td colspan="8">Could not load usage log.</td></tr>';
+        if (notice) {
+          notice.textContent = `Could not load API usage log: ${e && e.message ? e.message : String(e)}`;
+          notice.style.display = 'block';
+        }
         if (sr) sr.textContent = 'Could not load API usage log.';
+      } finally {
+        if (region) region.setAttribute('aria-busy','false');
+        if (main) main.setAttribute('aria-busy','false');
       }
     }
 

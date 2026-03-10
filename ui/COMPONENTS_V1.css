@@ -322,8 +322,23 @@
   border: 1px solid var(--border-2);
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
+
+  /* Make horizontal scroll discoverable, consistent with .board */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 .table-wrap:focus-visible{outline:none;box-shadow:var(--focus-strong)}
+
+/* WebKit scrollbar styling for table scroll regions */
+.table-wrap::-webkit-scrollbar{height:12px}
+.table-wrap::-webkit-scrollbar-track{background:transparent}
+.table-wrap::-webkit-scrollbar-thumb{
+  background: var(--scrollbar-thumb);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+.table-wrap::-webkit-scrollbar-thumb:hover{background: var(--scrollbar-thumb-hover)}
 
 /* Numeric alignment helper (tables + KPIs) */
 .num{

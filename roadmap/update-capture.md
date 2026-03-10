@@ -53,3 +53,21 @@
 - Expanded PRD-002 (Live Kanban From Data) into implementation-ready acceptance criteria and edge cases; added PRD-002-DR1 on status alias mapping source-of-truth.
 - Added delivery task `T-0307` to `ops/agent-tasks.csv` to implement PRD-002 hardening (mapping, resilience warnings, perf/a11y guardrails).
 - Control Tower refresh (18:40 UTC): captured latest delivery movement **T-0306 In Progress → Review** and **T-0315 In Progress → Done**; reprioritised next 24–48h to Activity (T-0305), CV manifest+QA gate (T-0205), and Team Ops closeout (T-0306).
+
+## 2026-03-10
+- Groomed `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md`: expanded PRD-001 (Canonical Job Record + Stage Model) to add schema versioning, machine-readable required fields (`ops/crm/job-record-required-fields-v1.json`), validation/publish gating rules, and recommendations for `closed_reason` enum values.
+- Adjusted PRD-006 grooming state: Ready → Refined and added default decisions for event `type` enum, retention window (30 days), and derived-when-events-present behaviour (hide derived when events exist).
+- Added continuous BA delivery task T-0312 to `ops/agent-tasks.csv` (Squad Business Analyst Continuous) with status In Progress and today's timestamps; BA cron id: 41e6207f-db96-4527-b7a1-bfe0c5a823b6.
+- Updated backlog decision requests: PRD-001 defaults for required fields (`job_id, role_title, company_name, stage, updated_at, source_url?`) and PRD-001-DR2 recommended closed_reason values (`rejected, withdrawn, no_response, role_closed, other`).
+- **Control Tower hygiene:** restored missing rows in `ops/agent-tasks.csv` for T-0305/T-0306/T-0307/T-0315 (were referenced in docs but absent in CSV); refreshed `ops/CONTROL_TOWER.md` and recorded CV Preview AC-8 gap (default path must be blank).
+- Files updated:
+  - `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (PRD-001 expanded, PRD-006 grooming state changed, PRD-006 defaults added)
+  - `ops/agent-tasks.csv` (T-0312 appended; timestamps set to 2026-03-10)
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+Next steps / recommended actions:
+1. Ledger: confirm PRD-001 required fields list (PRD-001-DR1) or accept defaults to unblock Ready movement.
+2. Vantage + Build Engineer: confirm PRD-006 decisions (type enum, retention window, derived suppression) or accept defaults.
+3. Tide (BA owner): run daily cron and move any PRDs whose decisions are confirmed to Ready, and update `ops/agent-tasks.csv` statuses accordingly.
+4. Implement `ops/crm/job-record-required-fields-v1.json` and `ops/ui/job_validation_v1.js` (recommend owner: Ledger + Build Engineer) to make validation explicit and enforce publish gating.
+
