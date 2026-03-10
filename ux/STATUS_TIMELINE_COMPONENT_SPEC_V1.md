@@ -171,7 +171,7 @@ Acceptance criteria:
 Dependencies:
 - `ops/events/` directory and at least one JSONL file.
   - Seed created: `ops/events/events-2026-03.jsonl`.
-- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added.
+- Data hygiene: `ops/job-pipeline.csv` does not yet carry `updated_at`, so derived timeline will use `last_action` until `updated_at` is added (tracked: `ops/agent-tasks.csv` T-0316).
 
 **Handoff item UX-002:** Implement derived-activity generator (CSV fallback) as a pure function.
 

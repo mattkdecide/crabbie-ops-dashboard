@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (10:28 UTC)
+Last updated: 2026-03-10 (12:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -226,6 +226,22 @@ Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-5)
 
 ### 1.12 Build handoff (concrete): `job-pipeline.csv` schema bump + backfill (safe, backwards-compatible)
+
+### 1.13 Build handoff (concrete): Promote Activity once `ops/activity.html` exists (avoid dead links)
+Why: right now UX recommends Activity as a first-class destination, but the page is not yet published (T-0305). We should avoid shipping nav/items that 404.
+
+Deliverables (static v1):
+1) When `ops/activity.html` is added, promote it in *two* places (and only then):
+   - Add `Activity` to the masthead nav set (see `ops/ux/MASTHEAD_NAV_SPEC_V1.md`).
+   - Add the Home tile `Activity` on `ops/index.html` under Operate.
+2) Until the page exists:
+   - Hide the Activity nav link, OR render it as `aria-disabled="true"` + `Coming soon` (no dead link).
+3) `nav_v1.js` must treat `activity.html` as a first-class route for active-link semantics.
+
+Acceptance:
+- No published page contains a dead link to `activity.html`.
+- Once `activity.html` exists, it is reachable from both masthead and Home.
+
 Why: Until pipeline writers are updated, Activity/Timeline fallback is still weak. A one-time schema bump + best-effort backfill makes derived activity immediately more useful.
 
 Deliverables (v1):

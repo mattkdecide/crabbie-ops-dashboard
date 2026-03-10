@@ -259,10 +259,20 @@
   text-decoration:none;
 }
 .btn:hover{border-color:color-mix(in srgb, var(--accent) 40%, var(--border-2));box-shadow:var(--shadow-1)}
-.btn:active{transform:translateY(1px)}
+.btn:not([disabled]):not([aria-disabled="true"]):active{transform:translateY(1px)}
 .btn:focus-visible{outline:none;box-shadow:var(--focus-strong)}
-.btn[disabled], .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;box-shadow:none}
+.btn[disabled],
+.btn[aria-disabled="true"]{
+  opacity:.55;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+/* Anchors styled as buttons should behave like disabled buttons when aria-disabled is present. */
+a.btn[aria-disabled="true"]{
+  pointer-events:none;
+}
 .btn--primary,
+
 .btn[aria-current="page"]{
   background:color-mix(in srgb, var(--accent) 22%, var(--surface-2));
   border-color:color-mix(in srgb, var(--accent) 45%, var(--border-2));

@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-10 (10:28 UTC)
+Last updated: 2026-03-10 (12:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -219,6 +219,21 @@ Implementation pointer (tie-to-build):
 
 Rationale:
 - Avoids a “broken by default” first impression and reduces support/debug churn.
+
+---
+
+## AC-8b: CV Preview draft loader is hardened (path allowlist)
+**Given** I open `ops/cv-preview.html`
+**When** I attempt to load a draft via either the input field or the `?file=` query param
+**Then** the loader MUST reject unsafe paths before calling `fetch()`:
+- Reject any value containing a protocol or absolute URL (examples: `http:`, `https:`, `file:`, `data:`)
+- Reject any path containing `..` segments (path traversal)
+- Allowlist prefix: path MUST start with `outputs/cv/`
+
+**And** when rejected, the UI must show a readable error starting with (exact): `Could not load draft:` and include the attempted path.
+
+Build tie-in:
+- This hardening is required for hosted environments; see `ops/ux/HANDOFF_NOTES_V1.md` (UX-003).
 
 ---
 

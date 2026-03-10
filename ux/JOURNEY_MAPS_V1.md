@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (10:24 UTC)
+Last updated: 2026-03-10 (12:28 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -94,6 +94,7 @@ Current build note:
 - Current fallback inputs: `ops/job-pipeline.csv`, `ops/agent-tasks.csv`
 - Current UI targets: `ops/status.html` (compact), `ops/activity.html` (full, to create)
 - Build status: `ops/activity.html` does not exist yet (tracked in `ops/agent-tasks.csv` → T-0305).
+- Build status: `ops/status.html` does not yet include the compact “What changed” module (same task: T-0305). Until it lands, Status only links out to artefacts and forces manual scanning.
 
 User story:
 - As Matt, I want to see what changed (and what needs attention) without scanning 3 pages.
@@ -114,6 +115,8 @@ Implementation notes (v1, build-ready):
 - Prefer events when present.
   - Seed file exists now: `ops/events/events-2026-03.jsonl`.
   - Canonical envelope fields are `{event_type, occurred_at, data}` (not legacy `{type, payload}`); see `ops/architecture/CONTROL_TOWER_API_EVENT_ENVELOPE_ALIGNMENT_2026-03-09.md`.
+- **Build status:** `ops/activity.html` still not published; tracked in `ops/agent-tasks.csv` (T-0305). This blocks a clean “View all” Activity destination and forces Status to carry the full burden.
+- **Data dependency:** derived activity quality remains weak until `ops/job-pipeline.csv` gains `updated_at` (tracked: T-0316).
 - **Schema drift watch:** PRD-006 currently describes an alternate JSONL shape `{ts, type, title, refs, actor}`. For v1 build, implement a tolerant parser and map both shapes into the timeline UI (see `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` → UX-004).
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
   - When falling back, show the inline note (exact): `Event feed unavailable, showing derived activity.`
