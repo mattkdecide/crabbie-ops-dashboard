@@ -46,6 +46,8 @@
       <input class='input' id='mdPath' type='text' value='outputs/cv/R-2026-0017/draft.md' aria-describedby='mdTip' />
     </div>
     <button class='btn' id='loadBtn' type='submit'>Load Draft</button>
+    <a class='btn' id='runFromPreviewLink' href='cv-run.html'>Run CV ↗</a>
+    <a class='btn' id='pipelineFromPreviewLink' href='kanban.html'>Pipeline ↗</a>
     <span class='cv-note cv-tip' id='mdTip'>Tip: use query param <code>?file=outputs/cv/&lt;role_id&gt;/draft.md</code></span>
     <p class='sr-only' id='loadStatus' role='status' aria-live='polite'></p>
   </form>
@@ -120,13 +122,55 @@
       }
     }
 
+    function roleIdFromPath(p){
+      const path = String(p || '').trim();
+      // Expected: outputs/cv/<ROLE_ID>/draft.md (or final.pdf etc.)
+      const m = path.match(/outputs\/cv\/([^\/]+)\//i);
+      return m ? m[1] : '';
+    }
+
+    function syncContextLinks(){
+      const mdPath = document.getElementById('mdPath')?.value || '';
+      const roleId = roleIdFromPath(mdPath);
+
+      const runLink = document.getElementById('runFromPreviewLink');
+      const pipeLink = document.getElementById('pipelineFromPreviewLink');
+
+      if (runLink) {
+        if (roleId) {
+          const qs = new URLSearchParams();
+          qs.set('role_key', roleId);
+          runLink.setAttribute('href', `cv-run.html?${qs.toString()}`);
+        } else {
+          runLink.setAttribute('href', 'cv-run.html');
+        }
+      }
+
+      if (pipeLink) {
+        if (roleId) {
+          const qs = new URLSearchParams();
+          qs.set('role_id', roleId);
+          pipeLink.setAttribute('href', `kanban.html?${qs.toString()}`);
+        } else {
+          pipeLink.setAttribute('href', 'kanban.html');
+        }
+      }
+    }
+
     const params = new URLSearchParams(location.search);
     const qFile = params.get('file');
     if(qFile) document.getElementById('mdPath').value = qFile;
 
+    syncContextLinks();
+
+    document.getElementById('mdPath').addEventListener('input', syncContextLinks);
+    document.getElementById('mdPath').addEventListener('change', syncContextLinks);
+
     document.getElementById('cvForm').addEventListener('submit', (e)=>{
       e.preventDefault();
-      loadDraft(document.getElementById('mdPath').value.trim());
+      const p = document.getElementById('mdPath').value.trim();
+      syncContextLinks();
+      loadDraft(p);
     });
   </script>
   <script src='ui/nav_v1.js'></script>
