@@ -20,7 +20,7 @@
     <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
       <a class="btn" href="status.html">Status</a>
       <a class="btn" href="kanban.html">Pipeline</a>
-      <a class="btn" href="agent-queue.html" aria-current="page">Agent Queue</a>
+      <a class="btn" href="agent-queue.html">Agent Queue</a>
       <a class="btn" href="agents.html">Agents</a>
       <a class="btn" href="api-usage.html">API Usage</a>
       <a class="btn" href="cv-preview.html">CV Preview</a>
@@ -28,8 +28,8 @@
     </nav>
   </header>
 
-  <main id="main" aria-label="Task columns" tabindex="-1">
-    <div class="sr-only" role="status" aria-live="polite" data-agent-queue-meta></div>
+  <main id="main" aria-label="Task columns" tabindex="-1" aria-busy="false">
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-agent-queue-meta></div>
     <div class="board" data-agent-queue-board tabindex="0" role="region" aria-label="Agent queue board (scroll horizontally)" aria-busy="false"></div>
     <noscript>
       <div class="column"><div class="column__shell"><h2 class="column__header">Agent Queue requires JavaScript</h2>
