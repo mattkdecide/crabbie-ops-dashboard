@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (08:28 UTC)
+Last updated: 2026-03-10 (10:28 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -145,6 +145,12 @@ Implementation notes (static JS v1):
   3) Allowlist prefix: must start with `outputs/cv/`.
 - Default input state: blank.
   - Helper text (exact): `Paste a path under outputs/cv/… (e.g., outputs/cv/R-2026-TEST-EY/draft.md)`
+  - Concrete patch (HTML):
+    - Change the input from:
+      - `<input ... id='mdPath' ... value='outputs/cv/R-2026-0017/draft.md' ...>`
+    - To:
+      - `<input ... id='mdPath' ... value='' ...>`
+    - Update the existing tip element (currently `#mdTip`) so it includes the helper text above (query-param guidance can remain, but should be secondary).
 - Error copy (exact, prefix only): `Could not load draft:` then include the attempted path.
 
 Acceptance:
@@ -156,6 +162,15 @@ Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-7, AC-8)
 
 ### 1.6 Build handoff (concrete): Seed events feed + parse-first-N proof
+
+**Handoff item UX-007 (concrete): JSONL parse diagnostics + truncation notice**
+Why: when events JSONL contains a bad line (or is very large), we need a visible, operator-friendly signal instead of silent failure.
+
+Deliverables (static v1):
+- If JSON parsing fails for some lines, skip them and show: `X lines skipped (invalid JSON).`
+- Cap parsing to the first 50 non-empty lines; if the file has more, show: `Showing first 50 events.`
+
+Reference: `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` (UX-004, updated acceptance)
 Why: unblocks AC-5 quickly (real events path, not just derived fallback).
 
 Deliverables (static v1):

@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-10 (08:28 UTC)
+Last updated: 2026-03-10 (10:28 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -164,6 +164,11 @@ Non-goal:
 **When** there is an events feed available at `ops/events/events-YYYY-MM.jsonl`
 **Then** the UI renders a Timeline list from the first N events.
 
+**And** parsing is resilient:
+- invalid JSONL lines are skipped
+- a visible notice is shown when skips occur (exact): `X lines skipped (invalid JSON).`
+- if the feed is truncated for performance (v1 cap), show (exact): `Showing first 50 events.`
+
 **And** if the events feed is missing
 **Then** the UI renders a derived timeline from `job-pipeline.csv` and `agent-tasks.csv` and shows the inline note:
 `Event feed unavailable, showing derived activity.`
@@ -207,6 +212,10 @@ Non-goals (v1):
 
 Build note (current gap, as of 2026-03-10):
 - `ops/cv-preview.html` still defaults to `outputs/cv/R-2026-0017/draft.md` which is likely non-existent on a fresh publish.
+
+Implementation pointer (tie-to-build):
+- In `ops/cv-preview.html`, set `#mdPath` default `value` to empty.
+- Update the helper/tip copy (currently under `#mdTip`) to include the exact helper text above (query-param guidance can remain, but must not replace the default-path guidance).
 
 Rationale:
 - Avoids a “broken by default” first impression and reduces support/debug churn.

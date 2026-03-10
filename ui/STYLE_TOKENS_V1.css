@@ -101,10 +101,17 @@
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-2);line-height:var(--lh-body)}
 
-a{color:var(--link);text-decoration:none;text-underline-offset:2px}
+a{
+  color:var(--link);
+  /* Default underline improves discoverability (esp. in dense ops text). */
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: color-mix(in srgb, var(--link) 60%, transparent);
+  text-underline-offset: 2px;
+}
 a:visited{color:var(--link-visited)}
-a:hover{text-decoration:underline;text-decoration-thickness:2px}
-a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;text-decoration:underline;text-decoration-thickness:2px}
+a:hover{ text-decoration-color: currentColor; }
+a:focus-visible{outline:none;box-shadow:var(--focus-strong);border-radius:8px;text-decoration-color: currentColor;}
 
 /* Text selection should remain readable in dark UI */
 ::selection{background:color-mix(in srgb, var(--accent) 35%, transparent);color:var(--text)}

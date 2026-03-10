@@ -105,8 +105,9 @@ Build handoff (concrete): **UX-004**
 
 Acceptance criteria (UX-004):
 1. Given a JSONL file containing a mix of canonical + legacy-shaped lines, page renders without crashing.
-2. Invalid JSON lines are skipped and a `"X lines skipped"` notice is shown.
+2. Invalid JSON lines are skipped and a notice is shown in the UI (exact format): `X lines skipped (invalid JSON).`
 3. Canonical envelope lines are mapped using the rules in Section 5.
+4. Parser caps work for v1: parse at most the first 50 non-empty lines (perf guard), and indicate when the feed is truncated (exact): `Showing first 50 events.`
 
 ### Mapping rules (events → TimelineItem)
 - `occurredAt` = `event.occurred_at`.

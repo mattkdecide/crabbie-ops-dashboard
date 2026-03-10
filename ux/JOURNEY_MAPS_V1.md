@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (08:28 UTC)
+Last updated: 2026-03-10 (10:24 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -117,6 +117,7 @@ Implementation notes (v1, build-ready):
 - **Schema drift watch:** PRD-006 currently describes an alternate JSONL shape `{ts, type, title, refs, actor}`. For v1 build, implement a tolerant parser and map both shapes into the timeline UI (see `ops/ux/STATUS_TIMELINE_COMPONENT_SPEC_V1.md` → UX-004).
   - v1 fetch rule: try `events/events-2026-03.jsonl` first; if missing, fall back to derived activity.
   - When falling back, show the inline note (exact): `Event feed unavailable, showing derived activity.`
+  - If some JSONL lines fail to parse, skip them and show a small notice: `X lines skipped (invalid JSON).` (no console-only failures).
 - CSV-derived activity is inherently lossy until CSVs carry an `updated_at` field.
   - Current fallback for `ops/job-pipeline.csv`: use `last_action` as the best available timestamp.
   - Current fallback for `ops/agent-tasks.csv`: use `updated_at` (already present).

@@ -65,9 +65,22 @@
   - `ops/agent-tasks.csv` (T-0312 appended; timestamps set to 2026-03-10)
   - `ops/UPDATE_CAPTURE.md` (this entry)
 
+## 2026-03-10 (BA cron run @ 09:38 UTC)
+- Groomed backlog:
+  - PRD-006 moved **Refined → Ready** (implementation underway; defaults stand unless overridden).
+- Expanded PRD-004 into implementation-ready acceptance criteria/edge cases/decisions (nav set, active-state automation, mobile behaviour, resilience).
+- Updated BA task tracking row T-0312 notes in `ops/agent-tasks.csv` with this run stamp.
+- Files updated:
+  - `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (PRD-004 expanded; PRD-006 moved to Ready)
+  - `ops/agent-tasks.csv` (T-0312 run stamp)
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-10 (PM Control Tower cron run @ 09:48 UTC)
+- Refreshed `ops/CONTROL_TOWER.md` (backlog status movement, top priorities, blockers/decisions, AC updates).
+- Aligned PRD-006 delivery status **Backlog → In Progress** in `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` to match active build work (T-0305).
+
 Next steps / recommended actions:
 1. Ledger: confirm PRD-001 required fields list (PRD-001-DR1) or accept defaults to unblock Ready movement.
 2. Vantage + Build Engineer: confirm PRD-006 decisions (type enum, retention window, derived suppression) or accept defaults.
 3. Tide (BA owner): run daily cron and move any PRDs whose decisions are confirmed to Ready, and update `ops/agent-tasks.csv` statuses accordingly.
 4. Implement `ops/crm/job-record-required-fields-v1.json` and `ops/ui/job_validation_v1.js` (recommend owner: Ledger + Build Engineer) to make validation explicit and enforce publish gating.
-
