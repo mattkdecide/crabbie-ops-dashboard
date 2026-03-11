@@ -12,6 +12,11 @@
 
   <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
   <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
+  <style>
+    /* Hard override for Kanban heading alignment + non-overlap */
+    .page-kanban .column__header{position:static !important;top:auto !important;min-height:56px;display:flex;align-items:center}
+    .page-kanban .column__shell{display:flex;flex-direction:column}
+  </style>
 </head>
 <body class="page-kanban">
   <a class="skip-link" href="#main">Skip to content</a>
