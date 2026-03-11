@@ -41,7 +41,7 @@
       <button type="button" class="nav-toggle" data-nav-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
     </div>
     <h1 class="topbar__title">Specialist Agent Profiles</h1>
-    <p class="topbar__sub">Loaded from each agent markdown profile. Edits in the text areas save locally in your browser (they do not overwrite the repo).</p>
+    <p class="topbar__sub">Loaded from each agent markdown profile. Textarea edits save locally in your browser only. Use “Edit in GitHub” for true write access.</p>
     <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
       <a class="btn" href="status.html">Status</a>
       <a class="btn" href="activity.html">Activity</a>
@@ -54,9 +54,24 @@
     </nav>
   </header>
 
-  <main class="profiles" id="main" aria-label="Agent profiles" tabindex="-1"></main>
+  <main id="main" aria-label="Agent profiles" tabindex="-1">
+    <section class="item" style="margin:16px">
+      <h2 class="item__title">Libraries and core docs</h2>
+      <div class="item__small">Direct read access is live below. For write access, use GitHub edit links.</div>
+      <div class="item__small" style="margin-top:8px">
+        <a href="CONTROL_TOWER.md" target="_blank" rel="noopener">CONTROL_TOWER.md</a> ·
+        <a href="UPDATE_CAPTURE.md" target="_blank" rel="noopener">UPDATE_CAPTURE.md</a> ·
+        <a href="PRODUCT_REQUIREMENTS_BACKLOG_V1.md" target="_blank" rel="noopener">PRODUCT_REQUIREMENTS_BACKLOG_V1.md</a> ·
+        <a href="TEAM_OPENCLAW.md" target="_blank" rel="noopener">TEAM_OPENCLAW.md</a> ·
+        <a href="agents/README.md" target="_blank" rel="noopener">agents/README.md</a>
+      </div>
+    </section>
+    <div class="profiles" id="profiles-grid"></div>
+  </main>
 
   <script>
+    const GH_REPO = 'https://github.com/mattkdecide/crabbie-ops-dashboard';
+
     const AGENTS = [
       {key:'tide', avatar:'ui/assets/crabbie-logo.jpg', emoji:'🎈🦀', name:'Crabbie', fn:'PM Control Tower'},
       {key:'vantage', avatar:'ui/assets/agents/analytics-blue.png', emoji:'🎈🔭', name:'Vantage', fn:'UX Strategist / Role Analyst'},
@@ -70,15 +85,23 @@
     async function loadProfile(agent){
       const card = document.createElement('section');
       card.className = 'item';
+      const file = `agents/${agent.key}.md`;
+      const ghView = `${GH_REPO}/blob/main/${file}`;
+      const ghEdit = `${GH_REPO}/edit/main/${file}`;
+
       card.innerHTML = `
         <h2 class='item__title'>${agent.avatar ? `<img class='avatar' src='${agent.avatar}' alt=''>` : `<span class='avatar-emoji' aria-hidden='true'>${agent.emoji || '🎈'}</span>`}${agent.name}</h2>
         <div class='item__meta'>${agent.fn}</div>
         <div data-agent-owner='${agent.key}'></div>
         <label class='sr-only' for='ta-${agent.key}'>Profile text for ${agent.name}. Edits save locally in your browser only.</label>
         <textarea class='textarea' id='ta-${agent.key}' aria-label='Profile text for ${agent.name}. Edits save locally in your browser only.' spellcheck='false'></textarea>
-        <div class='item__small'>Live source: <a href='agents/${agent.key}.md'>agents/${agent.key}.md</a></div>
+        <div class='item__small'>
+          Live source: <a href='${file}' target='_blank' rel='noopener'>${file}</a> ·
+          <a href='${ghView}' target='_blank' rel='noopener'>View in GitHub</a> ·
+          <a href='${ghEdit}' target='_blank' rel='noopener'>Edit in GitHub</a>
+        </div>
       `;
-      document.getElementById('main').appendChild(card);
+      document.getElementById('profiles-grid').appendChild(card);
 
       const ta = document.getElementById('ta-'+agent.key);
       const localKey = `agent-edit-${agent.key}`;
