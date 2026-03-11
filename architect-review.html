@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f8ff" media="(prefers-color-scheme: light)">
+  <title>Architect Review Pack · Crabbie Ops</title>
+  <link rel="icon" type="image/jpeg" href="ui/assets/crabbie-logo.jpg">
+  <link rel="apple-touch-icon" href="ui/assets/crabbie-logo.jpg">
+  <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
+  <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar" role="banner">
+    <div class="topbar__row">
+      <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
+    </div>
+    <h1 class="topbar__title">Architect Review Pack</h1>
+    <p class="topbar__sub">Ground-truth map of what is live, what is static, and what is still maturing.</p>
+    <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
+      <a class="btn" href="status.html">Status</a>
+      <a class="btn" href="activity.html">Activity</a>
+      <a class="btn" href="kanban.html">Pipeline</a>
+      <a class="btn" href="agent-queue.html">Agent Queue</a>
+      <a class="btn" href="agents.html">Agents</a>
+      <a class="btn" href="architect-review.html">Architect Pack</a>
+    </nav>
+  </header>
+
+  <main id="main" class="board board--wrap" tabindex="-1" aria-label="Architect review pack">
+    <section class="column">
+      <div class="column__shell">
+        <h2 class="column__header">Canonical sources (authoritative)</h2>
+        <div class="item item--link"><a class="item__link" href="CONTROL_TOWER.md"><h3 class="item__title">CONTROL_TOWER.md</h3><div class="item__small">Priority stack, blockers, decision requests, acceptance status.</div></a></div>
+        <div class="item item--link"><a class="item__link" href="UPDATE_CAPTURE.md"><h3 class="item__title">UPDATE_CAPTURE.md</h3><div class="item__small">Chronological shipping log and change narrative.</div></a></div>
+        <div class="item item--link"><a class="item__link" href="agent-tasks.csv"><h3 class="item__title">agent-tasks.csv</h3><div class="item__small">Execution task state and ownership.</div></a></div>
+        <div class="item item--link"><a class="item__link" href="job-pipeline.csv"><h3 class="item__title">job-pipeline.csv</h3><div class="item__small">Pipeline role records and stage state.</div></a></div>
+        <div class="item item--link"><a class="item__link" href="events/events-2026-03.jsonl"><h3 class="item__title">events/*.jsonl</h3><div class="item__small">Event feed for timeline and future read-models.</div></a></div>
+      </div>
+    </section>
+
+    <section class="column">
+      <div class="column__shell">
+        <h2 class="column__header">Surface reliability (current)</h2>
+        <div class="item"><h3 class="item__title">High confidence</h3><div class="item__small">Pipeline, Agent Queue, Activity. These read directly from CSV/events and are operationally useful.</div></div>
+        <div class="item"><h3 class="item__title">Medium confidence</h3><div class="item__small">Status page. Great navigation/orientation layer, but largely curated/static cards.</div></div>
+        <div class="item"><h3 class="item__title">Low confidence</h3><div class="item__small">read_models/v1/status_summary.json currently manual-seeded and stale, not suitable as telemetry truth.</div></div>
+      </div>
+    </section>
+
+    <section class="column">
+      <div class="column__shell">
+        <h2 class="column__header">Known gaps</h2>
+        <div class="item"><h3 class="item__title">Read-model freshness</h3><div class="item__small">No robust automated read-model generation pipeline yet.</div></div>
+        <div class="item"><h3 class="item__title">Data normalisation</h3><div class="item__small">`updated_at` normalisation/backfill still in-flight (PRD-008 dependency).</div></div>
+        <div class="item"><h3 class="item__title">CV flow hardening</h3><div class="item__small">CV run/preview UX and quality gates still being tightened.</div></div>
+      </div>
+    </section>
+
+    <section class="column">
+      <div class="column__shell">
+        <h2 class="column__header">Architect quick start</h2>
+        <div class="item">
+          <h3 class="item__title">Suggested review order</h3>
+          <div class="item__small">1) CONTROL_TOWER.md → 2) UPDATE_CAPTURE.md → 3) agent-tasks.csv + job-pipeline.csv → 4) Activity page → 5) architecture/*.md and schemas.</div>
+        </div>
+        <div class="item item--link"><a class="item__link" href="architecture/INTEGRATION_CONTRACTS_V1.md"><h3 class="item__title">Integration contracts</h3></a></div>
+        <div class="item item--link"><a class="item__link" href="architecture/openapi/control-tower-api.v1.yaml"><h3 class="item__title">Control Tower API spec</h3></a></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="ui/nav_v1.js"></script>
+</body>
+</html>
