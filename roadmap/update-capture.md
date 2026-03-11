@@ -138,3 +138,31 @@ Next steps / recommended actions:
 - Files updated:
   - `ops/CONTROL_TOWER.md`
   - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-11 (Controlled status corrections per directive)
+- Applied status changes in `ops/agent-tasks.csv` only where correction was clear under directive + task reality.
+- Status changes:
+  - `task_id: T-0010` | `old: In Progress` | `new: Backlog` | reason: stale generic reporting task; not a direct Phase-1 workflow hardening action.
+  - `task_id: T-0206` | `old: In Progress` | `new: Backlog` | reason: ops site navigation expansion is non-core while CV workflow hardening is priority 1.
+  - `task_id: T-0301` | `old: In Progress` | `new: Backlog` | reason: continuous UX stream is currently deprioritised unless directly unblocking workflow/CRM/task discipline.
+  - `task_id: T-0302` | `old: In Progress` | `new: Backlog` | reason: continuous UI enhancement stream is currently deprioritised unless directly unblocking workflow/CRM/task discipline.
+  - `task_id: T-0307` | `old: In Progress` | `new: Backlog` | reason: kanban hardening work is supporting platform scope; deferred until top unfinished workflow gaps are closed.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-11 (Controlled decisions applied)
+- `task_id: T-0317` | `old: Approved` | `new: In Progress` | reason: explicit Matt decision to pull top CV preview hardening task into active execution.
+- `task_id: T-0204` | `old: Approved` | `new: In Progress` | reason: explicit Matt decision to pull CRM mapping implementation into active execution.
+- `task_id: T-0312` | `old: In Progress` | `new: In Progress` | reason: active by decision, but notes scope tightened to task discipline only (stale-task cleanup, handoff quality, priority enforcement, blocker clarity).
+- `task_id: T-0501` | `old: In Progress` | `new: Approved` | reason: reframed from role-specific review to reusable CV QA regression task; queued as ready next-step workflow hardening work.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-11 (T-0501 decision adjustment)
+- `task_id: T-0501` | `old: Approved` | `new: In Progress` | reason: retained as active because underlying role remains commercially relevant; conversion to reusable QA regression is conditional on role relevance dropping.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/CONTROL_TOWER.md`
+  - `ops/UPDATE_CAPTURE.md` (this entry)

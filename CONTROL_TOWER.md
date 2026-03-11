@@ -34,28 +34,50 @@ Non-destructive preservation remains in force for existing infrastructure.
 
 ---
 
-## 2) Drift from Phase 1 priority order
+## 2) Drift and correction
 
-Current drift detected:
-1. Excess effort in dashboard/platform framing vs core workflow reliability.
-2. UI/nav enhancement work running ahead of CV pipeline hardening.
-3. Continuous BA/UX/UI loops not tightly constrained to workflow unblockers.
-4. Task system contains stale or ambiguous “In Progress” states not tied to measurable Phase 1 movement.
+Recent drift has included:
+- dashboard and platform work advancing ahead of core workflow hardening,
+- UI and navigation improvements being treated as active delivery when they are supporting work,
+- continuous streams remaining active without strong linkage to current top priorities,
+- and multiple tasks sitting in In Progress without enough evidence of meaningful movement.
 
-Correction applied in this control tower: active stack narrowed to CV + CRM + lifecycle discipline.
+Correction now in force:
+- workflow hardening first,
+- CRM integrity second,
+- task discipline third,
+- supporting platform work only when it directly unblocks those priorities.
 
 ---
 
-## 3) Corrected priority stack (next 24–72h)
+## 3) Top 3 priorities (next 24–48h)
 
-1. **T-0317 (build, Approved)** — CV Preview hardening (blank default, strict allowlist, traversal/protocol reject, safe load states)
-2. **T-0205 (build, In Progress)** — CV artefact manifest output + deterministic output contract
-3. **T-0204 (crm, Approved)** — canonical CRM status mapping implementation and enforcement
-4. **T-0316 (crm, Backlog -> pull forward)** — `updated_at` normalization/backfill for pipeline truthfulness
-5. **T-0501 (build, In Progress)** — convert from one-off review to QA regression test harness for CV workflow
+1. **T-0317 – CV Preview hardening (Build) [In Progress]**
+   - Make preview safe and reliable.
+   - Remove broken-by-default path behaviour.
+   - Enforce output allowlist, safe loader behaviour, and clear error states.
+   - This is the highest-priority workflow hardening item.
 
-Support discipline:
-- **T-0312 (ops, In Progress)** only for stale-task cleanup, handoff quality, and blocker clarity tied to items 1–5.
+2. **T-0205 – CV artefact manifest and output contract (Build) [In Progress]**
+   - Finalise predictable role-scoped artefact structure.
+   - Ensure manifest, draft, QA, and final-output linkage are consistent and reviewable.
+   - This is required for a reliable end-to-end workflow.
+
+3. **T-0204 – Canonical CRM status mapping (CRM) [In Progress]**
+   - Implement one source of truth for status mapping.
+   - Reduce pipeline ambiguity and support reliable workflow and reporting logic.
+   - This is the highest-priority CRM integrity item.
+
+_Next up: T-0316 – updated_at normalisation/backfill, then T-0312 – task discipline and stale-work cleanup._
+
+**T-0312 – Task discipline and control-tower hygiene (Ops) [In Progress]**
+- Tighten task states, next-action quality, blocker clarity, and handoff quality.
+- Reduce stale work, vague notes, and false In Progress states.
+- Keep the board operationally trustworthy.
+
+**T-0501 – CV draft review for active priority role (In Progress)**
+- Retain only because the underlying role remains commercially relevant.
+- If role relevance drops, convert this task into a reusable CV QA regression task.
 
 ---
 
@@ -87,52 +109,41 @@ Support discipline:
 
 ---
 
-## 6) 7-day execution plan (directive-aligned)
+## 5) 7-day execution plan
 
-## Day 1
-- Land T-0317 fully (preview hardening).
-- Add explicit handoff packet for T-0205 using `HANDOFF_FORMAT.md`.
+### Day 1
+- Move T-0317 and T-0204 into active execution.
+- Confirm corrected task states and update capture entries.
 
-## Day 2
-- Complete T-0205 manifest contract and output structure checks.
-- Validate deterministic command → artefact path consistency.
+### Day 2
+- Harden CV Preview safety and default behaviour.
+- Reduce broken-by-default behaviour in the preview path.
 
-## Day 3
-- Complete T-0204 canonical mapping enforcement across CV stage writes.
-- Run mapping verification against current `job-pipeline.csv` + `agent-tasks.csv`.
+### Day 3
+- Tighten artefact manifest/output contract for role-scoped CV runs.
+- Confirm predictable linkage across draft, QA, manifest, and final outputs.
 
-## Day 4
-- Execute T-0316 `updated_at` normalization + backfill safely.
-- Produce before/after verification note and anomaly list.
+### Day 4
+- Implement canonical CRM status mapping.
+- Remove ambiguous status interpretation paths.
 
-## Day 5
-- Rework T-0501 into reusable CV QA regression suite (pass/fail + threshold report).
-- Ensure QA outputs are linked to artefacts and status changes.
+### Day 5
+- Normalise updated_at handling and improve pipeline truthfulness.
+- Reduce stale or misleading recency signals.
 
-## Day 6
-- Task discipline sweep:
-  - stale In Progress cleanup,
-  - explicit next-action enforcement,
-  - blocker reason normalization,
-  - owner clarity check.
+### Day 6
+- Apply stale-task cleanup and handoff-quality corrections across active tasks.
+- Reduce false In Progress and weak notes.
 
-## Day 7
-- End-to-end dry run on at least 2 real roles:
-  - URL/paste intake → extraction → mapping → draft → QA gate → artefacts → CRM update.
-- Publish short evidence report: what improved in reliability and where manual effort was reduced.
-
-Success condition for the 7-day window:
-- demonstrable improvement in core workflow reliability,
-- cleaner CRM truth,
-- tighter task lifecycle with reduced ambiguity.
+### Day 7
+- Run one end-to-end dry run of the CV workflow and record gaps.
+- Use findings to define the next hardening pass.
 
 ---
 
-## 7) Enforcement rule for this sprint
+## 6) Enforcement note
 
-No architecture/dashboard/platform scope expansion unless directly required to unblock:
+No new architecture, dashboard, API, read-model, or platform expansion work should be pulled forward unless it directly removes a blocker to:
 - CV workflow hardening,
 - CRM integrity,
-- or task lifecycle discipline.
-
-If a proposed item does not pass the directive expansion test, defer it.
+- or task discipline.
