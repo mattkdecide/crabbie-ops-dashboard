@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Ready for build
-Last updated: 2026-03-10 (14:30 UTC)
+Last updated: 2026-03-10 (20:30 UTC)
 
 This file consolidates implementation-ready acceptance criteria for the current static build files.
 
@@ -50,7 +50,7 @@ Supporting specs:
 
 **And** pages SHOULD NOT hard-code `aria-current="page"` in the HTML.
 - Rationale: avoid drift and ensure a single source of truth for active-link semantics.
-- Build note (current gap, as of 2026-03-10): `ops/cv-preview.html` and `ops/cv-run.html` still hard-code `aria-current` on their nav link; remove once `nav_v1.js` is the active-state source.
+- Build note (current reality, as of 2026-03-10): ops pages now rely on `nav_v1.js` for active-state semantics; avoid reintroducing per-page `aria-current` attributes.
 
 **And** on small screens, when the nav is expanded it SHOULD render as a distinct panel (surface + border + radius + readable spacing) so the link set is scannable (avoid a wall of inline links).
 

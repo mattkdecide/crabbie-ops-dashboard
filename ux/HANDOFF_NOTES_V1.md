@@ -1,7 +1,7 @@
 # UX Handoff Notes v1 (Build + Design)
 
 Owner: UX (Vantage)
-Last updated: 2026-03-10 (18:30 UTC)
+Last updated: 2026-03-10 (20:24 UTC)
 
 This is a practical handoff note intended to reduce ambiguity for build work.
 
@@ -337,12 +337,19 @@ Deliverables (static v1):
 Acceptance reference:
 - `ops/ux/ACCEPTANCE_CRITERIA_V1.md` (AC-11)
 
+**Handoff item UX-012 (concrete): Team Ops publish gate (avoid “Review” without a page)**
+Why: Task T-0306 is meaningless to review if `ops/team-ops.html` is not present in-repo.
+
+Deliverables:
+1) Ensure `ops/team-ops.html` exists under `ops/` and is linked from at least one surface (Home tile or masthead/nav utility list).
+2) If the page is not ready to ship, set task T-0306 to `Blocked` with a short reason (e.g., “page not committed yet”).
+
 ### 1.11 Build handoff (concrete): Home tiles for Activity + Team Ops (index.html)
 Target file: `ops/index.html`
 
 Why: Home is the first click after publish. If Activity/Team Ops ship but are not visible on Home, discoverability suffers and the “control tower” loop breaks.
 
-Current reality (2026-03-10): `ops/activity.html` exists and is linked from Status (“What changed”), but Home does not yet include an Activity tile under Operate.
+Current reality (2026-03-10): `ops/activity.html` exists and is linked from Status (“What changed”), and Home now includes an Activity tile under Operate (shipped in UI pass T-0302).
 
 Deliverables (static v1):
 1) Under **Operate**, add two full-card links using the existing `.item--link` pattern:

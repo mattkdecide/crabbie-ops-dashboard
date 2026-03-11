@@ -1,6 +1,6 @@
 # UX Journey Maps v1
 
-Last updated: 2026-03-10 (18:24 UTC)
+Last updated: 2026-03-10 (20:24 UTC)
 
 ## 1) Job Intake -> Prioritise -> Act (file-first)
 **Primary artefacts:**
@@ -106,7 +106,7 @@ User story:
 Journey:
 1. Open `ops/index.html` (Home) or `ops/status.html` (Launchpad).
 2. Use **Activity** entry point:
-   - Home tile (recommended once `ops/activity.html` exists), or
+   - Home tile (shipped): Operate → `activity.html`, or
    - Status “What changed” module → `activity.html`.
 3. If `ops/events/` exists, render first N events.
 4. If `ops/events/` is missing, render **derived activity**:

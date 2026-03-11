@@ -9,6 +9,11 @@
   --tap-min: 44px; /* WCAG-ish touch target baseline */
   --tap-min-compact: 40px; /* For dense secondary actions (still reasonable on desktop) */
 
+  /* Motion (keep subtle; allow prefers-reduced-motion to zero durations) */
+  --dur-1: 140ms;
+  --dur-2: 220ms;
+  --ease-standard: cubic-bezier(.2,.8,.2,1);
+
   /* Colour */
   --bg: #0b1020;
   --surface: #121a36;
@@ -149,6 +154,15 @@
     --focus: 0 0 0 2px rgba(29,78,216,.35);
     --focus-strong: 0 0 0 3px rgba(29,78,216,.50);
   }
+}
+
+/* Reduce motion: respect user preference while keeping layout stable.
+   Strategy: zero durations and avoid smooth scrolling.
+*/
+@media (prefers-reduced-motion: reduce){
+  :root{--dur-1: 0ms; --dur-2: 0ms}
+  html:focus-within{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:0ms !important;animation-iteration-count:1 !important;transition-duration:0ms !important}
 }
 
 *{box-sizing:border-box}

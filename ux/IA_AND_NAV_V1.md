@@ -2,7 +2,7 @@
 
 Owner: UX (Vantage)
 Status: Implementation-ready (static HTML v1)
-Last updated: 2026-03-10 (18:30 UTC)
+Last updated: 2026-03-10 (20:30 UTC)
 
 ## 0) Scope
 This IA covers the *current build surfaces* in `ops/*.html` plus their supporting artefacts. It is written to be directly implementable in static HTML first, and later migratable to a templated build.
@@ -47,7 +47,7 @@ Build note (current reality):
   - `--link-visited` (derived)
 - Known UX gap (should be fixed next): `ops/cv-preview.html` still defaults the draft path to a likely non-existent file (`outputs/cv/R-2026-0017/draft.md`). The default state should be blank + helper text (see AC-8 / Handoff UX-003).
 - Known security/robustness gap (should be fixed with the same patch): CV Preview draft loader is not yet allowlisted to `outputs/cv/**` and does not yet reject protocols / `..` segments before `fetch()` (see AC-8b / Handoff UX-003).
-- Known discoverability gap (nice-to-have): `ops/index.html` (Home) does not yet expose an **Activity** tile under Operate. Once `activity.html` is stable, add a full-card link (Handoff 1.11) so “What changed” is 1 click from Home.
+- Discoverability note (resolved): `ops/index.html` (Home) now exposes an **Activity** tile under Operate, so “What changed” is 1 click from Home (shipped in UI pass T-0302).
 - Launchpad note (resolved): `ops/status.html` now includes a “What changed” module that links to `activity.html` as the first-class “View all” destination (T-0305 shipped).
 
 Pragmatic v1 recommendation:
@@ -129,7 +129,8 @@ Job-to-be-done: open one page and jump to the right operational surface.
 
 Should contain:
 - persistent masthead (target) or topbar cross-links (current)
-- a compact “What changed” module (last 24h) using Timeline component (or placeholder)
+- a “What changed” module that links to `activity.html` as the first-class destination
+  - v1 placeholder is acceptable (e.g., Activity link + Update Capture link) until an inline last-24h list ships
 - links to: Kanban, Agent Queue, CV Preview, key specs
 
 ### `ops/kanban.html` (Pipeline)
