@@ -1,72 +1,138 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-10 18:48 UTC
+**Last updated:** 2026-03-11 UTC
+**Directive basis:** `ops/DIRECTIVE_TO_CRABBIE.md`, `ops/TASK_LIFECYCLE_RULES.md`, `ops/HANDOFF_FORMAT.md`
 
-## 1) Backlog status changes (since last capture)
+## 0) Priority reset (active)
 
-Capture window: since **2026-03-10 15:48 UTC**.
+Execution is now anchored to:
+1. End-to-end CV workflow hardening
+2. CRM integrity
+3. Task lifecycle discipline
+4. Supporting ops/UI/architecture work only when it directly unblocks 1–3
 
-### Status moved
-- **T-0305 — Activity Timeline page (PRD-006)**
-  - Delivery execution status (agent task): **In Progress → Done**.
-  - Evidence: `ops/activity.html` shipped (events JSONL first + derived fallback + diagnostics) and `ops/status.html` now includes the compact **“What changed”** module linking to Activity.
-- **T-0317 — CV Preview hardening (PRD-007)**
-  - Delivery execution status (agent task): **Backlog → Approved**.
-  - Meaning: UX handoff is ready; build can implement now without further grooming.
-
-### PRD alignment (system-of-record hygiene)
-- **PRD-006 — Activity Timeline**
-  - Delivery status should now read **Done** in `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (matches T-0305 completion).
+Non-destructive preservation remains in force for existing infrastructure.
 
 ---
 
-## 2) Top 3 priorities (next 24–48h)
+## 1) Backlog reassessment against directive
 
-1. **T-0317 – CV Preview: blank default + safe loader (Build) [Approved]**
-   - Remove misleading default `outputs/cv/...` path.
-   - Enforce allowlist `outputs/cv/**`, reject traversal/protocols, safe error + a11y status states, escape-first markdown rendering.
-   - This is the highest-risk surface (broken-by-default + path abuse), so it should ship next.
-2. **T-0316 / PRD-008 – `job-pipeline.csv` updated_at backfill (CRM) [Backlog]**
-   - Add canonical `updated_at` column + non-destructive backfill rules.
-   - This stabilises Kanban ordering and makes derived Activity fallback meaningful when events JSONL is unavailable.
-3. **T-0306 – Team Ops board closeout (Build) [Review]**
-   - Drive to strict PRD-005 pass: gauges by canonical bucket, movement feed sorted by `updated_at`, blockers panel, filter + deep links, resilient error states.
+### In-scope (keep active now)
+- **CV workflow hardening:** T-0205, T-0317, T-0501
+- **CRM integrity:** T-0204, T-0316
+- **Task discipline/control quality:** T-0312
 
-_Next up (queued): T-0307 (PRD-002 hardening) to finish Kanban resilience + status alias mapping source-of-truth._
+### Deprioritised (retain, do not actively expand now)
+- Platform/UI expansion not directly tied to CV/CRM/task discipline:
+  - T-0101, T-0102, T-0103, T-0104, T-0105, T-0106
+  - T-0206, T-0301, T-0302, T-0306, T-0307
+- Non-core integrations/research:
+  - T-0111, T-0112, T-0113, T-0114, T-0115, T-0116, T-0117
 
----
-
-## 3) Blockers + decision requests
-
-### Blockers (operational)
-- **CV Preview remains broken-by-default + security gap remains (until T-0317 lands):** the loader must be blank by default and must not fetch arbitrary paths.
-- **Derived recency still depends on `updated_at`:** until PRD-008/T-0316 lands, any derived fallback ordering can’t be relied on for true recency across all jobs.
-
-### Decision requests (open)
-- **Paused role work (T-0001–T-0006):** confirm when to restart, and which single role to resume first (u&u vs Metro), plus role brief inputs.
-- **PRD-003-DR1 (CV QA gate):** confirm minimum QA checks required to unblock PDF.
-- **PRD-006 decision bundle (confirm defaults or override):**
-  - DR1: canonical `type` enum list (default: `release`, `decision`, `build`, `data`, `incident`, `task`)
-  - DR2: retention window (default: last 30 days)
-  - DR3: derived activity behaviour when events exist (default: hide derived when events present; show fallback only on events load failure)
-- **PRD-005 decision requests (Team Ops board):**
-  - DR1: whether “Approved” is distinct from “Review” in v1 UI (recommend: bucket=Review; chip=Approved)
-  - DR2: canonical status buckets to display in gauges (recommend: Backlog, In Progress, Blocked, Review, Done)
-- **PRD-007 decision requests (CV Preview loader):**
-  - DR1: whether PDF preview (`outputs/cv/<role_id>/cv.pdf`) should be supported here or remain markdown-only v1
-  - DR2: maximum draft size threshold + truncation behaviour (recommend: warn at 1 MB, truncate at 250k chars)
-- **PRD-008 decision requests (`updated_at` backfill rules):**
-  - DR1: proxy precedence for backfill (recommend: documented fixed precedence list + pick latest parseable within it)
-  - DR2: required timestamp format (recommend: ISO-8601 UTC `YYYY-MM-DDTHH:MM:SSZ`)
-  - DR3: whether to overwrite present-but-invalid `updated_at` values (recommend: fill blanks by default; add `--fix-invalid` flag)
-- **PRD-001-DR1 (Canonical job record):** confirm canonical required fields list for a “valid job record”.
-- **PRD-002-DR1 (Kanban status mapping):** confirm canonical source-of-truth for status alias mapping (recommend: a single JSON mapping file shared by Kanban + derived Activity).
+### Paused role-specific tracks (remain blocked, no active spend)
+- T-0001 to T-0006 (u&u / Metro chain)
 
 ---
 
-## 4) Acceptance criteria updates (make work testable)
+## 2) Drift from Phase 1 priority order
 
-Acceptance criteria baseline remains in `ops/PRODUCT_REQUIREMENTS_BACKLOG_V1.md` (PRD-001…PRD-008) plus UX acceptance criteria (`ops/ux/ACCEPTANCE_CRITERIA_V1.md`).
+Current drift detected:
+1. Excess effort in dashboard/platform framing vs core workflow reliability.
+2. UI/nav enhancement work running ahead of CV pipeline hardening.
+3. Continuous BA/UX/UI loops not tightly constrained to workflow unblockers.
+4. Task system contains stale or ambiguous “In Progress” states not tied to measurable Phase 1 movement.
 
-Updates/signals in this window:
-- **No net-new AC authored in this capture.** This run is primarily a **status/priority alignment** update reflecting T-0305 completion and T-0317 being implementation-ready (Approved).
+Correction applied in this control tower: active stack narrowed to CV + CRM + lifecycle discipline.
+
+---
+
+## 3) Corrected priority stack (next 24–72h)
+
+1. **T-0317 (build, Approved)** — CV Preview hardening (blank default, strict allowlist, traversal/protocol reject, safe load states)
+2. **T-0205 (build, In Progress)** — CV artefact manifest output + deterministic output contract
+3. **T-0204 (crm, Approved)** — canonical CRM status mapping implementation and enforcement
+4. **T-0316 (crm, Backlog -> pull forward)** — `updated_at` normalization/backfill for pipeline truthfulness
+5. **T-0501 (build, In Progress)** — convert from one-off review to QA regression test harness for CV workflow
+
+Support discipline:
+- **T-0312 (ops, In Progress)** only for stale-task cleanup, handoff quality, and blocker clarity tied to items 1–5.
+
+---
+
+## 4) Top 5 tasks that most directly harden end-to-end CV workflow
+
+1. **T-0317** — secure and predictable preview input/output path handling.
+2. **T-0205** — standardize artefact set (draft/qa/manifest/final) and reduce operator ambiguity.
+3. **T-0204** — ensure status writes are canonical across CV stages.
+4. **T-0316** — restore timestamp integrity for reliable pipeline recency and stage confidence.
+5. **T-0501** — formalize QA pass/fail checks as reusable regression, not ad hoc review.
+
+---
+
+## 5) Stale / vague / misassigned tasks — proposed corrections
+
+### Reassignment / scope corrections
+- **T-0010 (ops, In Progress)** → **Backlog** unless directly generating CV/CRM/task-discipline signal; otherwise noise.
+- **T-0301 (strategy, In Progress)** → **Backlog** (deprioritized; not a direct Phase 1 unblocker).
+- **T-0302 (ui, In Progress)** → **Backlog** (same reason).
+- **T-0307 (build, In Progress)** → **Backlog** unless explicitly required to support CV/CRM integrity this sprint.
+
+### Clarify or close
+- **T-0501** notes are too role-specific; reframe note to: “Convert review into reusable CV QA regression case + acceptance checks.”
+- **T-0206** currently “In Progress” but non-core; set to **Backlog** with note: “Resume post-Phase-1 unless direct unblock needed.”
+- **T-0306** remains blocked and non-core; keep **Blocked** with explicit defer note, no active effort.
+
+### Keep blocked (valid)
+- **T-0001..T-0006** keep **Blocked** with explicit “Paused by directive sequence, not cancelled.”
+
+---
+
+## 6) 7-day execution plan (directive-aligned)
+
+## Day 1
+- Land T-0317 fully (preview hardening).
+- Add explicit handoff packet for T-0205 using `HANDOFF_FORMAT.md`.
+
+## Day 2
+- Complete T-0205 manifest contract and output structure checks.
+- Validate deterministic command → artefact path consistency.
+
+## Day 3
+- Complete T-0204 canonical mapping enforcement across CV stage writes.
+- Run mapping verification against current `job-pipeline.csv` + `agent-tasks.csv`.
+
+## Day 4
+- Execute T-0316 `updated_at` normalization + backfill safely.
+- Produce before/after verification note and anomaly list.
+
+## Day 5
+- Rework T-0501 into reusable CV QA regression suite (pass/fail + threshold report).
+- Ensure QA outputs are linked to artefacts and status changes.
+
+## Day 6
+- Task discipline sweep:
+  - stale In Progress cleanup,
+  - explicit next-action enforcement,
+  - blocker reason normalization,
+  - owner clarity check.
+
+## Day 7
+- End-to-end dry run on at least 2 real roles:
+  - URL/paste intake → extraction → mapping → draft → QA gate → artefacts → CRM update.
+- Publish short evidence report: what improved in reliability and where manual effort was reduced.
+
+Success condition for the 7-day window:
+- demonstrable improvement in core workflow reliability,
+- cleaner CRM truth,
+- tighter task lifecycle with reduced ambiguity.
+
+---
+
+## 7) Enforcement rule for this sprint
+
+No architecture/dashboard/platform scope expansion unless directly required to unblock:
+- CV workflow hardening,
+- CRM integrity,
+- or task lifecycle discipline.
+
+If a proposed item does not pass the directive expansion test, defer it.
