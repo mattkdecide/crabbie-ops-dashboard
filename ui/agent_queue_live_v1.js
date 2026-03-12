@@ -126,16 +126,50 @@ function renderColumn(statusKey, statusLabel, tasks) {
 }
 
 async function loadMapping() {
-  const res = await fetch('crm/status-mapping-v1.json', { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Failed to load crm/status-mapping-v1.json (${res.status})`);
-  return res.json();
+  const sources = [
+    'crm/status-mapping-v1.json',
+    'https://raw.githubusercontent.com/mattkdecide/crabbie-ops-dashboard/main/crm/status-mapping-v1.json'
+  ];
+
+  let lastErr = null;
+  for (const src of sources) {
+    try {
+      const res = await fetch(src, { cache: 'no-store' });
+      if (!res.ok) {
+        lastErr = new Error(`Failed to load ${src} (${res.status})`);
+        continue;
+      }
+      return res.json();
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+
+  throw lastErr || new Error('Failed to load status mapping from all sources');
 }
 
 async function loadTasks() {
-  const res = await fetch('agent-tasks.csv', { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Failed to load agent-tasks.csv (${res.status})`);
-  const text = await res.text();
-  return parseCsv(text);
+  const sources = [
+    'agent-tasks.csv',
+    'https://raw.githubusercontent.com/mattkdecide/crabbie-ops-dashboard/main/agent-tasks.csv'
+  ];
+
+  let lastErr = null;
+  for (const src of sources) {
+    try {
+      const res = await fetch(src, { cache: 'no-store' });
+      if (!res.ok) {
+        lastErr = new Error(`Failed to load ${src} (${res.status})`);
+        continue;
+      }
+      const text = await res.text();
+      return parseCsv(text);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+
+  throw lastErr || new Error('Failed to load agent-tasks.csv from all sources');
 }
 
 function canonicaliseStatus(rawStatus, mapping) {

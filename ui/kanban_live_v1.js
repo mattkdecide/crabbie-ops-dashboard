@@ -163,16 +163,50 @@ function renderColumn(statusLabel, roles) {
 }
 
 async function loadMapping() {
-  const res = await fetch('crm/status-mapping-v1.json', { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Failed to load crm/status-mapping-v1.json (${res.status})`);
-  return res.json();
+  const sources = [
+    'crm/status-mapping-v1.json',
+    'https://raw.githubusercontent.com/mattkdecide/crabbie-ops-dashboard/main/crm/status-mapping-v1.json'
+  ];
+
+  let lastErr = null;
+  for (const src of sources) {
+    try {
+      const res = await fetch(src, { cache: 'no-store' });
+      if (!res.ok) {
+        lastErr = new Error(`Failed to load ${src} (${res.status})`);
+        continue;
+      }
+      return res.json();
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+
+  throw lastErr || new Error('Failed to load status mapping from all sources');
 }
 
 async function loadJobs() {
-  const res = await fetch('job-pipeline.csv', { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Failed to load job-pipeline.csv (${res.status})`);
-  const text = await res.text();
-  return parseCsv(text);
+  const sources = [
+    'job-pipeline.csv',
+    'https://raw.githubusercontent.com/mattkdecide/crabbie-ops-dashboard/main/job-pipeline.csv'
+  ];
+
+  let lastErr = null;
+  for (const src of sources) {
+    try {
+      const res = await fetch(src, { cache: 'no-store' });
+      if (!res.ok) {
+        lastErr = new Error(`Failed to load ${src} (${res.status})`);
+        continue;
+      }
+      const text = await res.text();
+      return parseCsv(text);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+
+  throw lastErr || new Error('Failed to load job-pipeline.csv from all sources');
 }
 
 async function loadAll() {

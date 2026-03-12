@@ -1,6 +1,6 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-11 UTC
+**Last updated:** 2026-03-12 UTC
 **Directive basis:** `ops/DIRECTIVE_TO_CRABBIE.md`, `ops/TASK_LIFECYCLE_RULES.md`, `ops/HANDOFF_FORMAT.md`
 
 ## 0) Priority reset (active)
@@ -62,6 +62,7 @@ Correction now in force:
    - Finalise predictable role-scoped artefact structure.
    - Ensure manifest, draft, QA, and final-output linkage are consistent and reviewable.
    - This is required for a reliable end-to-end workflow.
+   - **Staleness check:** `agent-tasks.csv` shows `updated_at=2026-03-07` (stale for In Progress). Either advance with a concrete next action + evidence, or downgrade to `Approved`/`Backlog` until actively moving.
 
 3. **T-0204 – Canonical CRM status mapping (CRM) [In Progress]**
    - Implement one source of truth for status mapping.

@@ -166,3 +166,17 @@ Next steps / recommended actions:
   - `ops/agent-tasks.csv`
   - `ops/CONTROL_TOWER.md`
   - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-11 (cleanup pass)
+- `task_id: T-0312` | title updated to `Task discipline and control-tower hygiene enforcement` | reason: align naming to active directive scope and remove vague continuous BA framing.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-11 (final board hygiene pass)
+- `task_id: T-0312` | title updated to `Task discipline, stale-task cleanup, handoff quality, and control-tower hygiene` | reason: make task function explicit and remove residual ambiguity.
+- `task_id: T-0316` | `old: Backlog` | `new: Approved` | reason: clearly defined next-ready CRM integrity task (updated_at normalization/backfill) and next in directive-aligned sequence.
+- `task_id: T-0501` | status unchanged (`In Progress`) | reason: role remains commercially live in `job-pipeline.csv` (`R-2026-TEST-EY`, status `Drafting`).
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
