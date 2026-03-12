@@ -50,7 +50,7 @@
   <form class='cv-controls' id='cvForm' aria-label='Load a draft markdown file'>
     <div class='field'>
       <label class='field__label' for='mdPath'>Draft file path</label>
-      <input class='input' id='mdPath' type='text' value='outputs/cv/R-2026-0017/draft.md' aria-describedby='mdTip' />
+      <input class='input' id='mdPath' type='text' value='' placeholder='outputs/cv/<role_id>/draft.md' aria-describedby='mdTip' />
     </div>
     <button class='btn' id='loadBtn' type='submit'>Load Draft</button>
     <a class='btn' id='runFromPreviewLink' href='cv-run.html'>Run CV ↗</a>
@@ -104,6 +104,23 @@
       return html;
     }
 
+    function sanitiseDraftPath(path){
+      const raw = String(path || '').trim();
+      if (!raw) throw new Error('Provide a draft path under outputs/cv/<role_id>/draft.md');
+
+      const low = raw.toLowerCase();
+      if (low.includes('://') || low.startsWith('javascript:') || low.startsWith('data:')) {
+        throw new Error('External or protocol paths are not allowed');
+      }
+      if (raw.includes('..') || raw.startsWith('/') || raw.startsWith('\\')) {
+        throw new Error('Path traversal or absolute paths are not allowed');
+      }
+      if (!/^outputs\/cv\/.+\.md$/i.test(raw)) {
+        throw new Error('Only markdown drafts under outputs/cv/** are allowed');
+      }
+      return raw;
+    }
+
     async function loadDraft(path){
       const target = document.getElementById('renderedMd');
       const live = document.getElementById('loadStatus');
@@ -114,14 +131,15 @@
       if (live) live.textContent = 'Loading draft.';
 
       try{
-        const res = await fetch(path + (path.includes('?') ? '&' : '?') + 't=' + Date.now());
+        const safePath = sanitiseDraftPath(path);
+        const res = await fetch(safePath + (safePath.includes('?') ? '&' : '?') + 't=' + Date.now());
         if(!res.ok) throw new Error('HTTP '+res.status);
         const md = await res.text();
         if (target) target.innerHTML = mdToHtml(md);
         if (live) live.textContent = 'Draft loaded.';
       }catch(e){
         const msg = (e && e.message) ? e.message : String(e);
-        if (target) target.innerHTML = '<p><strong>Could not load draft.</strong> Check the file path and ensure it exists in the published site.</p><p class="cv-note">'+escapeHtml(msg)+'</p>';
+        if (target) target.innerHTML = '<p><strong>Could not load draft.</strong> Use a published markdown path under <code>outputs/cv/</code>.</p><p class="cv-note">'+escapeHtml(msg)+'</p>';
         if (live) live.textContent = 'Could not load draft.';
       } finally {
         if (target) target.setAttribute('aria-busy','false');

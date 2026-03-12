@@ -180,3 +180,10 @@ Next steps / recommended actions:
 - Files updated:
   - `ops/agent-tasks.csv`
   - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-12 (execution resumed on priority stack)
+- `task_id: T-0317` | status remains `In Progress` | progress: removed broken-by-default CV preview path and hardened loader path validation.
+- Files changed:
+  - `ops/cv-preview.html` (blank default input, allowlist enforcement, traversal/protocol rejection, clearer error states)
+  - `ops/agent-tasks.csv` (T-0317 notes + updated_at)
+  - `ops/UPDATE_CAPTURE.md` (this entry)
