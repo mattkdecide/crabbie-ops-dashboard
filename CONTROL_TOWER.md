@@ -62,7 +62,7 @@ Correction now in force:
    - Finalise predictable role-scoped artefact structure.
    - Ensure manifest, draft, QA, and final-output linkage are consistent and reviewable.
    - This is required for a reliable end-to-end workflow.
-   - **Staleness check:** `agent-tasks.csv` shows `updated_at=2026-03-07` (stale for In Progress). Either advance with a concrete next action + evidence, or downgrade to `Approved`/`Backlog` until actively moving.
+   - **Staleness check (still true @ 2026-03-12 04:00 UTC):** `agent-tasks.csv` remains `updated_at=2026-03-07` (>3 days stale for In Progress). Next action required: either (a) post an execution note with what changed + next concrete step, or (b) move status back to `Approved` until actively moving.
 
 3. **T-0204 – Canonical CRM status mapping (CRM) [In Progress]**
    - Implement one source of truth for status mapping.

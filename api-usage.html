@@ -104,9 +104,29 @@
         if (main) main.setAttribute('aria-busy','true');
         if (region) region.setAttribute('aria-busy','true');
 
-        const res = await fetch('usage/api-usage-log.csv?t='+Date.now(),{cache:'no-store'});
-        if (!res.ok) throw new Error(`HTTP ${res.status} fetching api-usage-log.csv`);
-        const txt = await res.text();
+        const sources = [
+          'usage/api-usage-log.csv?t='+Date.now(),
+          'https://raw.githubusercontent.com/mattkdecide/crabbie-ops-dashboard/main/usage/api-usage-log.csv?t='+Date.now()
+        ];
+
+        let txt = '';
+        let lastErr = null;
+        for (const src of sources) {
+          try {
+            const res = await fetch(src,{cache:'no-store'});
+            if (!res.ok) {
+              lastErr = new Error(`HTTP ${res.status} fetching ${src}`);
+              continue;
+            }
+            txt = await res.text();
+            if (txt && txt.trim()) break;
+          } catch (e) {
+            lastErr = e;
+          }
+        }
+
+        if (!txt || !txt.trim()) throw (lastErr || new Error('Usage CSV is empty or unavailable'));
+
         const data = parseCSV(txt);
 
         const tb = document.getElementById('rows');
