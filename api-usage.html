@@ -45,6 +45,18 @@
       <section class="item"><h2 class="item__title">Status</h2><div class="item__meta" id="budgetStatus">-</div></section>
     </div>
 
+    <section class="item" aria-label="Budget usage gauge">
+      <h2 class="item__title">Daily Budget Usage</h2>
+      <div class="cap-row">
+        <div class="cap-meta" id="budgetGaugeLabel">Loading usage…</div>
+        <div class="cap-val num" id="budgetGaugeVal">-</div>
+      </div>
+      <div class="cap-track" role="progressbar" aria-label="Daily budget usage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="budgetGaugeBar">
+        <div class="cap-fill" id="budgetGaugeFill" style="width:0%"></div>
+      </div>
+      <div class="cap-sub" id="budgetGaugeSub">Target: USD $2.00/day</div>
+    </section>
+
     <section class="item" aria-label="Usage log table">
       <h2 class="item__title">Usage Log</h2>
       <div id="usageNotice" class="notice notice--danger" role="alert" style="display:none;margin-bottom:var(--s2)"></div>
@@ -159,7 +171,8 @@
         document.getElementById('costTotal').textContent = '$'+cost.toFixed(2);
 
         const budgetEl = document.getElementById('budgetStatus');
-        const onTarget = cost <= 2;
+        const budget = 2;
+        const onTarget = cost <= budget;
         const budgetText = onTarget ? 'On target' : 'Above target';
         budgetEl.className = 'item__meta';
         budgetEl.textContent = '';
@@ -168,7 +181,25 @@
         badge.textContent = budgetText;
         budgetEl.appendChild(badge);
 
-        if (sr) sr.textContent = `Loaded ${data.length} usage rows. Budget status: ${budgetText}.`;
+        const pctRaw = budget > 0 ? (cost / budget) * 100 : 0;
+        const pct = Math.max(0, Math.round(pctRaw));
+        const pctClamped = Math.min(pct, 100);
+        const gaugeLabel = document.getElementById('budgetGaugeLabel');
+        const gaugeVal = document.getElementById('budgetGaugeVal');
+        const gaugeFill = document.getElementById('budgetGaugeFill');
+        const gaugeBar = document.getElementById('budgetGaugeBar');
+        const gaugeSub = document.getElementById('budgetGaugeSub');
+
+        if (gaugeLabel) gaugeLabel.textContent = `Used $${cost.toFixed(2)} of $${budget.toFixed(2)} daily target`;
+        if (gaugeVal) gaugeVal.textContent = `${pct}%`;
+        if (gaugeFill) {
+          gaugeFill.style.width = `${pctClamped}%`;
+          gaugeFill.className = `cap-fill ${pct <= 75 ? 'success' : pct <= 100 ? 'warning' : 'danger'}`;
+        }
+        if (gaugeBar) gaugeBar.setAttribute('aria-valuenow', String(Math.min(pct, 999)));
+        if (gaugeSub) gaugeSub.textContent = pct > 100 ? `Over budget by $${(cost - budget).toFixed(2)}` : `Remaining budget: $${(budget - cost).toFixed(2)}`;
+
+        if (sr) sr.textContent = `Loaded ${data.length} usage rows. Budget status: ${budgetText}. Usage ${pct} percent.`;
       } catch(e){
         const tb = document.getElementById('rows');
         tb.innerHTML = '<tr><td colspan="8">Could not load usage log.</td></tr>';
@@ -176,6 +207,14 @@
           notice.textContent = `Could not load API usage log: ${e && e.message ? e.message : String(e)}`;
           notice.style.display = 'block';
         }
+        const gaugeLabel = document.getElementById('budgetGaugeLabel');
+        const gaugeVal = document.getElementById('budgetGaugeVal');
+        const gaugeFill = document.getElementById('budgetGaugeFill');
+        const gaugeSub = document.getElementById('budgetGaugeSub');
+        if (gaugeLabel) gaugeLabel.textContent = 'Usage unavailable';
+        if (gaugeVal) gaugeVal.textContent = '-';
+        if (gaugeFill) { gaugeFill.style.width = '0%'; gaugeFill.className = 'cap-fill'; }
+        if (gaugeSub) gaugeSub.textContent = 'Could not compute budget usage.';
         if (sr) sr.textContent = 'Could not load API usage log.';
       } finally {
         if (region) region.setAttribute('aria-busy','false');
