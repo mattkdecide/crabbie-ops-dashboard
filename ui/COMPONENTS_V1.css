@@ -175,7 +175,8 @@
    - Keep column headers aligned to a consistent baseline.
    - Prevent sticky-offset overlap over the first card on the pipeline board.
 */
-.page-kanban .column__header{
+.page-kanban .column__header,
+.page-agent-queue .column__header{
   position: static;
   top: auto;
   min-height: 56px;
