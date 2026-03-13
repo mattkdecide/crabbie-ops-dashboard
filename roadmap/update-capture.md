@@ -229,3 +229,23 @@ Next steps / recommended actions:
   - `ops/publish_ops.sh`
   - `ops/agent-tasks.csv`
   - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-13 (Team Ops Ship 1 started)
+- `task_id: T-0306` | `old: Backlog` | `new: In Progress` | reason: started Team Ops Ship 1 interactive implementation.
+- Implemented Team Ops UI first pass:
+  - canonical columns board,
+  - drag between columns,
+  - per-card Save / Undo for pending moves,
+  - edit dialog for notes (+ optional agent/priority),
+  - archive action (non-destructive: Done + closed_reason).
+- Added persistence foundation:
+  - Team Ops UI attempts safe POST write to `/api/task-update`.
+  - backend write script implemented at `ops/scripts/task_update_v1.py` (canonical status validation, note guards, atomic CSV write, updated_at + last_editor + audit append).
+- Current gap: `/api/task-update` endpoint wiring is not yet live on hosted surface; save attempts will fail until endpoint is connected.
+- Files changed:
+  - `ops/team-ops.html`
+  - `ops/ui/team_ops_v1.js`
+  - `ops/scripts/task_update_v1.py`
+  - `ops/publish_ops.sh`
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
