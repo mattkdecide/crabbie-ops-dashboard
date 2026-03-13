@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Agent Detail · Crabbie Ops</title>
+  <link rel="icon" type="image/jpeg" href="ui/assets/crabbie-logo.jpg">
+  <link rel="apple-touch-icon" href="ui/assets/crabbie-logo.jpg">
+  <link rel="stylesheet" href="ui/STYLE_TOKENS_V1.css">
+  <link rel="stylesheet" href="ui/COMPONENTS_V1.css">
+  <style>.textarea{width:100%;min-height:40vh;background:var(--surface-2);color:var(--text);border:1px solid var(--border-2);border-radius:10px;padding:10px;font: var(--fs-1)/1.45 ui-monospace,monospace;}</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar" role="banner">
+    <div class="topbar__row">
+      <a class="home-logo" href="agents.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Back to Agents</a>
+    </div>
+    <h1 class="topbar__title" id="agentName">Agent Detail</h1>
+    <p class="topbar__sub">Profile + library links. Main operational metrics stay on Agents page.</p>
+  </header>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <section class="item">
+      <h2 class="item__title">Profile markdown</h2>
+      <div class="item__small" id="profileLinks"></div>
+      <textarea id="profileBox" class="textarea" spellcheck="false"></textarea>
+    </section>
+
+    <section class="item">
+      <h2 class="item__title">Library links</h2>
+      <div class="item__small">
+        <a href="../SOUL.md" target="_blank" rel="noopener">SOUL.md</a> ·
+        <a href="../USER.md" target="_blank" rel="noopener">USER.md</a> ·
+        <a href="../TOOLS.md" target="_blank" rel="noopener">TOOLS.md</a> ·
+        <a href="../MEMORY.md" target="_blank" rel="noopener">MEMORY.md</a> ·
+        <a href="CONTROL_TOWER.md" target="_blank" rel="noopener">CONTROL_TOWER.md</a> ·
+        <a href="UPDATE_CAPTURE.md" target="_blank" rel="noopener">UPDATE_CAPTURE.md</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const GH='https://github.com/mattkdecide/crabbie-ops-dashboard';
+    const params = new URLSearchParams(location.search);
+    const agent = (params.get('agent')||'').trim().toLowerCase();
+    const safe = /^[a-z0-9-]+$/.test(agent) ? agent : 'tide';
+    const file = `agents/${safe}.md`;
+    document.getElementById('agentName').textContent = `Agent Detail: ${safe}`;
+    document.getElementById('profileLinks').innerHTML = `Source: <a href="${file}" target="_blank" rel="noopener">${file}</a> · <a href="${GH}/blob/main/${file}" target="_blank" rel="noopener">View in GitHub</a> · <a href="${GH}/edit/main/${file}" target="_blank" rel="noopener">Edit profile</a>`;
+
+    const ta=document.getElementById('profileBox');
+    const key=`agent-edit-${safe}`;
+    fetch(file+'?t='+Date.now()).then(r=>r.text()).then(t=>{ ta.value=t; if(localStorage.getItem(key)) ta.value=localStorage.getItem(key); }).catch(()=>ta.value='Could not load profile markdown.');
+    ta.addEventListener('input',()=>localStorage.setItem(key,ta.value));
+  </script>
+  <script src="ui/nav_v1.js"></script>
+</body>
+</html>

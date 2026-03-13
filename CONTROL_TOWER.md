@@ -1,6 +1,6 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-12 UTC
+**Last updated:** 2026-03-13 08:03 UTC
 **Directive basis:** `ops/DIRECTIVE_TO_CRABBIE.md`, `ops/TASK_LIFECYCLE_RULES.md`, `ops/HANDOFF_FORMAT.md`
 
 ## 0) Priority reset (active)
@@ -58,11 +58,11 @@ Correction now in force:
    - Enforce output allowlist, safe loader behaviour, and clear error states.
    - This is the highest-priority workflow hardening item.
 
-2. **T-0205 – CV artefact manifest and output contract (Build) [In Progress]**
+2. **T-0205 – CV artefact manifest and output contract (Build) [Approved]**
    - Finalise predictable role-scoped artefact structure.
    - Ensure manifest, draft, QA, and final-output linkage are consistent and reviewable.
    - This is required for a reliable end-to-end workflow.
-   - **Staleness check (still true @ 2026-03-12 08:03 UTC):** `agent-tasks.csv` remains `updated_at=2026-03-07` (>3 days stale for In Progress). Next action required: either (a) add an execution note with what changed + next concrete step (and bump `updated_at`), or (b) move status back to `Approved` until actively moving.
+   - **Current discipline rule:** keep as `Approved` until there is a concrete execution update, then move to `In Progress` with evidence in notes.
 
 3. **T-0204 – Canonical CRM status mapping (CRM) [In Progress]**
    - Implement one source of truth for status mapping.
@@ -70,6 +70,8 @@ Correction now in force:
    - This is the highest-priority CRM integrity item.
 
 _Next up: T-0316 – updated_at normalisation/backfill, then T-0312 – task discipline and stale-work cleanup._
+
+**Housekeeping note (non-core):** T-0306 was stale-blocked noise (blocked since 2026-03-10 with a defer-style blocker). Per `TASK_LIFECYCLE_RULES.md`, it has now been moved back to **Backlog** with an explicit defer note: “Deferred until post-Phase-1; no ops/team-ops.html stub exists yet.”
 
 **T-0312 – Task discipline and control-tower hygiene (Ops) [In Progress]**
 - Tighten task states, next-action quality, blocker clarity, and handoff quality.

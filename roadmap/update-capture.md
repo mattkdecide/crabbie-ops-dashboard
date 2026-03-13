@@ -187,3 +187,45 @@ Next steps / recommended actions:
   - `ops/cv-preview.html` (blank default input, allowlist enforcement, traversal/protocol rejection, clearer error states)
   - `ops/agent-tasks.csv` (T-0317 notes + updated_at)
   - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-13 (backlog capture)
+- Added backlog task `T-0320` to capture Agent Profiles redesign request for later spec (no implementation started).
+- Scope captured: compact agent cards, live 24h capacity/task visibility, per-agent Edit page, MD library editing moved off main Agents page.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-13 (additional deferred UX feedback)
+- Updated backlog task `T-0320` notes with deferred UX requirements:
+  - Kanban tiles/columns should aim to fit typical browser width without horizontal scrolling where practical.
+  - Agent Queue should follow the same principle.
+  - Include movable-user interaction expectations in redesign scope.
+- Confirmed primary focus remains end-to-end CV workflow hardening.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-13 (idle-time research backlog)
+- Added backlog task `T-0321`: research `clawhub.ai` skills shortlist for current/future plans.
+- Output requirement captured: skill name, details, star rating count, and URL.
+- Files updated:
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)
+
+## 2026-03-13 (Agent Profiles v1 operational surface)
+- `task_id: T-0320` | `old: Backlog` | `new: In Progress` | reason: started implementation of operational Agent Profiles v1.
+- Implemented compact main Agents operational view:
+  - per-agent workload/evidence chips,
+  - workload counts (In Progress/Blocked/Approved/Backlog),
+  - movement/contribution row (stale active, updated 24h/7d, output 7d),
+  - up to 3 active tasks + overflow indicator,
+  - blocker/attention summary,
+  - compact page-level summary strip.
+- Added per-agent detail page for profile/library maintenance (moved away from large editable boxes on main page).
+- Files changed:
+  - `ops/agents.html`
+  - `ops/ui/agent_profiles_v1.js`
+  - `ops/agent-detail.html`
+  - `ops/publish_ops.sh`
+  - `ops/agent-tasks.csv`
+  - `ops/UPDATE_CAPTURE.md` (this entry)

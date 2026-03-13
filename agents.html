@@ -15,24 +15,8 @@
   <style>
     .profiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--s3);padding:var(--s4)}
     .avatar{width:30px;height:30px;border-radius:50%;vertical-align:-6px;object-fit:cover;display:inline-block;margin-right:6px}
-    .avatar-emoji{font-size:24px;line-height:1;display:inline-block;vertical-align:-3px;margin-right:6px}
-    .textarea{
-      width:100%;
-      min-height:clamp(160px, 24vh, 240px);
-      resize:vertical;
-      background:var(--surface-2);
-      color:var(--text);
-      border:1px solid var(--border-2);
-      border-radius:10px;
-      padding:10px;
-      font: var(--fs-1)/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-    .textarea:focus-visible{outline:none;box-shadow:var(--focus-strong)}
-
-    @media (max-width: 640px){
-      .profiles{padding:var(--s3);grid-template-columns:1fr}
-      .textarea{min-height:clamp(140px, 22vh, 200px)}
-    }
+    .summary-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--s2)}
+    @media (max-width: 640px){.profiles{padding:var(--s3);grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -43,8 +27,8 @@
       <a class="home-logo" href="index.html"><img src="ui/assets/crabbie-logo.jpg" alt="Crabbie"> Crabbie Ops Home</a>
       <button type="button" class="nav-toggle" data-nav-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">☰ Menu</button>
     </div>
-    <h1 class="topbar__title">Specialist Agent Profiles</h1>
-    <p class="topbar__sub">Loaded from each agent markdown profile. Textarea edits save locally in your browser only. Use “Edit in GitHub” for true write access.</p>
+    <h1 class="topbar__title">Agent Profiles (Operational)</h1>
+    <p class="topbar__sub">Operational capacity and contribution view: active, blocked, stale, and evidence-backed output.</p>
     <nav id="primary-nav" class="topbar__actions" data-nav-links aria-label="Primary">
       <a class="btn" href="status.html">Status</a>
       <a class="btn" href="activity.html">Activity</a>
@@ -59,73 +43,14 @@
 
   <main id="main" aria-label="Agent profiles" tabindex="-1">
     <section class="item" style="margin:16px">
-      <h2 class="item__title">Libraries and core docs</h2>
-      <div class="item__small">Direct read access is live below. For write access, use GitHub edit links.</div>
-      <div class="item__small" style="margin-top:8px">
-        <a href="CONTROL_TOWER.md" target="_blank" rel="noopener">CONTROL_TOWER.md</a> ·
-        <a href="UPDATE_CAPTURE.md" target="_blank" rel="noopener">UPDATE_CAPTURE.md</a> ·
-        <a href="PRODUCT_REQUIREMENTS_BACKLOG_V1.md" target="_blank" rel="noopener">PRODUCT_REQUIREMENTS_BACKLOG_V1.md</a> ·
-        <a href="TEAM_OPENCLAW.md" target="_blank" rel="noopener">TEAM_OPENCLAW.md</a> ·
-        <a href="agents/README.md" target="_blank" rel="noopener">agents/README.md</a>
-      </div>
+      <h2 class="item__title">Summary (24h/7d operational truth)</h2>
+      <div id="agents-summary" class="summary-strip"></div>
     </section>
     <div class="profiles" id="profiles-grid"></div>
   </main>
 
-  <script>
-    const GH_REPO = 'https://github.com/mattkdecide/crabbie-ops-dashboard';
-
-    const AGENTS = [
-      {key:'tide', avatar:'ui/assets/crabbie-logo.jpg', emoji:'🎈🦀', name:'Crabbie', fn:'PM Control Tower'},
-      {key:'vantage', avatar:'ui/assets/agents/analytics-blue.png', emoji:'🎈🔭', name:'Vantage', fn:'UX Strategist / Role Analyst'},
-      {key:'polish', avatar:'ui/assets/agents/design.png', emoji:'🎈🎨', name:'Polish', fn:'UI Designer / Visual Quality'},
-      {key:'forge', avatar:'ui/assets/agents/build-hardhat.png', emoji:'🎈⚒️', name:'Forge', fn:'CV Strategist'},
-      {key:'ledger', avatar:'ui/assets/agents/legal-red.png', emoji:'🎈📊', name:'Ledger', fn:'CRM Manager'},
-      {key:'radar', avatar:'ui/assets/agents/radar-megaphone.png', emoji:'🎈📡', name:'Radar', fn:'Opportunity Scout'},
-      {key:'atlas', avatar:'ui/assets/agents/ops-blue.png', emoji:'🎈🧭', name:'Atlas', fn:'Research & Contact Intel'}
-    ];
-
-    async function loadProfile(agent){
-      const card = document.createElement('section');
-      card.className = 'item';
-      const file = `agents/${agent.key}.md`;
-      const ghView = `${GH_REPO}/blob/main/${file}`;
-      const ghEdit = `${GH_REPO}/edit/main/${file}`;
-
-      card.innerHTML = `
-        <h2 class='item__title'>${agent.avatar ? `<img class='avatar' src='${agent.avatar}' alt=''>` : `<span class='avatar-emoji' aria-hidden='true'>${agent.emoji || '🎈'}</span>`}${agent.name}</h2>
-        <div class='item__meta'>${agent.fn}</div>
-        <div data-agent-owner='${agent.key}'></div>
-        <label class='sr-only' for='ta-${agent.key}'>Profile text for ${agent.name}. Edits save locally in your browser only.</label>
-        <textarea class='textarea' id='ta-${agent.key}' aria-label='Profile text for ${agent.name}. Edits save locally in your browser only.' spellcheck='false'></textarea>
-        <div class='item__small'>
-          Live source: <a href='${file}' target='_blank' rel='noopener'>${file}</a> ·
-          <a href='${ghView}' target='_blank' rel='noopener'>View in GitHub</a> ·
-          <a href='${ghEdit}' target='_blank' rel='noopener'>Edit in GitHub</a>
-        </div>
-      `;
-      document.getElementById('profiles-grid').appendChild(card);
-
-      const ta = document.getElementById('ta-'+agent.key);
-      const localKey = `agent-edit-${agent.key}`;
-
-      try {
-        const res = await fetch(`agents/${agent.key}.md?t=${Date.now()}`);
-        const txt = await res.text();
-        ta.value = txt;
-      } catch (e) {
-        ta.value = 'Could not load profile markdown.';
-      }
-
-      if(localStorage.getItem(localKey)) ta.value = localStorage.getItem(localKey);
-      ta.addEventListener('input', ()=>localStorage.setItem(localKey, ta.value));
-    }
-
-    AGENTS.forEach(loadProfile);
-  </script>
-
-  <script src="ui/agent_capacity_v1.js"></script>
-  <script>window.initAgentCapacity && window.initAgentCapacity();</script>
+  <script src="ui/agent_profiles_v1.js"></script>
+  <script>window.initAgentProfiles && window.initAgentProfiles();</script>
   <script src="ui/nav_v1.js"></script>
 </body>
 </html>
