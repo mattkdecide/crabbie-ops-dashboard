@@ -124,6 +124,8 @@ function renderCard(role) {
   const link = safeLink(role.url);
   if (link) quickLinks.push(link);
 
+  if (role.role_id) quickLinks.push(`<a href="role-detail.html?role_id=${escapeHtml(String(role.role_id).trim())}">Role detail ↗</a>`);
+
   const run = cvRunLink(role.role_id, role.title);
   if (run) quickLinks.push(run);
 
