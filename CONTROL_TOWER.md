@@ -1,6 +1,6 @@
 # Squad PM Control Tower
 
-**Last updated:** 2026-03-13 08:03 UTC
+**Last updated:** 2026-03-14 04:00 UTC
 **Directive basis:** `ops/DIRECTIVE_TO_CRABBIE.md`, `ops/TASK_LIFECYCLE_RULES.md`, `ops/HANDOFF_FORMAT.md`
 
 ## 0) Priority reset (active)
@@ -64,24 +64,41 @@ Correction now in force:
    - This is required for a reliable end-to-end workflow.
    - **Current discipline rule:** keep as `Approved` until there is a concrete execution update, then move to `In Progress` with evidence in notes.
 
-3. **T-0204 – Canonical CRM status mapping (CRM) [In Progress]**
+3. **T-0204 – Canonical CRM status mapping (CRM) [Approved]**
    - Implement one source of truth for status mapping.
    - Reduce pipeline ambiguity and support reliable workflow and reporting logic.
    - This is the highest-priority CRM integrity item.
+   - **Discipline rule:** keep as `Approved` until there is a concrete implementation update, then move to `In Progress` with evidence.
 
 _Next up: T-0316 – updated_at normalisation/backfill, then T-0312 – task discipline and stale-work cleanup._
 
-**Housekeeping note (non-core):** T-0306 was stale-blocked noise (blocked since 2026-03-10 with a defer-style blocker). Per `TASK_LIFECYCLE_RULES.md`, it has now been moved back to **Backlog** with an explicit defer note: “Deferred until post-Phase-1; no ops/team-ops.html stub exists yet.”
+## 3b) Heartbeat check (2026-03-14 04:00 UTC)
 
-**T-0312 – Task discipline and control-tower hygiene (Ops) [In Progress]**
-- Tighten task states, next-action quality, blocker clarity, and handoff quality.
-- Reduce stale work, vague notes, and false In Progress states.
-- Keep the board operationally trustworthy.
+## 3c) Heartbeat check (2026-03-14 08:00 UTC)
 
-**T-0501 – CV draft review for active priority role (In Progress)**
-- Retain only because the underlying role remains commercially relevant.
-- If role relevance drops, convert this task into a reusable CV QA regression task.
+### Movement since last update
+- No new execution evidence recorded in `agent-tasks.csv` since 04:00 UTC.
 
+### Integrity fix applied
+- CONTROL_TOWER top-priority list now aligns with board truth: **T-0204 is `Approved`** (not `In Progress`) until concrete implementation evidence exists.
+
+### Staleness / next-action flags
+- **T-0317 (In Progress, updated_at 2026-03-12)** is nearing the 3-day stale threshold; needs a concrete “what changed” note or move to `Review` once hardening is landed.
+- **T-0205 (Approved, updated_at 2026-03-12)** will become stale soon as a high-priority Approved item; either start with an evidence-backed first step (then move to `In Progress`) or explicitly de-prioritise.
+
+### Movement since last update
+- **Board truth tightened:** reconciled stale/mismatched statuses in `ops/agent-tasks.csv` to match `TASK_LIFECYCLE_RULES.md`.
+  - T-0204: **In Progress → Approved** (stale; awaiting concrete implementation evidence).
+  - T-0312: **In Progress → Approved** (stale; next hygiene sweep explicitly defined).
+  - T-0501: **In Progress → Backlog** (role-specific, stale; reframed as future reusable QA regression).
+  - T-0306: **In Progress → Backlog** (deferred post-Phase-1; eliminate board drift).
+
+### Current staleness / integrity flags (per TASK_LIFECYCLE_RULES)
+- **T-0317 (In Progress, updated_at 2026-03-12)** approaches stale threshold next; needs a concrete “what changed” note or a move to Review once hardening lands.
+- **T-0205 (Approved, updated_at 2026-03-12)** remains the next highest-leverage CV workflow hardening item. Start only with a concrete execution step (then move to In Progress with evidence).
+
+### Status mismatch
+- Previously observed mismatch on **T-0306** has been corrected in `agent-tasks.csv` (now Backlog + deferred note).
 ---
 
 ## 4) Top 5 tasks that most directly harden end-to-end CV workflow
@@ -150,3 +167,22 @@ No new architecture, dashboard, API, read-model, or platform expansion work shou
 - CV workflow hardening,
 - CRM integrity,
 - or task discipline.
+
+---
+
+## 3d) Heartbeat check (2026-03-15 00:00 UTC)
+
+### Movement since last update
+- No new execution evidence recorded in `agent-tasks.csv` since 2026-03-14 08:00 UTC.
+
+### Staleness flags (per TASK_LIFECYCLE_RULES)
+- **T-0317 (In Progress, updated_at 2026-03-12)** is now stale (>=3 days). Either (a) record concrete execution evidence (commit/ref, file list, deployed change) and move to **Review**, or (b) move back to **Approved** with a crisp first step to restart.
+- **T-0205 (Approved, updated_at 2026-03-12)** is now stale as a high-priority Approved item. Either start with a concrete first implementation step (then move to **In Progress** with evidence), or explicitly de-prioritise.
+
+### Still-valid top priorities (next 24–48h)
+1. **T-0317** CV Preview hardening (safety + blank default).
+2. **T-0205** CV artefact manifest/output contract.
+3. **T-0204** Canonical CRM status mapping.
+
+### Decisions needed
+- None yet, unless Matt wants to explicitly pause/de-scope T-0205 or re-order priorities.
